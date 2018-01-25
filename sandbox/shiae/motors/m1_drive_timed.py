@@ -90,12 +90,14 @@ Authors: David Fisher and Allison Shi.
 #
 #  Observation you should make, the pattern run_forever-->time.sleep-->stop naturally blocks code execution until done.
 
+import ev3dev.ev3 as ev3
+import time
 
 def main():
 
-       print("--------------------------------------------")
-       print("  Timed Driving")
-       print("--------------------------------------------")
+    print("--------------------------------------------")
+    print("  Timed Driving")
+    print("--------------------------------------------")
     ev3.Sound.speak("Timed Driving").wait()
 
     # Connect two large motors on output ports B and C
@@ -116,8 +118,8 @@ def main():
         left_motor.run_forever(speed_sp=v)
         right_motor.run_forever(speed_sp=v)
         time.sleep(time_s)
+        right_motor.stop()
         left_motor.stop()
-        right_motor.stop(stop_action="brake")
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
