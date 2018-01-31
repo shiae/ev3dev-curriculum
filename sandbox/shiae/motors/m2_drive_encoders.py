@@ -4,13 +4,15 @@ This module lets you practice using the encoder to determine distances while blo
 
 You will now use a run_to_rel_pos command to implement the action drive inches action.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Allison, Ryan, and Stephen.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
+# DONE: 2. Copy the contents of your m1_drive_timed.py and paste that text
+# into this file below these comments.
 #   If your program says and prints anything at the start change it to print and say "Drive using encoders"
 
-# TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
+# DONE: 3. Add a beep after the drive motors stop (see code below).  Test your
+# code to hear the beep AFTER movement.
 #   ev3.Sound.beep().wait()
 
 # TODO: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
@@ -51,9 +53,9 @@ import math
 def main():
 
     print("--------------------------------------------")
-    print("  Timed Driving")
+    print("  Drive using Encoders")
     print("--------------------------------------------")
-    ev3.Sound.speak("Timed Driving").wait()
+    ev3.Sound.speak("Drive Using Encoders").wait()
 
     # Connect two large motors on output ports B and C
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -65,17 +67,25 @@ def main():
 
     time_s = 1  # Any value other than 0.
     while time_s != 0:
-        v = int(input("Enter a speed (0 to 900 dps): "))
-        x = int(input("Distance to travel (inches): "))
+        # v = int(input("Enter a speed (0 to 900 dps): "))
+        # x = int(input("Distance to travel (inches): "))
+        y = 90 * int(input("Distance to travel (inches): "))
+        s = int(input("Enter a speed (0 to 900 dps): "))
 
-        time_s = 1 / ((9.2032635351028/(1 + 8.5531895233376 * math.exp(
-            -.0054156306930 * v))) / x)
+        # time_s = 1 / ((9.2032635351028/(1 + 8.5531895233376 * math.exp(
+        #     -.0054156306930 * v))) / x)
 
-        left_motor.run_forever(speed_sp=v)
-        right_motor.run_forever(speed_sp=v)
-        time.sleep(time_s)
-        right_motor.stop()
-        left_motor.stop()
+        # left_motor.run_forever(speed_sp=v)
+        # right_motor.run_forever(speed_sp=v)
+        # time.sleep(time_s)
+        # right_motor.stop()
+        # left_motor.stop()
+
+        left_motor.run_to_rel_pos(position_sp=y, speed_sp=s)
+        right_motor.run_to_rel_pos(position_sp=y, speed_sp=s)\
+        right_motor.wait_while(right_motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
