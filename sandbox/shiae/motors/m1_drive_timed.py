@@ -114,8 +114,8 @@ def main():
         v = int(input("Enter a speed (0 to 900 dps): "))
         x = int(input("Distance to travel (inches): "))
 
-        time_s = 9.2032635351028/(1 + 8.5531895233376 * math.exp(
-            -.0054156306930 * x))
+        time_s = 1 / ((9.2032635351028/(1 + 8.5531895233376 * math.exp(
+            -.0054156306930 * v))) / x)
 
         left_motor.run_forever(speed_sp=v)
         right_motor.run_forever(speed_sp=v)
