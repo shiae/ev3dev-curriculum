@@ -92,6 +92,7 @@ Authors: David Fisher and Allison Shi.
 
 import ev3dev.ev3 as ev3
 import time
+import math
 
 def main():
 
@@ -113,7 +114,8 @@ def main():
         v = int(input("Enter a speed (0 to 900 dps): "))
         x = int(input("Distance to travel (inches): "))
 
-        time_s = (360/v)*(x/4.7)
+        time_s = 9.2032635351028/(1 + 8.5531895233376 * math.exp(
+            -.0054156306930 * x))
 
         left_motor.run_forever(speed_sp=v)
         right_motor.run_forever(speed_sp=v)
