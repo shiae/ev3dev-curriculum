@@ -105,6 +105,10 @@ def main():
             ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[index])
 
             index += 1
+            while btn.down:
+                time.sleep(0.01)
+                if btn.down is False:
+                    break
 
         # DONE: 5. Formally test your work. When you think you have the problem
         #  complete run these tests:
