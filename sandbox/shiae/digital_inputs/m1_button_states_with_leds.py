@@ -17,6 +17,9 @@ import time
 
 
 def main():
+
+    index = 0
+
     print("--------------------------------------------")
     print(" Buttons and LEDs")
     print("--------------------------------------------")
@@ -53,7 +56,7 @@ def main():
 
     current_color_index = 0
     while True:
-        # TODO: 3. Implement the left, right, and up buttons as follows:
+        # DONE: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
         #      -- print the word "up"
         #      -- turn off all LEDs
@@ -94,6 +97,14 @@ def main():
         #   Since you are only allowed to use states, not event callbacks, this last request is a pain, but it's doable
         #     with a while loop that blocks code execution until the down instance variable is False.
         #     Use a time.sleep(0.01) inside the while loop to do nothing but wait for the button to be released.
+
+        if btn.down:
+            if index > 2:
+                index = 0
+            ev3.Leds.set_color(led_colors[index], ev3.Leds.LEFT)
+            ev3.Leds.set_color(led_colors[index], ev3.Leds.RIGHT)
+
+            index += 1
 
         # TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
         #   Press Left - Green left LED is on (try holding the button down for a few seconds when you to the press)
