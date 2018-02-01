@@ -37,7 +37,8 @@ class Snatch3r(object):
                                     speed_sp=speed_deg_per_second)
 
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
-        self.right_motor.run_to_rel_pos(position_sp=degrees_to_turn,
-                                        speed_sp=-turn_speed_sp)
+        degrees_to_turn *= 4.61004
+        self.right_motor.run_to_rel_pos(position_sp=-degrees_to_turn,
+                                        speed_sp=turn_speed_sp)
         self.left_motor.run_to_rel_pos(position_sp=degrees_to_turn,
                                         speed_sp=turn_speed_sp)
