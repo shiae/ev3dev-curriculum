@@ -41,6 +41,9 @@ def main():
         #   You are done with the Motors unit!
         #
         # Observations you should make, by making library functions you can make this program in only 3 lines of code.
+        for k in range(sides):
+            robot.drive_inches(edge_length_in, speed_deg_per_second)
+            robot.turn_degrees(360 / sides, speed_deg_per_second)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
