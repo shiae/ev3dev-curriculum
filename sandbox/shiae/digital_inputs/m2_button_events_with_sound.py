@@ -44,7 +44,7 @@ def main():
     # Buttons on EV3 (we keep giving you this line, but you could have typed it)
     btn = ev3.Button()
 
-    # TODO: 3. Just below this comment add SIMPLE (no lambda) callbacks for:
+    # DONE: 3. Just below this comment add SIMPLE (no lambda) callbacks for:
     #   .on_up to call handle_up_button (that function already exist below, you will modify it in todo4)
     #   .on_down to call handle_down_button (that function does not exist yet, you will write it in todo4)
     #   .on_left to call handle_left_button (that function does not exist yet, you will write it in todo4)
@@ -93,6 +93,30 @@ def handle_up_button(button_state):
         print("Up button is pressed")
     else:
         print("Up button was released")
+
+def handle_down_button(button_state):
+    """Handle IR / button event."""
+    if button_state:
+        print("Down button is pressed")
+        play_song_by_individual_tones()
+    else:
+        print("Down button was released")
+
+def handle_left_button(button_state):
+    """Handle IR / button event."""
+    if button_state:
+        print("Left button is pressed")
+        speak()
+    else:
+        print("Left button was released")
+
+def handle_right_button(button_state):
+    """Handle IR / button event."""
+    if button_state:
+        print("Right button is pressed")
+        play_wav_file()
+    else:
+        print("Right button was released")
 
 
 # TODO: 6. Implement the handle_shutdown function.
