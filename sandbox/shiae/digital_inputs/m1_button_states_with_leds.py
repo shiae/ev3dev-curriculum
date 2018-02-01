@@ -67,7 +67,8 @@ def main():
         #      -- turn off the left LED
         #   You are required to use the Button instance variables for the up, left, and right (not event callbacks).
         #   Notice that the word "up" (or "left" or "right" is printed continually while you hold the button)
-        #   Optional: You can also comment out the code above that does the 6 second red, green, off pattern.  It was
+        #   Optional: You can also comment out the code above that does the
+        #  6 second red, green, off pattern.  It was
         #     there just to provide you with code examples for using the LEDs.  It does not need to run anymore.
         #     Just make sure not to comment out too much. ;)
 
@@ -114,6 +115,7 @@ def main():
         #   it's too much trouble to do here.  So instead we just don't use the Enter button.
 
         if btn.backspace:
+            print("end")
             break
         time.sleep(0.01)  # Best practice to have a short delay to avoid working too hard between loop iterations.
 
