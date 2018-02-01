@@ -9,13 +9,14 @@ Since this module is all about the buttons the Sound code has just been provided
 example.  You will call different Sound functions using different buttons.
 
 Authors: David Fisher and Allison, Ryan, Stephen.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
 
 
-# TODO: 2. Have someone on your team run this program, as is, on the EV3 and make sure everyone understands the code.
+# DONE: 2. Have someone on your team run this program, as is, on the EV3 and
+# make sure everyone understands the code.
 # There is currently no way to exit this program, so you will have to manually exit the program using your keyboard.
 #   Hit Control C to exit the program when you are done running it.  Ctrl c is a KeyboardInterrupt.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
@@ -64,6 +65,9 @@ def main():
     # Using lambda call the function handle_shutdown passing in the state and dc
     # Note: the function handle_shutdown does not exist yet, you will write it in todo6.
 
+    btn.on_backspace = lamdba
+    predefined_inputs: function_name(parameters)
+
     while dc.running:
         btn.process()  # This command is VERY important when using button callbacks!
         time.sleep(0.01)  # A short delay is important to allow other things to happen.
@@ -76,7 +80,8 @@ def main():
 # Button event callback functions
 # ----------------------------------------------------------------------
 
-# TODO: 4. Implement the up, down, left, and right callback functions as follows:
+# DONE: 4. Implement the up, down, left, and right callback functions as
+# follows:
 #   handle_up_button - when state is True (a press), call play_song_by_individual_tones()
 #     You can leave the print messages below, just add the new requirement stated above.
 #   handle_down_button - when state is True (a press), call play_song_by_notes_list()
