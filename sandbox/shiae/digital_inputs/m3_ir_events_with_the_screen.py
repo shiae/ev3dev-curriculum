@@ -33,7 +33,8 @@ ch2 = ev3.RemoteControl(channel=2)
 ch3 = ev3.RemoteControl(channel=3)
 ch4 = ev3.RemoteControl(channel=4)
 
-# TODO: 2. Have someone on your team run this program as is on the EV3 and make sure everyone understands the code.
+# DONE: 2. Have someone on your team run this program as is on the EV3 and make
+#  sure everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
 
 class DataContainer(object):
@@ -112,7 +113,8 @@ def main():
         ch3.process()
         ch4.process()
 
-        # TODO: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
+        # DONE: 6. Call the .process() method on your channel 2 - 4
+        # RemoteControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
 
         # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
