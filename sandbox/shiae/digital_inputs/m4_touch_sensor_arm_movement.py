@@ -31,8 +31,7 @@ def main():
         command_to_run = input("Enter c (for calibrate), u (for up), d (for down), or q (for quit): ")
         if command_to_run == 'c':
             print("Calibrate the arm")
-            print("TODO: 3 is to delete this print statement, uncomment the line below, and implement that function.")
-            # arm_calibration(arm_motor, touch_sensor)
+            arm_calibration(arm_motor, touch_sensor)
         elif command_to_run == 'u':
             print("Move the arm to the up position")
             print("TODO: 4 is to delete this print statement, uncomment the line below, and implement that function.")
@@ -73,14 +72,16 @@ def arm_calibration(arm_motor, touch_sensor):
     #   Set the arm encoder position to 0 (the last line below is correct to do that, it's new so no bug there)
 
     # Code that attempts to do this task but has MANY bugs (nearly 1 on every line).  Fix them!
-    arm_motor.run_forever(speed_sp=100)
+    arm_motor.run_forever(speed_sp=400)
+    time.sleep(5)
     while not touch_sensor:
         time.sleep(0.01)
-    arm_motor.stop(stop_action="coast")
+    arm_motor.stop(stop_action="brake")
+    ev3.Sound.beep().wait()
 
     arm_revolutions_for_full_range = 14.2
-    arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range)
-    arm_motor.wait_while(ev3.Motor.STATE_STALLED)
+    arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range * 360)
+    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
 
