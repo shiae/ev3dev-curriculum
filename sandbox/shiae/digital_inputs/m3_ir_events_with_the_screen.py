@@ -28,6 +28,7 @@ import ev3dev.ev3 as ev3
 import time
 from PIL import Image
 
+ch1 = ev3.RemoteControl(channel=1)
 
 # TODO: 2. Have someone on your team run this program as is on the EV3 and make sure everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
@@ -74,6 +75,14 @@ def main():
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
+
+    ch1.on_red_up = lambda state: handle_red_up_1(state, dc)
+    ch1.on_red_down = lambda state: handle_red_down_1(state, dc)
+    ch1.on_blue_up = lambda state: handle_blue_up_1(state, dc)
+    ch1.on_blue_down = lambda state: handle_blue_down_1(state, dc)
+
+
+
 
     # TODO: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
