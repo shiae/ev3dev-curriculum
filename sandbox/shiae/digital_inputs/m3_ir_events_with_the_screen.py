@@ -89,10 +89,15 @@ def main():
 
 
 
-    # TODO: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
+    # DONE: 5. Create remote control objects for channels 2, 3, and 4. Add
+    # lambda callbacks for on_red_up to each one:
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
     #   Channel 3's .on_red_up should call handle_red_up_3 (that exist already) with state and dc as parameters
     #   Channel 4's .on_red_up should call handle_red_up_4 (that exist already) with state and dc as parameters
+
+    ch2.on_red_up = lambda state:handle_red_up_2(state, dc)
+    ch3.on_red_up = lambda state: handle_red_up_3(state, dc)
+    ch4.on_red_up = lambda state: handle_red_up_4(state, dc)
 
     # Buttons on EV3
     btn = ev3.Button()
@@ -103,6 +108,9 @@ def main():
         # object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
         ch1.process()
+        ch2.process()
+        ch3.process()
+        ch4.process()
 
         # TODO: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
