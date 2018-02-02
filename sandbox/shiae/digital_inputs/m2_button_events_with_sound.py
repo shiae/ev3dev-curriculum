@@ -65,8 +65,7 @@ def main():
     # Using lambda call the function handle_shutdown passing in the state and dc
     # Note: the function handle_shutdown does not exist yet, you will write it in todo6.
 
-    btn.on_backspace = lamdba
-    predefined_inputs: function_name(parameters)
+    btn.on_backspace = lamdba state: handle_shutdown(state, dc)
 
     while dc.running:
         btn.process()  # This command is VERY important when using button callbacks!
@@ -224,6 +223,13 @@ def play_wav_file():
     # Had to convert it to a PCM signed 16-bit little-endian .wav file
     # http://audio.online-convert.com/convert-to-wav
     ev3.Sound.play("/home/robot/csse120/assets/sounds/awesome_pcm.wav")
+
+
+def handle_shutdown(button_state, dc):
+    if button_state:
+        print("back")
+        dc.running = False
+
 
 
 # ----------------------------------------------------------------------
