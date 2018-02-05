@@ -34,19 +34,20 @@ import tkinter
 from tkinter import ttk
 
 
-# TODO: 4. Uncomment the code below.  It imports a library and creates a relatively simple class.
+# DONE: 4. Uncomment the code below.  It imports a library and creates a
+# relatively simple class.
 # The constructor receives a Tkinter Canvas and the one and only method draws a circle on that canvas at a given XY.
 
-# import mqtt_remote_method_calls as com
-#
-#
-# class MyDelegate(object):
-#
-#     def __init__(self, canvas):
-#         self.canvas = canvas
-#
-#     def on_circle_draw(self, color, x, y):
-#         self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
+import mqtt_remote_method_calls as com
+
+
+class MyDelegate(object):
+
+    def __init__(self, canvas):
+        self.canvas = canvas
+
+    def on_circle_draw(self, color, x, y):
+        self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
 
 
 def main():
@@ -78,10 +79,9 @@ def main():
 
     # Create an MQTT connection
     # TODO: 5. Delete the line below (mqtt_client = None) then uncomment the code below.  It creates a real mqtt client.
-    mqtt_client = None
-    # my_delegate = MyDelegate(canvas)
-    # mqtt_client = com.MqttClient(my_delegate)
-    # mqtt_client.connect("draw", "draw")
+    my_delegate = MyDelegate(canvas)
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect("draw", "draw")
 
     root.mainloop()
 
@@ -94,9 +94,11 @@ def left_mouse_click(event, mqtt_client):
     """ Draws a circle onto the canvas (one way or another). """
     print("You clicked location ({},{})".format(event.x, event.y))
 
-    # TODO: 6. Talk to your team members and have everyone pick a unique color.
+    # DONE: 6. Talk to your team members and have everyone pick a unique color.
     # Examples... "red", "green", "blue", "yellow", "aquamarine", "magenta", "navy", "orange"
-    my_color = "magenta"  # Make your color unique
+    ryan_color = "purple"  # Make your color unique
+    stephen_color = "green"
+    allison_color = "aquamarine"
 
     # Optional test: If you just want to see circles purely local to your computer the four lines below would work.
     # You could uncomment it to see it temporarily, but make sure to comment it back out before todo7 below.
@@ -114,6 +116,8 @@ def left_mouse_click(event, mqtt_client):
     # Review the lecture notes about the two parameters passed into the mqtt_client.send_message method if needed
     # All of your teammates should receive the message and create a circle of your color at your click location.
     # Additionally you will receive your own message and draw a circle in your color too.
+
+    mqtt_client.send_message('on_circle_draw', )
 
     # TODO: 8. Help get everyone on your team running this program at the same time.
     # You should be able to see circles on your computer from everyone else on your team.
