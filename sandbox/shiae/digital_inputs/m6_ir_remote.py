@@ -58,21 +58,21 @@ def main():
 
     right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-    touch_sensor = ev3.TouchSensor()
     ch1 = ev3.RemoteControl(channel=1)
     ch2 = ev3.RemoteControl(channel=2)
     ev3.Leds.all_off()  # Turn the leds off
     robot = robo.Snatch3r()
     dc = DataContainer()
 
-    # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
+    # DONE: 4. Add the necessary IR handler callbacks as per the instructions
+    # above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
 
     ch1.on_red_up = lambda state: handle_red_up_1(state, left_motor)
-    ch1.on_red_down = lambda state: handle_red_down_1(state)
-    ch1.on_blue_up = lambda state: handle_blue_up_1(state)
-    ch1.on_blue_down = lambda state: handle_blue_down_1(state)
+    ch1.on_red_down = lambda state: handle_red_down_1(state, left_motor)
+    ch1.on_blue_up = lambda state: handle_blue_up_1(state, right_motor)
+    ch1.on_blue_down = lambda state: handle_blue_down_1(state, right_motor)
     ch2.on_red_up = lambda state: handle_arm_up_button(state, robot)
     ch2.on_red_down = lambda state: handle_arm_down_button(state, robot)
     ch2.on_blue_up = lambda state: handle_calibrate_button(state, robot)
@@ -103,7 +103,7 @@ def main():
 # Some event handlers have been written for you (ones for the arm).
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
-# TODO: 6. Implement the IR handler callbacks handlers.
+# DONE: 6. Implement the IR handler callbacks handlers.
 
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
@@ -160,7 +160,39 @@ def handle_shutdown(button_state, dc):
 
 def handle_red_up_1(button_state, motor):
     if button_state:
-        
+        motor.run_forever(speed_sp=600)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+    else:
+        motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def handle_red_down_1(button_state, motor):
+    if button_state:
+        motor.run_forever(speed_sp=-600)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+    else:
+        motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def handle_blue_up_1(button_state, motor):
+    if button_state:
+        motor.run_forever(speed_sp=600)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+    else:
+        motor.stop()
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
+
+def handle_blue_down_1(button_state, motor):
+    if button_state:
+        motor.run_forever(speed_sp=-600)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+    else:
+        motor.stop()
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
 
 
 
