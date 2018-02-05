@@ -108,7 +108,7 @@ def left_mouse_click(event, mqtt_client):
     # Repeated: If you uncommented the code above to test it, make sure to comment it back out before todo7 below.
 
     # MQTT draw
-    # TODO: 7. Send a message using MQTT that will:
+    # DONE: 7. Send a message using MQTT that will:
     #   - Call the method called "on_circle_draw" on the delegate at the other end of the pipe.
     #   - Pass the parameters [my_color, event.x, event.y] as a list.
     # This is the only TO DO you have to think about.  It is meant to help you learn the mqtt_client.send_message syntax
@@ -119,7 +119,8 @@ def left_mouse_click(event, mqtt_client):
     mqtt_client.send_message('on_circle_draw', [my_color, event.x,
                                                 event.y])
 
-    # TODO: 8. Help get everyone on your team running this program at the same time.
+    # DONE: 8. Help get everyone on your team running this program at the same
+    # time.
     # You should be able to see circles on your computer from everyone else on your team.
     # Try to draw the first letter of your name in circles. :)
 
