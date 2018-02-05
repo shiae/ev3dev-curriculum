@@ -96,6 +96,7 @@ def left_mouse_click(event, mqtt_client):
 
     # DONE: 6. Talk to your team members and have everyone pick a unique color.
     # Examples... "red", "green", "blue", "yellow", "aquamarine", "magenta", "navy", "orange"
+
     ryan_color = "purple"  # Make your color unique
     stephen_color = "green"
     allison_color = "aquamarine"
