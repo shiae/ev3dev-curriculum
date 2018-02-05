@@ -97,9 +97,7 @@ def left_mouse_click(event, mqtt_client):
     # DONE: 6. Talk to your team members and have everyone pick a unique color.
     # Examples... "red", "green", "blue", "yellow", "aquamarine", "magenta", "navy", "orange"
 
-    ryan_color = "purple"  # Make your color unique
-    stephen_color = "green"
-    allison_color = "aquamarine"
+    my_color = "aquamarine"  # Make your color unique
 
     # Optional test: If you just want to see circles purely local to your computer the four lines below would work.
     # You could uncomment it to see it temporarily, but make sure to comment it back out before todo7 below.
@@ -118,7 +116,8 @@ def left_mouse_click(event, mqtt_client):
     # All of your teammates should receive the message and create a circle of your color at your click location.
     # Additionally you will receive your own message and draw a circle in your color too.
 
-    mqtt_client.send_message('on_circle_draw', [my_color, event.x, event.y])
+    mqtt_client.send_message('on_circle_draw', [my_color, event.x,
+                                                event.y])
 
     # TODO: 8. Help get everyone on your team running this program at the same time.
     # You should be able to see circles on your computer from everyone else on your team.
