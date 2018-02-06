@@ -101,6 +101,7 @@ class Snatch3r(object):
 
     def loop_forever(self):
         self.running = True
+
         while self.running:
             time.sleep(0.1)
 
