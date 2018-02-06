@@ -75,7 +75,7 @@ def main():
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
-    left_button['command'] = lambda: send_left(mqtt_client,left_speed_entry, right_speed_entry)
+    left_button['command'] = lambda: send_left(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<Left>', lambda event: send_left(mqtt_client))
     # left_button and '<Left>' key
 
@@ -126,8 +126,8 @@ def main():
 
 def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
     print("robit_forward")
-    mqtt_client.send_message(("drive", [int(left_speed_entry.get()),
-                                        int(right_speed_entry.get)]))
+    mqtt_client.send_message("drive", [int(left_speed_entry.get()),
+                                        int(right_speed_entry.get())])
 
 
 def send_backward(mqtt_client):
