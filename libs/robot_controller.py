@@ -87,6 +87,7 @@ class Snatch3r(object):
         self.running=False
 
     def drive(self, left_speed, right_speed):
+        "drives forward for positive values and backwards for negative values"
         self.left_motor.run_forever(speed=left_speed)
         self.right_motor.run_forever(speed=left_speed)
 
