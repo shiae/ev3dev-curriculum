@@ -67,7 +67,7 @@ def main():
 
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
-    forward_button['command'] = lambda: send_forward(mqtt_client)
+    forward_button['command'] = lambda: send_forward(mqtt_client, left_speed_entry , right_speed_entry)
     root.bind('<Up>', lambda event: send_forward(mqtt_client))
     # forward_button and '<Up>' key is done for your here...
     # forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
@@ -75,7 +75,7 @@ def main():
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
-    left_button['command'] = lambda: send_left(mqtt_client)
+    left_button['command'] = lambda: send_left(mqtt_client,left_speed_entry, right_speed_entry)
     root.bind('<Left>', lambda event: send_left(mqtt_client))
     # left_button and '<Left>' key
 
@@ -124,24 +124,25 @@ def main():
 # ----------------------------------------------------------------------
 # DONE: 4. Implement the functions for the drive button callbacks.
 
-def send_forward(mqtt_client):
+def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
     print("robit_forward")
-    mqtt_client.send_message(("drive", [left_speed, right_speed]))
+    mqtt_client.send_message(("drive", [int(left_speed_entry.get()),
+                                        int(right_speed_entry.get)]))
 
 
 def send_backward(mqtt_client):
     print("robit_backward")
-    mqtt_client.send_message(("drive", [left_speed, right_speed]))
+    mqtt_client.send_message(("drive"))
 
 
 def send_left(mqtt_client):
     print("robit_left")
-    mqtt_client.send_message(("turn", [left_speed, right_speed]))
+    mqtt_client.send_message(("turn"))
 
 
 def send_right(mqtt_client):
     print("robit_right")
-    mqtt_client.send_message(("turn", [left_speed, right_speed]))
+    mqtt_client.send_message(("turn"))
 
 
 def send_stop(mqtt_client):
