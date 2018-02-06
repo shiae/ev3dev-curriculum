@@ -84,3 +84,24 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye')
         ev3.Sound.speak('Goodbye').wait()
+        self.running=False
+
+    def drive(self, left_speed, right_speed):
+        self.left_motor.run_forever(speed=left_speed)
+        self.right_motor.run_forever(speed=left_speed)
+
+    def turn(self, left_speed, right_speed):
+        "turns left for positive values and right for negative values"
+        self.left_motor.run_forever(speed=-left_speed)
+        self.right_motor.run_forever(speed=right_speed)
+
+    def stop(self):
+        self.right_motor.stop()
+        self.left_motor.stop()
+
+    def loop_forever(self):
+        self.running = True
+        while self.running:
+            time.sleep(0.1)
+
+
