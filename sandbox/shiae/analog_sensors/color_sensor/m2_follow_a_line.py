@@ -81,7 +81,6 @@ def follow_the_line(robot, white_level, black_level):
 
     if robot.color_sensor.color < black_level:
         robot.drive(600, 600)
-
     elif robot.color_sensor.color > white_level:
         robot.turn_degrees(10, 600)
 
