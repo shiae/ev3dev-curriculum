@@ -147,7 +147,7 @@ def handle_calibrate_button(button_state, robot):
 
 
 def handle_shutdown(button_state, dc):
-    """
+    """dc
     Exit the program.
 
     Type hints:
