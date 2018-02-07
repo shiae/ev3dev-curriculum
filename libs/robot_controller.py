@@ -88,13 +88,13 @@ class Snatch3r(object):
 
     def drive(self, left_speed, right_speed):
         "drives forward for positive values and backwards for negative values"
-        self.left_motor.run_forever(speed=left_speed)
-        self.right_motor.run_forever(speed=left_speed)
+        self.left_motor.run_forever(speed_sp=left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
 
     def turn(self, left_speed, right_speed):
         "turns left for positive values and right for negative values"
-        self.left_motor.run_forever(speed=-left_speed)
-        self.right_motor.run_forever(speed=right_speed)
+        self.left_motor.run_forever(speed_sp=-left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
 
     def stop(self):
         self.right_motor.stop()
