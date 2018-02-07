@@ -32,8 +32,7 @@ def main():
     white_level = 50
     black_level = 40
     robot = robo.Snatch3r()
-    robot.color_sensor = ev3.ColorSensor()
-    assert robot.color_sensor
+
 
     while True:
         command_to_run = input("Enter w (white), b (black), f (follow), or q (for quit): ")
