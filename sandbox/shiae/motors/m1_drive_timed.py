@@ -8,7 +8,7 @@ to collect data, then make an equation to figure out the time needed given the d
 
 Note: If future modules you will learn different (BETTER) ways to drive a given distance.
 
-Authors: David Fisher and Allison Shi.
+Authors: David Fisher and Allison Shi, Stephen Acomb, and Ryan Fleetham.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # DONE: 2. Get a yardstick or tape measure to do some testing with
@@ -98,6 +98,7 @@ Authors: David Fisher and Allison Shi.
 import ev3dev.ev3 as ev3
 import time
 import math
+
 
 def main():
 
