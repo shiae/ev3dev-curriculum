@@ -126,11 +126,7 @@ def main():
 
 def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
     print("robit_forward")
-    l1 = int(left_speed_entry.get())
-    print(l1)
-    r1 = int(right_speed_entry.get())
-    print(r1)
-    mqtt_client.send_message("drive", [l1,r1])
+    mqtt_client.send_message("drive", [int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 
 def send_backward(mqtt_client):
