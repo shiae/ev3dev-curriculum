@@ -110,8 +110,9 @@ def drive_to_color(button_state, robot, color_to_seek):
         # Observations you should make, the instance variable robot.color_sensor.color is always updating
         # to the color seen and that value is given to you as an int.
 
-        ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek]).wait()
         robot.stop()
+        ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek]).wait()
+
 
 
 def handle_shutdown(button_state, dc):
