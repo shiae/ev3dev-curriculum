@@ -87,8 +87,6 @@ def follow_the_line(robot, white_level, black_level):
         while robot.color_sensor.reflected_light_intensity > black_level:
             robot.turn_degrees(10, 200)
 
-
-
     robot.stop()
     ev3.Sound.speak("Done")
 
