@@ -103,8 +103,15 @@ def seek_beacon(robot):
                     current_heading)) < 10:
                 if current_heading < 0:
                     robot.turn(turn_speed, turn_speed)
+                    while current_heading <= -2:
+                        time.sleep(0.01)
+                    robot.stop()
                 else:
                     robot.turn(-turn_speed, -turn_speed)
+                    while current_heading >= 2:
+                        time.sleep(0.01)
+                    robot.stop()
+
             else:
                 robot.stop()
                 print("Heading too far off")
