@@ -67,7 +67,9 @@ def seek_beacon(robot):
     while robot.beacon_seeker.distance == -128:
         robot.turn(turn_speed, turn_speed)
 
-    robot.drive(forward_speed, turn_speed)
+    while robot.beacon_seeker.distance > 0:
+        robot.drive(forward_speed, turn_speed)
+        time.sleep(0.01)
 
 
     while not robot.touch_sensor.is_pressed:
@@ -102,6 +104,20 @@ def seek_beacon(robot):
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
+                robot.drive(forward_speed, forward_speed)
+                while current_distance != 0:
+                    time.sleep(0.01)
+                return True
+            elif math.fabs(current_heading) >= 2 & int(math.fabs(
+                    current_heading)) < 10:
+                if current_heading < 0:
+                    robot.turn(turn_speed, turn_speed)
+                else:
+                    robot.turn(-turn_speed, -turn_speed)
+            else:
+                robot.stop()
+                print("Heading too far off")
+                ev3.Sound.speak("Heading too far off")
 
 
 
