@@ -110,12 +110,6 @@ def seek_beacon(robot):
                 print("Heading too far off")
                 ev3.Sound.speak("Heading too far off")
 
-
-
-
-
-
-
         time.sleep(0.2)
 
     # The touch_sensor was pressed to abort the attempt if this code runs.
