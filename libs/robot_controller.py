@@ -27,7 +27,7 @@ class Snatch3r(object):
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
-        self.ir_sensor = ev3.InfraredSensor
+        self.ir_sensor = ev3.InfraredSensor()
 
         self.MAX_SPEED = 900
         self.running = True
@@ -36,8 +36,8 @@ class Snatch3r(object):
         assert self.right_motor.connected
         assert self.arm_motor.connected
         assert self.touch_sensor.connected
-        assert self.color_sensor
-        assert self.ir_sensor
+        assert self.color_sensor.connected
+        assert self.ir_sensor.connected
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         #   Drives forward a set number of inches given the number of inches
