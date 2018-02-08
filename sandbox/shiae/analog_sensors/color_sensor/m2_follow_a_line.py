@@ -80,12 +80,14 @@ def follow_the_line(robot, white_level, black_level):
     # should drive straight or turn to the right.  You will need to test and refine your code until it works well.
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
 
-    while True:
-        if robot.color_sensor.color < black_level:
+    while not robot.touch_sensor:
+        if robot.color_sensor.reflected_light_intensity < black_level:
             robot.drive(600, 600)
-        elif robot.color_sensor.color > white_level:
-            robot.turn_degrees(10, 600)
-        time.sleep(0.01)
+            while robot.color_sensor.reflected_light_intensity < black_level:
+                time.sleep(.01)
+            while robot.color_sensor.reflected_light_intensity > black_level:
+                robot.turn_degrees(10, 600).wait()
+
 
     robot.stop()
     ev3.Sound.speak("Done")
