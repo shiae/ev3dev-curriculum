@@ -114,8 +114,8 @@ class Snatch3r(object):
 
     def stop(self):
         #   Stops the left and right motors.
-        self.right_motor.stop(stop_action='break')
-        self.left_motor.stop(stop_action='break')
+        self.right_motor.stop(stop_action='brake')
+        self.left_motor.stop(stop_action='brake')
 
     def loop_forever(self):
         #   Makes sure the robot is running.
