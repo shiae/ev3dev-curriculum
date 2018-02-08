@@ -67,8 +67,9 @@ def seek_beacon(robot):
         # The touch sensor can be used to abort the attempt (sometimes handy during testing)
 
         # TODO: 3. Use the beacon_seeker object to get the current heading and distance.
-        current_heading = 0  # use the beacon_seeker heading
-        current_distance = 0  # use the beacon_seeker distance
+        current_heading = robot.beacon_seeker.heading  # use the beacon_seeker heading
+        current_distance = robot.beacon_seeker.distance  # use the beacon_seeker
+        # distance
         if current_distance == -128:
             # If the IR Remote is not found just sit idle for this program until it is moved.
             print("IR Remote not found. Distance is -128")
@@ -96,19 +97,19 @@ def seek_beacon(robot):
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
                 robot.drive(forward_speed, forward_speed)
-                while current_distance != 0:
+                while robot.beacon_seeker.distance != 0:
                     time.sleep(0.01)
                 return True
             elif math.fabs(current_heading) >= 2 & int(math.fabs(
                     current_heading)) < 10:
                 if current_heading < 0:
                     robot.turn(turn_speed, turn_speed)
-                    while current_heading <= -2:
+                    while robot.beacon_seeker.heading <= -2:
                         time.sleep(0.01)
                     robot.stop()
                 else:
                     robot.turn(-turn_speed, -turn_speed)
-                    while current_heading >= 2:
+                    while robot.beacon_seeker.heading >= 2:
                         time.sleep(0.01)
                     robot.stop()
 
