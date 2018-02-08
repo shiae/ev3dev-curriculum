@@ -37,6 +37,7 @@ class Snatch3r(object):
         assert self.arm_motor.connected
         assert self.touch_sensor.connected
         assert self.color_sensor
+        assert self.ir_sensor
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         #   Drives forward a set number of inches given the number of inches
