@@ -59,9 +59,16 @@ def seek_beacon(robot):
     """
 
     # TODO: 2. Create a BeaconSeeker object on channel 1.
+    if robot.beacon_seeker.distance == 0:
+        return True
 
     forward_speed = 300
     turn_speed = 100
+    while robot.beacon_seeker.distance == -128:
+        robot.turn(turn_speed, turn_speed)
+
+    robot.drive(forward_speed, turn_speed)
+
 
     while not robot.touch_sensor.is_pressed:
         # The touch sensor can be used to abort the attempt (sometimes handy during testing)
