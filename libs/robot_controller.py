@@ -28,6 +28,7 @@ class Snatch3r(object):
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
+        self.beacon_seeker = ev3.BeaconSeeker(channel=1)
 
         self.MAX_SPEED = 900
         self.running = True
