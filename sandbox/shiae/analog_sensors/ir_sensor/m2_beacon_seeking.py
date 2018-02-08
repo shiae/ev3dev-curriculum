@@ -98,8 +98,6 @@ def seek_beacon(robot):
                 # You add more!
                 robot.drive(forward_speed, forward_speed)
                 while robot.beacon_seeker.distance > 1:
-                    print("On the right heading. Distance: ",
-                          robot.beacon_seeker.distance)
                     time.sleep(0.01)
                 robot.stop()
                 return True
