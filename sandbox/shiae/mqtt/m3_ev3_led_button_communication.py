@@ -69,7 +69,8 @@ import time
 #         ev3.Leds.set_color(led_side, led_color)
 
 class MyDelegate(object):
-
+    #   Creates an object able to allow a user to change the color of LEDs
+    # on a robot via the buttons on the robot.
     def __init__(self):
         self.running = True
 

@@ -42,7 +42,7 @@ import mqtt_remote_method_calls as com
 
 
 class MyDelegate(object):
-
+    #   Creates an object which can draw a circle to a shared canvas.
     def __init__(self, canvas):
         self.canvas = canvas
 

@@ -13,7 +13,7 @@ import mqtt_remote_method_calls as com
 
 
 class MyDelegate(object):
-
+    #   Creates an object which can write a message to a shared chat board.
     def __init__(self, label):
         self.label = label
 
@@ -81,6 +81,7 @@ def main():
 # Tkinter event handlers
 # ----------------------------------------------------------------------
 def send_message(mqtt_client, my_name, chat_window, msg_entry):
+    #   Writes a given message to a chat window under a given name.
     msg = msg_entry.get()
     msg_entry.delete(0, 'end')
     chat_window["text"] += "\nMe: " + msg
@@ -88,6 +89,7 @@ def send_message(mqtt_client, my_name, chat_window, msg_entry):
 
 
 def quit_program(mqtt_client):
+    #   Closes the chat window.
     if mqtt_client:
         mqtt_client.close()
     exit()

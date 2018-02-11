@@ -89,11 +89,14 @@ def main():
 # Tkinter callbacks
 # ----------------------------------------------------------------------
 def send_led_command(mqtt_client, led_side, led_color):
+    #   Prints how the LEDs will be updated to the terminal, then sends a
+    # message to change the color of LEDs to the client.
     print("Sending LED side = {}  LED color = {}".format(led_side, led_color))
     mqtt_client.send_message("set_led", [led_side, led_color])
 
 
 def quit_program(mqtt_client):
+    #   Exits connection with the client.
     mqtt_client.close()
     exit()
 
