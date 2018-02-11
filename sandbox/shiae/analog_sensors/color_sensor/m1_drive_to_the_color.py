@@ -70,8 +70,6 @@ def main():
         btn.process()
         time.sleep(0.01)
 
-    print("Goodbye!")
-    ev3.Sound.speak("Goodbye").wait()
     robot.shutdown()
 
 
