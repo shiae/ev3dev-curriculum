@@ -25,15 +25,11 @@ def main():
     print("--------------------------------------------")
     ev3.Sound.speak("Beep at blue").wait()
     print("Press the touch sensor to exit this program.")
-    pixy = ev3.Sensor(driver_name="pixy-lego")
-    print(1)
     robot = robo.Snatch3r()
-    print(2)
     robot.pixy.mode = "SIG1"
-    print(3)
     print("(X, Y)=({}, {}) Width={} Height={}".format(
-        pixy.value(1), pixy.value(2), pixy.value(3),
-        pixy.value(4)))
+        robot.pixy.value(1), robot.pixy.value(2), robot.pixy.value(3),
+        robot.pixy.value(4)))
 
     while not robot.touch_sensor.is_pressed:
         # TODO: 2. Implement the module as described in the opening comment block.
