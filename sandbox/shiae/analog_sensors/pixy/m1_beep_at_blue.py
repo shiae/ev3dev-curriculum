@@ -51,7 +51,6 @@ def main():
 #
 # Observations you should make, the Pixy cam can detect colors.  That's just neat. ;)
 
-
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
