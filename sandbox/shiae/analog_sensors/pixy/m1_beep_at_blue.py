@@ -43,7 +43,6 @@ def main():
             time.sleep(1)
 
 
-
         time.sleep(0.1)
 
     print("Goodbye!")
