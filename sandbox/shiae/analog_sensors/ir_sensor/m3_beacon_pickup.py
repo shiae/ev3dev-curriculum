@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """
 The goal of this module is to drive towards the beacon (the IR remote in beacon mode) and stop your robot right in front
@@ -43,6 +44,7 @@ def main():
         while True:
             found_beacon = robot.seek_beacon()
             if found_beacon:
+                robot.drive_inches(4, 200)
                 ev3.Sound.speak("I got the beacon")
                 robot.arm_up()
                 time.sleep(1)
