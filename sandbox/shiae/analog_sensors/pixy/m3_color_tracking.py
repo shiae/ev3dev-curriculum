@@ -45,16 +45,15 @@ def main():
         if x < 150:
             robot.turn(turn_speed, turn_speed)
             while robot.pixy.value(1) < 150 and \
-                    robot.touch_sensor.is_pressed == False:
+                    robot.touch_sensor.is_pressed is False:
                 time.sleep(.01)
         elif x > 170:
             robot.turn(-turn_speed, -turn_speed)
             while robot.pixy.value(1) > 170 and \
-                    robot.touch_sensor.is_pressed == False:
+                    robot.touch_sensor.is_pressed is False:
                 time.sleep(.01)
         else:
             robot.stop()
-
 
         time.sleep(0.25)
 
