@@ -44,11 +44,13 @@ def main():
         # Continuously track the color until the touch sensor is pressed to end the program.
         if x < 150:
             robot.turn(turn_speed, turn_speed)
-            while robot.pixy.value(1) < 150:
+            while robot.pixy.value(1) < 150 and \
+                    robot.touch_sensor.is_pressed == False:
                 time.sleep(.01)
         elif x > 170:
             robot.turn(-turn_speed, -turn_speed)
-            while robot.pixy.value(1) > 170:
+            while robot.pixy.value(1) > 170 and \
+                    robot.touch_sensor.is_pressed == False:
                 time.sleep(.01)
         else:
             robot.stop()
@@ -56,9 +58,7 @@ def main():
 
         time.sleep(0.25)
 
-    print("Goodbye!")
-    ev3.Sound.speak("Goodbye").wait()
-    robot.stop()
+    robot.shutdown()
 
 # TODO: 4. Call over a TA or instructor to sign your team's checkoff sheet.
 #
