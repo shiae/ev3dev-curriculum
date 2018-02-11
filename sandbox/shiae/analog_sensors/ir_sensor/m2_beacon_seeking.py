@@ -97,7 +97,7 @@ def seek_beacon(robot):
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
                 robot.drive(forward_speed, forward_speed)
-                while robot.beacon_seeker.distance > 1:
+                while robot.beacon_seeker.distance > 1 and robot.touch_sensor.is_pressed == False:
                     time.sleep(0.01)
                 robot.stop()
                 return True
@@ -120,7 +120,7 @@ def seek_beacon(robot):
                 ev3.Sound.speak("Heading too far off").wait()
                 return False
 
-        time.sleep(0.2)
+        time.sleep(0.02)
 
     # The touch_sensor was pressed to abort the attempt if this code runs.
     print("Abandon ship!")
