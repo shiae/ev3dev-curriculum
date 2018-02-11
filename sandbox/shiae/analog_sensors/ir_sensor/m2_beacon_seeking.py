@@ -117,7 +117,8 @@ def seek_beacon(robot):
             else:
                 robot.stop()
                 print("Heading too far off")
-                ev3.Sound.speak("Heading too far off")
+                ev3.Sound.speak("Heading too far off").wait()
+                return False
 
         time.sleep(0.2)
 
