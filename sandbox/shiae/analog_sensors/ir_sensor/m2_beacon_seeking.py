@@ -15,8 +15,6 @@ import traceback
 
 import ev3dev.ev3 as ev3
 import time
-import math
-
 import robot_controller as robo
 
 
@@ -99,7 +97,8 @@ def seek_beacon(robot):
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
                 robot.drive(forward_speed, forward_speed)
-                while robot.beacon_seeker.distance > 1 and robot.touch_sensor.is_pressed == False:
+                while robot.beacon_seeker.distance > 1 and \
+                        robot.touch_sensor.is_pressed is False:
                     time.sleep(0.01)
                 robot.stop()
                 return True
@@ -129,7 +128,8 @@ def seek_beacon(robot):
     robot.stop()
     return False
 
-    # TODO: 6. Demo your program by putting the beacon within a few feet of the robot, within 30 degrees of straight in
+    # DONE: 6. Demo your program by putting the beacon within a few feet of the
+    #  robot, within 30 degrees of straight in
     # front.  The robot should drive to and stop at the beacon.  After a successful run move the beacon then do it again
     # for the demo.  During testing if your robot fails to find the beacon remember that you can press the touch sensor
     # to abandon ship on the attempt. ;) You must demo 2 successful finds to check off but you can have as many attempts
