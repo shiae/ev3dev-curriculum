@@ -128,6 +128,8 @@ class Snatch3r(object):
             time.sleep(0.1)
 
     def seek_beacon(self):
+        """positions the robot to face a beacon object and moves the robot
+        towards the beacon to pick it up and set it back down"""
         forward_speed = 300
         turn_speed = 100
 
