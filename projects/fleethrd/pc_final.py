@@ -7,10 +7,6 @@ def main():
     root = tkinter.Tk()
     gui(root)
     root.mainloop()
-    # settings = ['a', 'a', 'a']
-    # data = ['a', 'a', 'a']
-    #  enigma(settings, data)
-    # print(data)
 
 
 def gui(root):
@@ -60,7 +56,6 @@ def gui(root):
     optionmenu_widget_2 = tkinter.OptionMenu(root,
                                            control_variable_2, *OPTION_TUPLE)
     optionmenu_widget_2.grid(row=7, column=3)
-
 
 
 def enigma(first_input, second_input, third_input, first_settings_input,
