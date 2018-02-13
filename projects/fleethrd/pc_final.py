@@ -25,24 +25,25 @@ def encryption(data, wheels):
 
 
 def system_rotation(wheels):
-    x_rotation(wheels[1])
+    rotation(wheels[1])
     if wheels[0] == 1:
-        y_rotation(wheels[2])
+        rotation(wheels[2])
     elif wheels[0] == 2:
-        z_rotation(wheels[3])
+        rotation(wheels[3])
     wheels[0] += 1
 
 
-def x_rotation(wheel):
-    
-
-
-def y_rotation(wheel):
-
-
-
-def z_rotation(wheel):
-
+def rotation(wheel):
+    temp = wheel[0]
+    for k in range(len(wheel) - 1):
+        if wheel[k + 1] > 0:
+            wheel[k] = wheel[k + 1] - 1
+        else:
+            wheel[k] = 3
+    if temp > 0:
+        wheel[3] = temp - 1
+    else:
+        wheel[3] = 3
 
 
 def letters_to_numbers(data):
