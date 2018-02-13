@@ -37,26 +37,6 @@ def gui(root):
     third_input.insert(0, "a")
     third_input.grid(row=1, column=4)
 
-    first_settings_input_label = ttk.Label(main_frame, text="First Setting")
-    first_settings_input_label.grid(row=3, column=0)
-    first_settings_input = ttk.Entry(main_frame, width=8)
-    first_settings_input.insert(0, "a")
-    first_settings_input.grid(row=4, column=0)
-
-    second_settings_input_label = ttk.Label(main_frame, text="Second Setting")
-    second_settings_input_label.grid(row=3, column=2)
-    second_settings_input = ttk.Entry(main_frame, width=8,
-                                      justify=tkinter.CENTER)
-    second_settings_input.insert(0, "a")
-    second_settings_input.grid(row=4, column=2)
-
-    third_settings_input_label = ttk.Label(main_frame, text="Third Setting")
-    third_settings_input_label.grid(row=3, column=4)
-    third_settings_input = ttk.Entry(main_frame, width=8,
-                                     justify=tkinter.RIGHT)
-    third_settings_input.insert(0, "a")
-    third_settings_input.grid(row=4, column=4)
-
     encipher_button = ttk.Button(main_frame, text="Encipher")
     encipher_button.grid(row=6, column=2)
     encipher_button['command'] = (lambda: enigma(first_input, second_input,
