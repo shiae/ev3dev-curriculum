@@ -61,9 +61,26 @@ def gui(root):
     encipher_button.grid(row=6, column=2)
     encipher_button['command'] = (lambda: enigma(first_input, second_input,
                                                  third_input,
-                                                 first_settings_input,
-                                                 second_settings_input,
-                                                 third_settings_input))
+                                                 control_variable_1,
+                                                 control_variable,
+                                                 control_variable_2))
+
+    control_variable = tkinter.StringVar(root)
+    OPTION_TUPLE = ("a", "b", "c", "d")
+    optionmenu_widget = tkinter.OptionMenu(root,
+                                           control_variable, *OPTION_TUPLE)
+    optionmenu_widget.grid(row= 7,column=2)
+
+    control_variable_1 = tkinter.StringVar(root)
+    optionmenu_widget_1 = tkinter.OptionMenu(root,
+                                           control_variable_1, *OPTION_TUPLE)
+    optionmenu_widget_1.grid(row=7, column=1)
+
+    control_variable_2 = tkinter.StringVar(root)
+    optionmenu_widget_2 = tkinter.OptionMenu(root,
+                                           control_variable_2, *OPTION_TUPLE)
+    optionmenu_widget_2.grid(row=7, column=3)
+
 
 
 def enigma(first_input, second_input, third_input, first_settings_input,
