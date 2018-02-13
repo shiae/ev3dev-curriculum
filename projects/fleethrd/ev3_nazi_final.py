@@ -1,12 +1,33 @@
 
+import mqtt_remote_method_calls as com
+
+import ev3dev.ev3 as ev3
+import time
+
+
+class MyDelegate(object):
+
+    def __init__(self):
+        self.running = True
+        self.data = ['a', 'a', 'a']
+        self.settings = ['a', 'a', 'a']
+
+    def receive_data(self, data):
+        self.data = data
+        decryption(self.settings, self.data)
+
+    def receive_settings(self, settings):
+        self.settings = settings
+
 def main():
-    settings = ['b', 'a', 'a']
-    data = ['d', 'c', 'c']
-    decription(settings, data)
-    print(data)
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_pc()
+    while my_delegate.running:
+        time.sleep(.01)
 
 
-def decription(settings, data):
+def decryption(settings, data):
     x = [2, 0, 1, 3]
     y = [3, 2, 1, 0]
     z = [1, 3, 2, 0]
@@ -21,6 +42,7 @@ def decription(settings, data):
     system_rotation(wheels)
     data[2] = wheels[1].index(wheels[2].index(wheels[3].index(wheels[4].index(wheels[3][wheels[2][wheels[1][data[2]]]]))))
     numbers_to_letters(data)
+    print(data)
 
 
 def set_up(settings, wheels):

@@ -1,15 +1,19 @@
 
 import tkinter
 from tkinter import ttk
+import mqtt_remote_method_calls as com
+
 
 
 def main():
+    mqtt_client = com.MqttClient()
+    mqtt_client.connect_to_ev3()
     root = tkinter.Tk()
-    gui(root)
+    gui(root, mqtt_client)
     root.mainloop()
 
 
-def gui(root):
+def gui(root, mqtt_client):
     root.title("Enigma")
 
     main_frame = ttk.Frame(root, padding=20, relief='raised')
@@ -35,7 +39,8 @@ def gui(root):
 
     encipher_button = ttk.Button(main_frame, text="Encipher")
     encipher_button.grid(row=6, column=2)
-    encipher_button['command'] = (lambda: enigma(first_input, second_input,
+    encipher_button['command'] = (lambda: enigma(mqtt_client, first_input,
+                                                 second_input,
                                                  third_input,
                                                  control_variable_1,
                                                  control_variable,
@@ -58,7 +63,8 @@ def gui(root):
     optionmenu_widget_2.grid(row=7, column=3)
 
 
-def enigma(first_input, second_input, third_input, first_settings_input,
+def enigma(mqtt_client, first_input, second_input, third_input,
+           first_settings_input,
            second_settings_input, third_settings_input):
     x = [2, 0, 1, 3]
     y = [3, 2, 1, 0]
@@ -67,9 +73,11 @@ def enigma(first_input, second_input, third_input, first_settings_input,
     wheels = [0, x, y, z, r]
     settings = [first_settings_input.get(), second_settings_input.get(),
                 third_settings_input.get()]
+    mqtt_client.send_message("receive_settings", [settings])
     data = [first_input.get(), second_input.get(), third_input.get()]
     set_up(settings, wheels)
     encryption(data, wheels)
+    mqtt_client.send_message("receive_data", [data])
     print(data)
 
 
