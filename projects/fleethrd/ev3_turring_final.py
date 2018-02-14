@@ -11,12 +11,17 @@ class MyDelegate(object):
         self.running = True
         self.data = []
         self.settings = []
-
+        self.guess = []
 
     def receive_data(self, data):
         self.data = data
-        self.settings = bombe(self.data, self.settings)
+        print(data)
 
+    def guess_data(self, guess):
+        print(guess)
+        self.guess = guess
+        self.settings = bombe(self.data, self.settings, self.guess)
+        print(self.settings)
 
     def receive_settings(self, settings):
         print ('settings unknown')
@@ -29,7 +34,7 @@ def main():
         time.sleep(.01)
 
 
-def bombe(data, settings):
+def bombe(data, settings, guess):
     letters_to_numbers(data)
     for k in range(4):
         time.sleep(1)
@@ -43,9 +48,8 @@ def bombe(data, settings):
                     tester.append(data[z])
                 decryption(settings, tester)
                 numbers_to_letters(tester)
-                if tester == ['a', 'a', 'a']:
+                if tester == guess:
                     numbers_to_letters(settings)
-                    print(settings)
                     return settings
 
 
@@ -114,6 +118,7 @@ def numbers_to_letters(data):
             data[k] = 'c'
         elif data[k] == 3:
             data[k] = 'd'
+
 
 
 main()

@@ -2,83 +2,81 @@
 import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
+import math
+import random
 
+
+class MyDelegate(object):
+
+    def __init__(self):
+        self.settings = []
+
+    def receive_settings(self, settings):
+        self.settings = settings
 
 
 def main():
-    mqtt_client = com.MqttClient()
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()
     root = tkinter.Tk()
     gui(root, mqtt_client)
     root.mainloop()
+    random.randint(0, 3)
 
 
 def gui(root, mqtt_client):
     root.title("Enigma")
 
-    main_frame = ttk.Frame(root, padding=20, relief='raised')
+    main_frame = ttk.Frame(root)
     main_frame.grid()
 
-    first_input_label = ttk.Label(main_frame, text="First Input")
-    first_input_label.grid(row=0, column=0)
-    first_input = ttk.Entry(main_frame, width=8)
-    first_input.insert(0, "a")
-    first_input.grid(row=1, column=0)
-
-    second_input_label = ttk.Label(main_frame, text="Second Input")
-    second_input_label.grid(row=0, column=2)
-    second_input = ttk.Entry(main_frame, width=8, justify=tkinter.CENTER)
-    second_input.insert(0, "a")
-    second_input.grid(row=1, column=2)
-
-    third_input_label = ttk.Label(main_frame, text="Third Input")
-    third_input_label.grid(row=0, column=4)
-    third_input = ttk.Entry(main_frame, width=8, justify=tkinter.RIGHT)
-    third_input.insert(0, "a")
-    third_input.grid(row=1, column=4)
-
-    encipher_button = ttk.Button(main_frame, text="Encipher")
-    encipher_button.grid(row=6, column=2)
-    encipher_button['command'] = (lambda: enigma(mqtt_client, first_input,
-                                                 second_input,
-                                                 third_input,
-                                                 control_variable_1,
-                                                 control_variable,
-                                                 control_variable_2))
-
-    control_variable = tkinter.StringVar(root)
+    control_variable_0 = tkinter.StringVar(root)
     OPTION_TUPLE = ("a", "b", "c", "d")
     optionmenu_widget = tkinter.OptionMenu(root,
-                                           control_variable, *OPTION_TUPLE)
-    optionmenu_widget.grid(row= 7,column=2)
+                                           control_variable_0, *OPTION_TUPLE)
+    optionmenu_widget.grid(row= 0,column=0)
 
     control_variable_1 = tkinter.StringVar(root)
     optionmenu_widget_1 = tkinter.OptionMenu(root,
                                            control_variable_1, *OPTION_TUPLE)
-    optionmenu_widget_1.grid(row=7, column=1)
+    optionmenu_widget_1.grid(row=0, column=1)
 
     control_variable_2 = tkinter.StringVar(root)
     optionmenu_widget_2 = tkinter.OptionMenu(root,
                                            control_variable_2, *OPTION_TUPLE)
-    optionmenu_widget_2.grid(row=7, column=3)
+    optionmenu_widget_2.grid(row=0, column=2)
+
+    guess_button = ttk.Button(main_frame, text='guess')
+    guess_button.grid(row=5, column=2)
+    guess_button['command'] = lambda: send_guess(mqtt_client, control_variable_0,
+                                                 control_variable_1, control_variable_2)
+
+    reset_button = ttk.Button(main_frame, text='reset')
+    reset_button.grid(row=6, column=2)
+    reset_button['command'] = lambda: marching_orders(mqtt_client)
 
 
-def enigma(mqtt_client, first_input, second_input, third_input,
-           first_settings_input,
-           second_settings_input, third_settings_input):
+def marching_orders(mqtt_client):
+    data = ['a', 'a', 'a']
+    settings = ['a', 'a', 'a']
+    generate(data)
+    print('message', data)
+    generate(settings)
+    enigma(mqtt_client, data, settings)
+
+
+def enigma(mqtt_client, data, settings):
     x = [2, 0, 1, 3]
     y = [3, 2, 1, 0]
     z = [1, 3, 2, 0]
     r = [2, 3, 0, 1]
     wheels = [0, x, y, z, r]
-    settings = [first_settings_input.get(), second_settings_input.get(),
-                third_settings_input.get()]
     mqtt_client.send_message("receive_settings", [settings])
-    data = [first_input.get(), second_input.get(), third_input.get()]
     set_up(settings, wheels)
     encryption(data, wheels)
     mqtt_client.send_message("receive_data", [data])
-    print(data)
+    print('enciphered', data)
 
 
 def set_up(settings, wheels):
@@ -144,6 +142,22 @@ def numbers_to_letters(data):
             data[k] = 'c'
         elif data[k] == 3:
             data[k] = 'd'
+
+
+def send_guess(mqtt_client, guess_0, guess_1, guess_2):
+    guess = []
+    guess.append(guess_0.get())
+    guess.append(guess_1.get())
+    guess.append(guess_2.get())
+    print(guess)
+    mqtt_client.send_message("guess_data", [guess])
+
+
+def generate(list):
+    for k in range(len(list)):
+        list[k] = random.randint(0,3)
+    numbers_to_letters(list)
+
 
 
 main()
