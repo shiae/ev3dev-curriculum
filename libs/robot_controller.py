@@ -86,7 +86,8 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def arm_down(self):
-        #   Moves the arm up until the arm returns to it's lowest position,
+        #   Moves the
+        # arm up until the arm returns to it's lowest position,
         # then beeps.
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
         self.arm_motor.wait_while(
@@ -102,7 +103,7 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye')
-        ev3.Sound.speak('Goodbye').wait()
+        # ev3.Sound.speak('Goodbye').wait()
         self.running = False
 
     def drive(self, left_speed, right_speed):
@@ -170,3 +171,15 @@ class Snatch3r(object):
         print("Abandon ship!")
         self.stop()
         return False
+
+    def shake(self):
+        self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
+        time.sleep(4)
+        self.arm_motor.run_forever(speed_sp=-self.MAX_SPEED)
+        time.sleep(1)
+        self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
+        time.sleep(1)
+
+        self.arm_motor.run_to_abs_pos(position_sp=100, speed_sp=self.MAX_SPEED)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        time.sleep(1)
