@@ -174,12 +174,12 @@ class Snatch3r(object):
 
     def shake(self):
         self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
-        time.sleep(3)
-        self.arm_motor.run_to_abs_pos(position_sp=10, speed_sp=self.MAX_SPEED)
-        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        time.sleep(4)
+        self.arm_motor.run_forever(speed_sp=-self.MAX_SPEED)
         time.sleep(1)
         self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
-        time.sleep(3)
-        self.arm_motor.run_to_abs_pos(position_sp=10, speed_sp=self.MAX_SPEED)
+        time.sleep(1)
+
+        self.arm_motor.run_to_abs_pos(position_sp=100, speed_sp=self.MAX_SPEED)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         time.sleep(1)

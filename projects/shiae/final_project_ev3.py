@@ -12,9 +12,9 @@ robit = robo.Snatch3r()
 
 
 def main():
-    robit.arm_calibration()
-    # friend_tracking()
-    shake()
+    # robit.arm_calibration()
+    friend_tracking()
+    # shake()
     # mqtt_client = com.MqttClient(robit)
     # mqtt_client.connect_to_pc()
     # robit.loop_forever()  # Calls a function that has a while True: loop within
@@ -28,7 +28,7 @@ def friend_tracking():
     print("Press the touch sensor to exit this program.")
     robit.pixy.mode = "SIG1"
     turn_speed = 100
-    forward_speed = 300
+    # forward_speed = 300
     robit.pixy.mode = "SIG1"
     while not robit.touch_sensor.is_pressed:
 
@@ -51,7 +51,9 @@ def friend_tracking():
                             robit.touch_sensor.is_pressed is False:
                 time.sleep(.01)
         else:
-            robit.drive(forward_speed, forward_speed)
+            robit.stop()
+            ev3.Sound.speak("Friend!")
+            time.sleep(2)
 
         time.sleep(0.25)
 
@@ -63,11 +65,11 @@ def shake():
     print(" Shake")
     print("--------------------------------------------")
 
-    while not robit.touch_sensor.is_pressed:
-        if robit.ir_sensor.proximity < 10:
-            robit.shake()
+    # while not robit.touch_sensor.is_pressed:
+    if robit.ir_sensor.proximity < 10:
+        robit.shake()
 
-    print("Goodbye!")
+    print("left shake")
 
 
 main()
