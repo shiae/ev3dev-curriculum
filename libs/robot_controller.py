@@ -103,7 +103,7 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye')
-        ev3.Sound.speak('Goodbye').wait()
+        # ev3.Sound.speak('Goodbye').wait()
         self.running = False
 
     def drive(self, left_speed, right_speed):
