@@ -9,7 +9,18 @@ import time
 # from tkinter import ttk
 import robot_controller as robo
 robit = robo.Snatch3r()
+import mqtt_remote_method_calls as com
 
+
+class MyDelegate:
+    def __init__(self):
+
+
+
+my_delegate = MyDelegate()
+mqtt_client = com.MqttClient(my_delegate)
+my_delegate.mqtt_client = mqtt_client
+mqtt_client.connect_to_pc()
 
 def main():
     # robit.arm_calibration()

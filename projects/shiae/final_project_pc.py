@@ -18,6 +18,10 @@ class MyDelegate(object):
 
 
 def main():
+    name()
+
+
+def name():
     root = tkinter.Tk()
     root.title = "Robit"
 
@@ -33,36 +37,36 @@ def main():
 
     msg_button = ttk.Button(main_frame, text="Send")
     msg_button.grid(row=2, column=1)
-    msg_button['command'] = lambda: send_message(mqtt_client, robit,
-                                                 chat_window, msg_entry)
+    msg_button['command'] = lambda: send_message(mqtt_client, "Robit",
+                                                 pc_window, msg_entry)
     root.bind('<Return>',
-              lambda event: send_message(mqtt_client, robit, chat_window,
+              lambda event: send_message(mqtt_client, "Robit", pc_window,
                                          msg_entry))
 
-    chat_window = ttk.Label(main_frame, justify=tkinter.LEFT, text="",
+    pc_window = ttk.Label(main_frame, justify=tkinter.LEFT, text="",
                             width=60, wraplength="500p")
     # chat_window.pack(fill="x")
-    chat_window.grid(columnspan=2)
+    pc_window.grid(columnspan=2)
 
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=4, column=1)
     q_button['command'] = (lambda: quit_program(mqtt_client))
 
     # Create an MQTT connection
-    my_delegate = MyDelegate(chat_window)
+    my_delegate = MyDelegate(pc_window)
     mqtt_client = com.MqttClient(my_delegate)
-    mqtt_client.connect(pc, robit)
+    mqtt_client.connect(pc_window, "Robit")
     # mqtt_client.connect(my_name, team_member_name, "35.194.247.175")  # Off campus IP address of a GCP broker
 
     root.mainloop()
 
 
-def send_message(mqtt_client, my_name, chat_window, msg_entry):
+def send_message(mqtt_client, my_name, pc_window, msg_entry):
     #   Writes a given message to a chat window under a given name.
     msg = msg_entry.get()
     msg_entry.delete(0, 'end')
-    chat_window["text"] += "\nMe: " + msg
-    mqtt_client.send_message("on_chat_message", [my_name + ": " + msg])
+    pc_window["text"] += "\nMe: " + msg
+    mqtt_client.send_message("pc_message", [my_name + ": " + msg])
 
 
 def quit_program(mqtt_client):
