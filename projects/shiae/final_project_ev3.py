@@ -64,11 +64,9 @@ def shake():
 
     while not robit.touch_sensor.is_pressed:
         if robit.ir_sensor.proximity < 10:
-            robit.arm_up()
-            time.sleep(1)
-            robit.arm_down()
-            time.sleep(1)
+            robit.shake()
 
     print("Goodbye!")
+
 
 main()
