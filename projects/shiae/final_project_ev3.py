@@ -3,15 +3,17 @@
 
 """
 
-# import ev3dev.ev3 as ev3
+import ev3dev.ev3 as ev3
 import time
 # import tkinter
 # from tkinter import ttk
 import robot_controller as robo
 robit = robo.Snatch3r()
 
-def main():
 
+def main():
+    friend_tracking()
+    shake()
     # mqtt_client = com.MqttClient(robit)
     # mqtt_client.connect_to_pc()
     # robit.loop_forever()  # Calls a function that has a while True: loop within
@@ -54,5 +56,15 @@ def friend_tracking():
 
     robit.shutdown()
 
+def shake():
+    print("--------------------------------------------")
+    print(" Shake")
+    print("--------------------------------------------")
+
+    forward_speed = 300
+    turn_speed = 100
+
+    while not robit.touch_sensor.is_pressed:
+        current_distance = robit.beacon_seeker.distance
 
 main()
