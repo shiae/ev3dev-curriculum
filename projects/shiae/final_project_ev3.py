@@ -61,10 +61,16 @@ def shake():
     print(" Shake")
     print("--------------------------------------------")
 
-    forward_speed = 300
-    turn_speed = 100
-
     while not robit.touch_sensor.is_pressed:
         current_distance = robit.beacon_seeker.distance
+        if current_distance == -128:
+            print("IR Remote not found. Distance is -128")
+            robit.stop()
+        elif current_distance < 2:
+            robit.arm_up()
+            time.sleep(1)
+            robit.arm_down()
+            time.sleep(1)
+    time.sleep(0.01)
 
 main()
