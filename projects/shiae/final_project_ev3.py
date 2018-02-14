@@ -12,6 +12,7 @@ robit = robo.Snatch3r()
 
 
 def main():
+    robit.arm_calibration()
     # friend_tracking()
     shake()
     # mqtt_client = com.MqttClient(robit)
