@@ -86,7 +86,8 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def arm_down(self):
-        #   Moves the arm up until the arm returns to it's lowest position,
+        #   Moves the
+        # arm up until the arm returns to it's lowest position,
         # then beeps.
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
         self.arm_motor.wait_while(
