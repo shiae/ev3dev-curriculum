@@ -68,7 +68,7 @@ def shake():
             time.sleep(1)
             robit.arm_down()
             time.sleep(1)
-    time.sleep(0.01)
 
+    print("Goodbye!")
 
 main()

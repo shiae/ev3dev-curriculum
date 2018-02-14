@@ -171,3 +171,10 @@ class Snatch3r(object):
         print("Abandon ship!")
         self.stop()
         return False
+
+    def shake(self):
+        self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
+        time.sleep(1)
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        time.sleep(1)
