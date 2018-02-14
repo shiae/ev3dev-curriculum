@@ -18,7 +18,7 @@ def main():
     # # it to avoid letting the program end.
 
     print("--------------------------------------------")
-    print(" Color tracking")
+    print(" Friend tracking")
     print("--------------------------------------------")
     print("Press the touch sensor to exit this program.")
 
