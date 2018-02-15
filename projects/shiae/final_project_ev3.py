@@ -40,9 +40,10 @@ def friend_tracking():
     print(" Friend tracking")
     print("--------------------------------------------")
     print("Press the touch sensor to exit this program.")
+    current_distance = robit.beacon_seeker.distance
     robit.pixy.mode = "SIG1"
     turn_speed = 100
-    # forward_speed = 300
+    forward_speed = 300
     robit.pixy.mode = "SIG1"
     while not robit.touch_sensor.is_pressed:
 
@@ -68,6 +69,13 @@ def friend_tracking():
             robit.stop()
             ev3.Sound.speak("Friend!")
             time.sleep(2)
+            if current_distance == -128:
+                ev3.Sound.speak("Where are you?")
+            elif current_distance > 10:
+                robit.drive(forward_speed, forward_speed)
+            else:
+                robit.stop()
+                ev3.Sound.speak("Found you!")
 
         time.sleep(0.25)
 
@@ -82,7 +90,7 @@ def shake():
     ev3.Sound.speak("shake")
 
     while not robit.touch_sensor.is_pressed:
-        if robit.ir_sensor.proximity < 10:
+        if robit.ir_sensor.proximity < 7:
             robit.shake()
     print("Exit Shake")
 
