@@ -52,9 +52,13 @@ def gui(root, mqtt_client):
     guess_button['command'] = lambda: send_guess(mqtt_client, control_variable_0,
                                                  control_variable_1, control_variable_2)
 
-    reset_button = ttk.Button(main_frame, text='reset')
+    reset_button = ttk.Button(main_frame, text='new marching order')
     reset_button.grid(row=1, column=2)
     reset_button['command'] = lambda: marching_orders(mqtt_client)
+
+    reset_settings_button = ttk.Button(main_frame, text='reset settings')
+    reset_settings_button.grid(row=2, column=2)
+    reset_settings_button['command'] = lambda: reset_settings(mqtt_client)
 
 
 def marching_orders(mqtt_client):
@@ -158,6 +162,9 @@ def generate(list):
         list[k] = random.randint(0,3)
     numbers_to_letters(list)
 
+
+def reset_settings(mqtt_client):
+    mqtt_client.send_message("reset_settings")
 
 
 main()

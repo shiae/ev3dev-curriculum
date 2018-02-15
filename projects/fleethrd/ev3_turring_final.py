@@ -32,6 +32,9 @@ class MyDelegate(object):
         self.settings = bombe(self.data, self.guess)
         print(self.settings)
 
+    def reset_settings(self):
+        self.settings = []
+
 
 def main():
     my_delegate = MyDelegate()
@@ -58,6 +61,7 @@ def bombe(data, guess):
                 if tester == guess:
                     numbers_to_letters(settings)
                     return settings
+    return []
 
 
 def decryption(settings, data):
