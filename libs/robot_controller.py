@@ -176,6 +176,9 @@ class Snatch3r(object):
         """ The arm of the robot moves up for one second, down for one
         second, and then goes to position 0."""
         self.arm_motor.run_forever(speed_sp=-self.MAX_SPEED)
+        time.sleep(4)
+
+        self.arm_motor.run_forever(speed_sp=-self.MAX_SPEED)
         time.sleep(1)
         self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
         time.sleep(1)
