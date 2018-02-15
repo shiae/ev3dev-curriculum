@@ -173,13 +173,13 @@ class Snatch3r(object):
         return False
 
     def shake(self):
-        self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
-        time.sleep(4)
+        """ The arm of the robot moves up for one second, down for one
+        second, and then goes to position 0."""
         self.arm_motor.run_forever(speed_sp=-self.MAX_SPEED)
         time.sleep(1)
         self.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
         time.sleep(1)
 
-        self.arm_motor.run_to_abs_pos(position_sp=100, speed_sp=self.MAX_SPEED)
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         time.sleep(1)
