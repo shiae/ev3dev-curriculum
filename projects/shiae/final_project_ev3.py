@@ -26,9 +26,9 @@ def main():
     print("--------------------------------------------")
     print(" Calibrating")
     print("--------------------------------------------")
-    robit.arm_calibration()
-    # friend_tracking()
-    shake()
+    # robit.arm_calibration()
+    friend_tracking()
+    # shake()
     # mqtt_client = com.MqttClient(robit)
     # mqtt_client.connect_to_pc()
     # robit.loop_forever()  # Calls a function that has a while True: loop within
@@ -40,10 +40,10 @@ def friend_tracking():
     print(" Friend tracking")
     print("--------------------------------------------")
     print("Press the touch sensor to exit this program.")
-    current_distance = robit.beacon_seeker.distance
+    # current_distance = robit.beacon_seeker.distance
     robit.pixy.mode = "SIG1"
     turn_speed = 100
-    forward_speed = 300
+    # forward_speed = 300
     robit.pixy.mode = "SIG1"
     while not robit.touch_sensor.is_pressed:
 
@@ -57,25 +57,23 @@ def friend_tracking():
 
         if x < 150:
             robit.turn(turn_speed, turn_speed)
-            while robit.pixy.value(1) < 150 and \
-                            robit.touch_sensor.is_pressed is False:
+            while robit.pixy.value(1) < 150 and robit.touch_sensor.is_pressed is False:
                 time.sleep(.01)
         elif x > 170:
             robit.turn(-turn_speed, -turn_speed)
-            while robit.pixy.value(1) > 170 and \
-                            robit.touch_sensor.is_pressed is False:
+            while robit.pixy.value(1) > 170 and robit.touch_sensor.is_pressed is False:
                 time.sleep(.01)
         else:
             robit.stop()
-            ev3.Sound.speak("Friend!")
             time.sleep(2)
-            if current_distance == -128:
-                ev3.Sound.speak("Where are you?")
-            elif current_distance > 10:
-                robit.drive(forward_speed, forward_speed)
-            else:
-                robit.stop()
-                ev3.Sound.speak("Found you!")
+            # if current_distance == -128:
+            #     print("where are you?")
+            # elif current_distance > 10:
+            #     robit.drive(forward_speed, forward_speed)
+            #     time.sleep(3)
+            # else:
+            #     robit.stop()
+            #     ev3.Sound.speak("Woof!")
 
         time.sleep(0.25)
 
