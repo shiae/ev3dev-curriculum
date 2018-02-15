@@ -12,10 +12,10 @@ robit = robo.Snatch3r()
 import mqtt_remote_method_calls as com
 
 
-class MyDelegate:
-    def __init__(self):
-
-
+# class MyDelegate:
+#     def __init__(self):
+#
+#
 
 my_delegate = MyDelegate()
 mqtt_client = com.MqttClient(my_delegate)
@@ -23,7 +23,7 @@ my_delegate.mqtt_client = mqtt_client
 mqtt_client.connect_to_pc()
 
 def main():
-    # robit.arm_calibration()
+    robit.arm_calibration()
     friend_tracking()
     # shake()
     # mqtt_client = com.MqttClient(robit)
@@ -76,11 +76,9 @@ def shake():
     print(" Shake")
     print("--------------------------------------------")
 
-    # while not robit.touch_sensor.is_pressed:
+    robit.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
+    time.sleep(4)
     if robit.ir_sensor.proximity < 10:
         robit.shake()
-
-    print("left shake")
-
 
 main()
