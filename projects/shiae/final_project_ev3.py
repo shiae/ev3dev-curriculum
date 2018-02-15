@@ -24,8 +24,8 @@ mqtt_client.connect_to_pc()
 
 def main():
     robit.arm_calibration()
-    friend_tracking()
-    # shake()
+    # friend_tracking()
+    shake()
     # mqtt_client = com.MqttClient(robit)
     # mqtt_client.connect_to_pc()
     # robit.loop_forever()  # Calls a function that has a while True: loop within
@@ -76,8 +76,14 @@ def shake():
     print(" Shake")
     print("--------------------------------------------")
 
-    robit.arm_motor.run_forever(speed_sp=self.MAX_SPEED)
-    time.sleep(4)
+    ev3.Sound.speak("shake")
+
+    robit.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=robit.MAX_SPEED)
+    robit.arm_motor.wait_while(
+        ev3.Motor.STATE_RUNNING)
+    # robit.arm_motor.run_forever(speed_sp=robit.MAX_SPEED)
+    # time.sleep(4)
+
     if robit.ir_sensor.proximity < 10:
         robit.shake()
 
