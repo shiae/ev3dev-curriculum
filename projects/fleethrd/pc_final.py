@@ -35,25 +35,25 @@ def gui(root, mqtt_client):
     OPTION_TUPLE = ("a", "b", "c", "d")
     optionmenu_widget = tkinter.OptionMenu(root,
                                            control_variable_0, *OPTION_TUPLE)
-    optionmenu_widget.grid(row= 0,column=0)
+    optionmenu_widget.grid(row= 2,column=0)
 
     control_variable_1 = tkinter.StringVar(root)
     optionmenu_widget_1 = tkinter.OptionMenu(root,
                                            control_variable_1, *OPTION_TUPLE)
-    optionmenu_widget_1.grid(row=0, column=1)
+    optionmenu_widget_1.grid(row=2, column=1)
 
     control_variable_2 = tkinter.StringVar(root)
     optionmenu_widget_2 = tkinter.OptionMenu(root,
                                            control_variable_2, *OPTION_TUPLE)
-    optionmenu_widget_2.grid(row=0, column=2)
+    optionmenu_widget_2.grid(row=2, column=2)
 
     guess_button = ttk.Button(main_frame, text='guess')
-    guess_button.grid(row=5, column=2)
+    guess_button.grid(row=0, column=2)
     guess_button['command'] = lambda: send_guess(mqtt_client, control_variable_0,
                                                  control_variable_1, control_variable_2)
 
     reset_button = ttk.Button(main_frame, text='reset')
-    reset_button.grid(row=6, column=2)
+    reset_button.grid(row=1, column=2)
     reset_button['command'] = lambda: marching_orders(mqtt_client)
 
 
