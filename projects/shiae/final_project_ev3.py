@@ -9,7 +9,7 @@ import time
 # from tkinter import ttk
 import robot_controller as robo
 robit = robo.Snatch3r()
-import mqtt_remote_method_calls as com
+# import mqtt_remote_method_calls as com
 
 
 # class MyDelegate:
@@ -17,12 +17,15 @@ import mqtt_remote_method_calls as com
 #
 #
 
-my_delegate = MyDelegate()
-mqtt_client = com.MqttClient(my_delegate)
-my_delegate.mqtt_client = mqtt_client
-mqtt_client.connect_to_pc()
+# my_delegate = MyDelegate()
+# mqtt_client = com.MqttClient(my_delegate)
+# my_delegate.mqtt_client = mqtt_client
+# mqtt_client.connect_to_pc()
 
 def main():
+    print("--------------------------------------------")
+    print(" Calibrating")
+    print("--------------------------------------------")
     robit.arm_calibration()
     # friend_tracking()
     shake()
@@ -78,13 +81,10 @@ def shake():
 
     ev3.Sound.speak("shake")
 
-    robit.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=robit.MAX_SPEED)
-    robit.arm_motor.wait_while(
-        ev3.Motor.STATE_RUNNING)
-    # robit.arm_motor.run_forever(speed_sp=robit.MAX_SPEED)
-    # time.sleep(4)
+    while not robit.touch_sensor.is_pressed:
+        if robit.ir_sensor.proximity < 10:
+            robit.shake()
+    print("Exit Shake")
 
-    if robit.ir_sensor.proximity < 10:
-        robit.shake()
 
 main()
