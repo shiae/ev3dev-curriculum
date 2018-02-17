@@ -88,17 +88,19 @@ def main():
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
-    robit.loop_forever()
+    assert robit.pixy
+    assert robit.color_sensor
     print("--------------------------------------------")
     print(" Calibrating")
     print("--------------------------------------------")
     robit.arm_calibration()
+    if robit.color_sensor.value() == 5:
+        mqtt_client.send_message("scared_of_red")
+    # else:
     # friend_tracking()
     # shake()
-    # mqtt_client = com.MqttClient(robit)
-    # mqtt_client.connect_to_pc()
-    # robit.loop_forever()  # Calls a function that has a while True: loop within
-    # # it to avoid letting the program end.
+    robit.loop_forever()
+
 
 #
 # def friend_tracking():
