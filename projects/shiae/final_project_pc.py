@@ -18,8 +18,6 @@ def main():
     frame1.grid()
     # speak_button(frame1)
     command(frame1)
-    # if something.get == "Speak"
-    #   #     mqtt_client.send_message("speak_ev3")
 
 
     root.mainloop()
@@ -44,6 +42,12 @@ def command(frame):
     command_box.bind('<<Combobox Selected>>', print('command_ev3'))
     command_box['values'] = ('Fetch', 'Sit', 'Shake')
     command_box.grid(column=0, row=1)
+    if command_box.get() == "Speak":
+        mqtt_client.send_message('speak_ev3')
+    elif command_box.get() == "Fetch":
+        mqtt_client.send_message('fetch')
+    elif command_box.get() == "Sit":
+        mqtt_client.send_message('sit')
 
 
 main()
