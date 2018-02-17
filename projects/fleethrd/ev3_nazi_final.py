@@ -102,12 +102,14 @@ def numbers_to_letters(data):
 
 
 def process_data(data):
+    speed = 200
     if data[0] == 'd':
         # do nothing, no movement
     else:
         if data[2] == 'a':
             robot.follow_line()
-
+        elif data[2] =='b':
+            robot.turn_degrees(120, speed)
 
 
 main()

@@ -188,4 +188,4 @@ class Snatch3r(object):
         time.sleep(1)
 
     def follow_line(self):
-        
+        print('hi')
