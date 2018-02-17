@@ -187,5 +187,5 @@ class Snatch3r(object):
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         time.sleep(1)
 
-    def follow_line(self):
+    def follow_line(self, color):
         print('hi')
