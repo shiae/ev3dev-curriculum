@@ -8,7 +8,7 @@ import random
 
 class MyDelegate(object):
 
-    def __init__(self, label_to_display_messages_in):
+    def __init__(self, label_to_display_messages_in): # pass in a crapload
         self.settings = []
         self.display_label = label_to_display_messages_in
 
@@ -17,6 +17,9 @@ class MyDelegate(object):
         print("Received Settings")
         message_to_display = "{} was received for settings".format(settings)
         self.display_label.configure(text=message_to_display)
+
+    def receive_news_on_war(self, news):
+
 
 
 def main():

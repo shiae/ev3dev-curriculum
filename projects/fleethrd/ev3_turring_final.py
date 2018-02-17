@@ -160,7 +160,7 @@ def numbers_to_letters(data):
 def handle_up(state, mqtt_client, my_delegate):
     if state and my_delegate.has_settings:
         print("up button was pressed")
-        mqtt_client.send_message(my_delegate.settings)
+        mqtt_client.send_message("receive-settings", [my_delegate.settings])
         my_delegate.freeze = False
 
 
@@ -196,7 +196,8 @@ def return_home(data):
 
 def handle_down(state, mqtt_client, my_delegate):
     if state and my_delegate.waiting_on_news:
-        mqtt_client.send_message(True)
+        mqtt_client.send_message(
+            "receive_news_on_war", [my_delegate.waiting_on_news])
         my_delegate.waiting_on_news = False
 
 
