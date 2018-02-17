@@ -14,11 +14,13 @@ class MyDelegate(object):
         self.running = True
         self.data = ['a', 'a', 'a']
         self.settings = ['a', 'a', 'a']
+        self.foiled_by_damn_allies = False
 
     def receive_data(self, data):
         self.data = data
         decryption(self.settings, self.data)
-        process_data(self.data)
+        self.foiled_by_damn_allies = process_data(self.data)
+        return_home(self.foiled_by_damn_allies)
 
     def receive_settings(self, settings):
         self.settings = settings
@@ -144,8 +146,8 @@ def process_data(data):
             time.sleep(5)
 
 
-def return_home():
-
+def return_home(foiled):
+    
 
 
 main()
