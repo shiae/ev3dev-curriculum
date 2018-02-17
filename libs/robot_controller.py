@@ -189,18 +189,18 @@ class Snatch3r(object):
 
     def follow_line(self, color):
         if color == 'blue':
-            color = ev3.ColorSensor.COLOR_BLUE
+            color = self.color_sensor.COLOR_BLUE
         elif color == 'red':
-            color = ev3.ColorSensor.COLOR_RED
+            color = self.color_sensor.COLOR_RED
         elif color == 'green':
-            color = ev3.ColorSensor.COLOR_GREEN
+            color = self.color_sensor.COLOR_GREEN
         elif color == 'black':
-            color = ev3.ColorSensor.COLOR_BLACK
-        while ev3.ColorSensor.color != color:
+            color = self.color_sensor.COLOR_BLACK
+        while self.color_sensor.color != color and self.ir_sensor.proximity < 10:
             self.drive(200, 200)
-            while ev3.ColorSensor.color == ev3.ColorSensor.COLOR_WHITE:
+            while self.color_sensor.color == self.color_sensor.COLOR_WHITE:
                 time.sleep(.01)
-            while ev3.ColorSensor.color != ev3.ColorSensor.COLOR_WHITE:
+            while self.color_sensor.color != self.color_sensor.COLOR_WHITE:
                 self.turn_degrees(5, 100)
                 self.turn_degrees(-5, 100)
                 self.turn_degrees(-5, 100)
