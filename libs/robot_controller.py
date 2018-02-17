@@ -186,3 +186,6 @@ class Snatch3r(object):
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=self.MAX_SPEED)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         time.sleep(1)
+
+    def follow_line(self):
+        print('hi')

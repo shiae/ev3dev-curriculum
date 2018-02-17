@@ -3,6 +3,8 @@ import mqtt_remote_method_calls as com
 
 import ev3dev.ev3 as ev3
 import time
+import robot_controller as robo
+robot = robo.Snatch3r # yes, a global variable because I need it in many places
 
 
 class MyDelegate(object):
@@ -97,6 +99,17 @@ def numbers_to_letters(data):
             data[k] = 'c'
         elif data[k] == 3:
             data[k] = 'd'
+
+
+def process_data(data):
+    speed = 200
+    if data[0] == 'd':
+        # do nothing, no movement
+    else:
+        if data[2] == 'a':
+            robot.follow_line()
+        elif data[2] =='b':
+            robot.turn_degrees(120, speed)
 
 
 main()

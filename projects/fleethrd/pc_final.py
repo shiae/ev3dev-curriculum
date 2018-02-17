@@ -8,24 +8,26 @@ import random
 
 class MyDelegate(object):
 
-    def __init__(self):
+    def __init__(self, label_to_display_messages_in):
         self.settings = []
+        self.display_label = label_to_display_messages_in
 
     def receive_settings(self, settings):
         self.settings = settings
+        print("Received Settings")
+        message_to_display = "{} was received for settings".format(settings)
+        self.display_label.configure(text=message_to_display)
 
 
 def main():
-    my_delegate = MyDelegate()
-    mqtt_client = com.MqttClient(my_delegate)
-    mqtt_client.connect_to_ev3()
+
     root = tkinter.Tk()
-    gui(root, mqtt_client)
+    gui(root)
     root.mainloop()
     random.randint(0, 3)
 
 
-def gui(root, mqtt_client):
+def gui(root):
     root.title("Enigma")
 
     main_frame = ttk.Frame(root)
@@ -35,7 +37,7 @@ def gui(root, mqtt_client):
     OPTION_TUPLE = ("a", "b", "c", "d")
     optionmenu_widget = tkinter.OptionMenu(root,
                                            control_variable_0, *OPTION_TUPLE)
-    optionmenu_widget.grid(row= 2,column=0)
+    optionmenu_widget.grid(row=2, column=0)
 
     control_variable_1 = tkinter.StringVar(root)
     optionmenu_widget_1 = tkinter.OptionMenu(root,
@@ -59,6 +61,13 @@ def gui(root, mqtt_client):
     reset_settings_button = ttk.Button(main_frame, text='reset settings')
     reset_settings_button.grid(row=2, column=2)
     reset_settings_button['command'] = lambda: reset_settings(mqtt_client)
+
+    button_message = ttk.Label(main_frame, text="--")
+    button_message.grid(row=2, column=3)
+
+    my_delegate = MyDelegate(button_message)
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_ev3()
 
 
 def marching_orders(mqtt_client):
@@ -157,10 +166,10 @@ def send_guess(mqtt_client, guess_0, guess_1, guess_2):
     mqtt_client.send_message("guess_data", [guess])
 
 
-def generate(list):
-    for k in range(len(list)):
-        list[k] = random.randint(0,3)
-    numbers_to_letters(list)
+def generate(input_list):
+    for k in range(len(input_list)):
+        input_list[k] = random.randint(0, 3)
+    numbers_to_letters(input_list)
 
 
 def reset_settings(mqtt_client):

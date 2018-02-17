@@ -3,6 +3,8 @@ import mqtt_remote_method_calls as com
 
 import ev3dev.ev3 as ev3
 import time
+import robot_controller as robo
+robot = robo.Snatch3r # yes, a global variable because I need it in many places
 
 
 class MyDelegate(object):
@@ -12,6 +14,7 @@ class MyDelegate(object):
         self.data = []
         self.settings = []
         self.guess = []
+        self.freeze = False
 
     def receive_data(self, data):
         self.data = data
@@ -31,6 +34,11 @@ class MyDelegate(object):
         self.guess = guess
         self.settings = bombe(self.data, self.guess)
         print(self.settings)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+        self.freeze = True
+        while self.freeze:
+            time.sleep(.01)
 
     def reset_settings(self):
         self.settings = []
@@ -40,8 +48,12 @@ def main():
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
+    btn = ev3.Button()
+    btn.on_up = lambda state: handle_up(state, mqtt_client, my_delegate)
     while my_delegate.running:
+        btn.process()
         time.sleep(.01)
+
 
 
 def bombe(data, guess):
@@ -129,6 +141,13 @@ def numbers_to_letters(data):
             data[k] = 'c'
         elif data[k] == 3:
             data[k] = 'd'
+
+
+def handle_up(state, mqtt_client, my_delegate):
+    if state and my_delegate.freeze is True:
+        print("up button was pressed")
+        mqtt_client.send_message(my_delegate.settings)
+        my_delegate.freeze = False
 
 
 main()
