@@ -19,8 +19,7 @@ class MyDelegate(object):
         print("--------------------------------------------")
         print(" Speak ev3")
         print("--------------------------------------------")
-        ev3.Sound.speak('bark')
-        ev3.Sound.speak('bark').wait()
+        ev3.Sound.speak('bark bark')
 
 
 def main():
@@ -96,16 +95,6 @@ def shake():
         if robit.ir_sensor.proximity < 7:
             robit.shake()
     print("Exit Shake")
-
-
-# def speak_ev3():
-#     print("--------------------------------------------")
-#     print(" Speak")
-#     print("--------------------------------------------")
-#     while not robit.touch_sensor.is_pressed:
-#         ev3.Sound.speak('bark')
-#         ev3.Sound.speak('bark').wait()
-#         print("bark")
 
 
 main()
