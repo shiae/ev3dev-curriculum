@@ -206,3 +206,7 @@ class Snatch3r(object):
                 self.turn_degrees(-5, 100)
                 self.turn_degrees(5, 100)
         self.stop()
+        if self.ir_sensor.proximity < 10:
+            return True
+        else:
+            return False
