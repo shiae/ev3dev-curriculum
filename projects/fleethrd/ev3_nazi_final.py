@@ -4,7 +4,8 @@ import mqtt_remote_method_calls as com
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
-robot = robo.Snatch3r # yes, a global variable because I need it in many places
+robot = robo.Snatch3r() # yes, a global variable because I need it in many
+# places
 
 
 class MyDelegate(object):
@@ -104,12 +105,42 @@ def numbers_to_letters(data):
 def process_data(data):
     speed = 200
     if data[0] == 'd':
-        # do nothing, no movement
+        time.sleep(10)
     else:
         if data[2] == 'a':
-            robot.follow_line()
+            robot.follow_line('blue')
+            if data[0] == 'a':
+                time.sleep(5)
+            elif data[0] == 'b':
+                robot.turn_degrees(150, speed)
+                robot.follow_line('red')
+            elif data[0] == 'c':
+                robot.turn_degrees(-150, speed)
+                robot.follow_line('green')
         elif data[2] =='b':
             robot.turn_degrees(120, speed)
+            robot.follow_line('red')
+            if data[0] == 'a':
+                robot.turn_degrees(-150, speed)
+                robot.follow_line('blue')
+            elif data[0] == 'b':
+                time.sleep(5)
+            elif data[0] == 'c':
+                robot.turn_degrees(150, speed)
+                robot.follow_line('green')
+        elif data[2] =='c':
+            robot.turn_degrees(-120, speed)
+            robot.follow_line('green')
+            if data[0] == 'a':
+                robot.turn_degrees(150, speed)
+                robot.follow_line('blue')
+            elif data[0] == 'b':
+                robot.turn_degrees(-150, speed)
+                robot.follow_line('red')
+            elif data[0] == 'c':
+                time.sleep(5)
+        else:
+            time.sleep(5)
 
 
 main()
