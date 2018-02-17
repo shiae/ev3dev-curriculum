@@ -93,4 +93,10 @@ def shake():
     print("Exit Shake")
 
 
+def speak():
+    ev3.Sound.speak('bark')
+    ev3.Sound.speak('bark').wait()
+
+
+
 main()
