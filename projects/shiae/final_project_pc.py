@@ -11,6 +11,9 @@ mqtt_client.connect_to_ev3()
 
 def main():
     root = tkinter.Tk()
+    root.title = "Robit"
+    label = ttk.Label(root, text="What do you want Robit to do?")
+    label.grid(row=0, column=0)
     frame1 = ttk.Frame(root, padding=30)
     frame1.grid()
     # speak_button(frame1)
@@ -40,7 +43,7 @@ def command(frame):
     command_box = ttk.Combobox(frame, textvariable=command_var)
     command_box.bind('<<Combobox Selected>>', print('command_ev3'))
     command_box['values'] = ('Fetch', 'Sit', 'Shake')
-    command_box.grid(column=0, row=0)
+    command_box.grid(column=0, row=1)
 
 
 main()
