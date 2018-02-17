@@ -22,6 +22,7 @@ my_delegate = MyDelegate()
 mqtt_client = com.MqttClient(my_delegate)
 mqtt_client.connect_to_ev3()
 
+
 def main():
     root = tkinter.Tk()
     root.title = "Robit"
@@ -32,21 +33,7 @@ def main():
     # speak_button(frame1)
     command(frame1)
 
-
     root.mainloop()
-
-
-# def speak_button(frame):
-#     hello_button = ttk.Button(frame, text="Speak")
-#     hello_button['command'] = (lambda: speak_pc())
-#     hello_button.grid()
-#
-#
-# def speak_pc():
-#     print("--------------------------------------------")
-#     print(" Speak PC")
-#     print("--------------------------------------------")
-#     mqtt_client.send_message("speak_ev3")
 
 
 def command(frame):
