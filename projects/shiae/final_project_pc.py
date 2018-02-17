@@ -15,6 +15,9 @@ def main():
     frame1.grid()
     # speak_button(frame1)
     command(frame1)
+    # if something.get == "Speak"
+    #   #     mqtt_client.send_message("speak_ev3")
+
 
     root.mainloop()
 
