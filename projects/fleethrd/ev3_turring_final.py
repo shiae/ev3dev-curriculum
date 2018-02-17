@@ -15,7 +15,9 @@ class MyDelegate(object):
         self.data = []
         self.settings = []
         self.guess = []
-        self.freeze = False
+        self.has_settings = False
+        self.win = False
+        self.waiting_on_news = False
 
     def receive_data(self, data):
         self.data = data
@@ -31,6 +33,15 @@ class MyDelegate(object):
             numbers_to_letters(self.settings)
             print("guessed", data_copy)
             process_data(data_copy)
+            self.win = return_home(data_copy)
+            if self.win:
+                time.sleep(10)
+                return_home(data_copy)
+            self.waiting_on_news = True
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
+            while self.waiting_on_news is True:
+                time.sleep(.01)
 
     def guess_data(self, guess):
         self.guess = guess
@@ -38,8 +49,8 @@ class MyDelegate(object):
         print(self.settings)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-        self.freeze = True
-        while self.freeze:
+        self.has_settings = True
+        while self.has_settings:
             time.sleep(.01)
 
     def reset_settings(self):
@@ -52,6 +63,7 @@ def main():
     mqtt_client.connect_to_pc()
     btn = ev3.Button()
     btn.on_up = lambda state: handle_up(state, mqtt_client, my_delegate)
+    btn.on_down = lambda state: handle_down(state, mqtt_client, my_delegate)
     while my_delegate.running:
         btn.process()
         time.sleep(.01)
@@ -146,7 +158,7 @@ def numbers_to_letters(data):
 
 
 def handle_up(state, mqtt_client, my_delegate):
-    if state and my_delegate.freeze is True:
+    if state and my_delegate.has_settings:
         print("up button was pressed")
         mqtt_client.send_message(my_delegate.settings)
         my_delegate.freeze = False
@@ -180,6 +192,12 @@ def return_home(data):
         robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
         robot.follow_line('black')
+
+
+def handle_down(state, mqtt_client, my_delegate):
+    if state and my_delegate.waiting_on_news:
+        mqtt_client.send_message(True)
+        my_delegate.waiting_on_news = False
 
 
 main()
