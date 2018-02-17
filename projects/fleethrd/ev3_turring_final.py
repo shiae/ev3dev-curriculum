@@ -4,7 +4,8 @@ import mqtt_remote_method_calls as com
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
-robot = robo.Snatch3r # yes, a global variable because I need it in many places
+robot = robo.Snatch3r() # yes, a global variable because I need it in many
+# places
 
 
 class MyDelegate(object):
@@ -29,6 +30,7 @@ class MyDelegate(object):
             numbers_to_letters(data_copy)
             numbers_to_letters(self.settings)
             print("guessed", data_copy)
+            process_data(data_copy)
 
     def guess_data(self, guess):
         self.guess = guess
@@ -148,6 +150,22 @@ def handle_up(state, mqtt_client, my_delegate):
         print("up button was pressed")
         mqtt_client.send_message(my_delegate.settings)
         my_delegate.freeze = False
+
+
+def process_data(data):
+    speed = 200
+    if data[0] == 'd':
+        time.sleep(10)
+    elif data[0] == 'a':
+        robot.follow_line('blue')
+    elif data[0] == 'b':
+        robot.follow_line('blue')
+        robot.turn_degrees(-30, speed)
+        robot.follow_line('red')
+    elif data[0] == 'c':
+        robot.follow_line('blue')
+        robot.turn(30, speed)
+        robot.follow_line('green')
 
 
 main()
