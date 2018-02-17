@@ -18,6 +18,7 @@ class MyDelegate(object):
     def receive_data(self, data):
         self.data = data
         decryption(self.settings, self.data)
+        process_data(self.data)
 
     def receive_settings(self, settings):
         self.settings = settings
