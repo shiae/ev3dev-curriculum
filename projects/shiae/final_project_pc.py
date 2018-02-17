@@ -4,17 +4,16 @@
 
 import tkinter
 from tkinter import ttk
-# import time
-import robot_controller as robo
-robit = robo.Snatch3r()
 import mqtt_remote_method_calls as com
-mqtt_client = com.MqttClient(robit)
+mqtt_client = com.MqttClient()
+mqtt_client.connect_to_ev3()
+
 
 def main():
-    command()
+    speak_button()
 
 
-def command():
+def speak_button():
     root = tkinter.Tk()
 
     frame1 = ttk.Frame(root, padding=30)
@@ -28,7 +27,11 @@ def command():
 
 
 def speak_pc():
+    print("--------------------------------------------")
+    print(" Speak PC")
+    print("--------------------------------------------")
     mqtt_client.send_message("speak_ev3")
+
 
 main()
 

@@ -5,29 +5,34 @@
 
 import ev3dev.ev3 as ev3
 import time
-# import tkinter
-# from tkinter import ttk
 import robot_controller as robo
+import mqtt_remote_method_calls as com
 robit = robo.Snatch3r()
-# import mqtt_remote_method_calls as com
 
 
-# class MyDelegate:
-#     def __init__(self):
-#
-#
+class MyDelegate(object):
+    def __init__(self):
+        self.robot = robo.Snatch3r()
+        self.mqtt_client = None  # To be set later.
 
-# my_delegate = MyDelegate()
-# mqtt_client = com.MqttClient(my_delegate)
-# my_delegate.mqtt_client = mqtt_client
-# mqtt_client.connect_to_pc()
+    def speak_ev3(self):
+        print("--------------------------------------------")
+        print(" Speak ev3")
+        print("--------------------------------------------")
+        ev3.Sound.speak('bark')
+        ev3.Sound.speak('bark').wait()
+
 
 def main():
-    print("--------------------------------------------")
-    print(" Calibrating")
-    print("--------------------------------------------")
+    # print("--------------------------------------------")
+    # print(" Calibrating")
+    # print("--------------------------------------------")
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_pc()
+    robit.loop_forever()
     # robit.arm_calibration()
-    friend_tracking()
+    # friend_tracking()
     # shake()
     # mqtt_client = com.MqttClient(robit)
     # mqtt_client.connect_to_pc()
@@ -93,10 +98,14 @@ def shake():
     print("Exit Shake")
 
 
-def speak():
-    ev3.Sound.speak('bark')
-    ev3.Sound.speak('bark').wait()
-
+# def speak_ev3():
+#     print("--------------------------------------------")
+#     print(" Speak")
+#     print("--------------------------------------------")
+#     while not robit.touch_sensor.is_pressed:
+#         ev3.Sound.speak('bark')
+#         ev3.Sound.speak('bark').wait()
+#         print("bark")
 
 
 main()
