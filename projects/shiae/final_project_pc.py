@@ -5,9 +5,22 @@
 import tkinter
 from tkinter import ttk, StringVar
 import mqtt_remote_method_calls as com
-mqtt_client = com.MqttClient()
-mqtt_client.connect_to_ev3()
 
+
+class MyDelegate(object):
+    def scared_of_red(self):
+        root = tkinter.Tk()
+        root.title = "I don't like red"
+        label = ttk.Label(root, text="I don't like red!")
+        label.grid()
+        frame = ttk.Frame(root, padding=30)
+        frame.grid()
+        root.mainloop()
+
+
+my_delegate = MyDelegate()
+mqtt_client = com.MqttClient(my_delegate)
+mqtt_client.connect_to_ev3()
 
 def main():
     root = tkinter.Tk()
