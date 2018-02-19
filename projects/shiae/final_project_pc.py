@@ -8,6 +8,8 @@ import mqtt_remote_method_calls as com
 
 
 class MyDelegate(object):
+    """ Creates an object used as a delegate for MQTT(for receiving messages
+    from ev3)"""
     # def scared_of_red(self):
     #     root = tkinter.Tk()
     #     root.title = "I don't like red"
@@ -18,6 +20,7 @@ class MyDelegate(object):
     #     root.mainloop()
 
     def love(self):
+        """ When Robit's color sensor senses red, a window with a hear gif pops up"""
         root = tkinter.Tk()
         hearts = tkinter.PhotoImage(file="hearts.gif")
         label = ttk.Label(root, image=hearts)
@@ -52,6 +55,7 @@ def main():
 
 
 def command(frame, root):
+    """ Creates a drop down for the different commands Robit can receive."""
     style = ttk.Style()
     style.configure('my.TButton', font=('Helvetica', 12), background='#002663',
                     padding=5)
@@ -78,6 +82,7 @@ def command(frame, root):
 
 
 def check(command_input, speak_btn):
+    """ Decides what message to send to Robit based on command selected."""
     if command_input == 'Speak':
         speak_btn.state(["!disabled"])
         # speak_btn[command] = lambda: mqtt_client.send_message('speak')
