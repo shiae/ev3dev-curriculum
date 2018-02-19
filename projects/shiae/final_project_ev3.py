@@ -24,14 +24,14 @@ class MyDelegate(object):
     def speak_ev3(self):
         """ Robit will say 'bark bark'"""
         print("--------------------------------------------")
-        print(" Speak ev3")
+        print(" Speak")
         print("--------------------------------------------")
         ev3.Sound.speak('bark bark')
 
     def sit(self):
         """Robit's motors will stop"""
         print("--------------------------------------------")
-        print(" Sit ev3")
+        print(" Sit")
         print("--------------------------------------------")
         robit.stop()
 
@@ -51,7 +51,7 @@ class MyDelegate(object):
         """Robit will look for and retrieve his toy, but will not return it
         to you--he will instead start running in circles."""
         print("--------------------------------------------")
-        print(" Fetch ev3")
+        print(" Fetch")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
         robit.pixy.mode = "SIG2"
@@ -100,7 +100,7 @@ class MyDelegate(object):
     def come(self):
         """Robit will look for his toy and come to it."""
         print("--------------------------------------------")
-        print(" Come ev3")
+        print(" Come")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
         robit.pixy.mode = "SIG2"
