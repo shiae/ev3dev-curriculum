@@ -17,6 +17,16 @@ class MyDelegate(object):
         frame.grid()
         root.mainloop()
 
+    def treat(self):
+        root = tkinter.Tk()
+        root.title = "Thanks for feeding me!"
+        hearts = tkinter.PhotoImage(file="hearts.gif")
+        label = ttk.Label(root, image=hearts)
+        label.grid()
+        frame = ttk.Frame(root, padding=30)
+        frame.grid()
+        root.mainloop()
+
 
 my_delegate = MyDelegate()
 mqtt_client = com.MqttClient(my_delegate)
