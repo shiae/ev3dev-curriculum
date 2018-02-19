@@ -82,29 +82,5 @@ def check(command_input, speak_btn):
         speak_btn.state(["disabled"])
         print("shake")
 
-    # print("here now")
-    # root.mainloop()
-
-
-
-
-# def send(selected):
-#     if selected == 'Speak':
-#         speak_btn.state(["!disabled"])
-#         # speak_btn[command] = lambda: mqtt_client.send_message('speak')
-#         print("speak")
-#     elif selected == 'Fetch':
-#         # mqtt_client.send_message('fetch')
-#         print("fetch")
-#     elif command_box.get() == 'Sit':
-#         # mqtt_client.send_message('sit')
-#         print("sit")
-#     elif command_box.get() == 'Come':
-#         # mqtt_client.send_message('come')
-#         print("come")
-#     elif command_box.get() == 'Shake':
-#         # mqtt_client.send_message('shake')
-#         print("shake")
-
 
 main()
