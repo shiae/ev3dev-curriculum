@@ -20,7 +20,7 @@ class MyDelegate(object):
         self.data = data
         decryption(self.settings, self.data)
         self.foiled_by_damn_allies = process_data(self.data)
-        return_home(self.foiled_by_damn_allies)
+        return_home(self.foiled_by_damn_allies, self.data)
 
     def receive_settings(self, settings):
         self.settings = settings
@@ -146,8 +146,70 @@ def process_data(data):
             time.sleep(5)
 
 
-def return_home(foiled):
-    
+def return_home(foiled, data):
+    speed = 200
+    if robot.color_sensor.color == robot.color_sensor.COLOR_BLUE:
+        if data[2] == 'a':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(180, speed)
+        elif data[2] == 'b':
+            robot.turn_degrees(-150, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(180, speed)
+        elif data[2] == 'c':
+            robot.turn_degrees(150, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(180, speed)
+        elif data[2] == 'd':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(180, speed)
+    elif robot.color_sensor.color == robot.color_sensor.COLOR_RED:
+        if data[2] == 'a':
+            robot.turn_degrees(150, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(30, speed)
+        elif data[2] == 'b':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(30, speed)
+        elif data[2] == 'c':
+            robot.turn_degrees(-150, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(30, speed)
+        elif data[2] == 'd':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(30, speed)
+    elif robot.color_sensor.color == robot.color_sensor.COLOR_GREEN:
+        if data[2] == 'a':
+            robot.turn_degrees(-150, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(-30, speed)
+        elif data[2] == 'b':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(-30, speed)
+        elif data[2] == 'c':
+            robot.turn_degrees(150, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(-30, speed)
+        elif data[2] == 'd':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            robot.turn_degrees(-30, speed)
+    elif robot.color_sensor.color == robot.color_sensor.COLOR_WHITE:
+        if data[2] == 'd':
+            robot.turn_degrees(180, speed)
+            robot.follow_line('black')
+            if data[0] == 'a':
+                robot.turn_degrees(180, speed)
+            elif data[0] == 'b':
+                robot.turn_degrees(30, speed)
+            elif data[0] == 'c':
+                robot.turn_degrees(-30, speed)
+        elif
 
 
 main()
