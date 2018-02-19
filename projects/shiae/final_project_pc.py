@@ -34,25 +34,32 @@ mqtt_client.connect_to_ev3()
 
 def main():
     root = tkinter.Tk()
-    root.title = "Robit"
+    root.title("Robit")
+    style = ttk.Style()
 
     label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
     label0.grid(row=0, column=0)
+    #
+    # label2 = ttk.Label(root, text=" ", font=('Helvetica', 10))
+    # label2.grid(row=1, column=0)
 
-    label2 = ttk.Label(root, text=" ", font=('Helvetica', 10))
-    label2.grid(row=1, column=0)
-
+    # style.configure('my.TLabel', background='#a8c9ff')
     label1 = ttk.Label(root, text="What do you want Robit to do?",
                        font=("Helvetica", 17))
     label1.grid(row=2, column=0)
 
-    frame1 = ttk.Frame(root, padding=70)
+    style.configure('my.TFrame', background='#a8c9ff')
+    frame1 = ttk.Frame(root, style='my.TFrame', padding=70)
     frame1.grid()
 
     command(frame1, root)
 
 
 def command(frame, root):
+    style = ttk.Style()
+    style.configure('my.TButton', font=('Helvetica', 12), background='#002663',
+                    padding=5)
+
     command_var = StringVar()
     command_box = ttk.Combobox(frame, textvariable=command_var,
                                font=("Helvetica", 12))
@@ -60,11 +67,8 @@ def command(frame, root):
     command_box['values'] = ('Fetch', 'Sit', 'Shake', 'Come', 'Speak')
     command_box.grid(column=0, row=3)
 
-    style = ttk.Style()
-    style.configure('my.TButton', font=('Helvetica', 12))
-
     speak_btn = ttk.Button(frame, text="Bark Bark", style='my.TButton')
-    speak_btn.grid(column=0, row=4)
+    speak_btn.grid(column=0, row=5)
     speak_btn.state(["disabled"])
 
     send_btn = ttk.Button(frame, text="Send", style='my.TButton')
