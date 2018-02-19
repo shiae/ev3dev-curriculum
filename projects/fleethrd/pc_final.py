@@ -2,21 +2,33 @@
 import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
-import math
 import random
+import time
 
 
 class MyDelegate(object):
 
-    def __init__(self, label_to_display_messages_in):
+    def __init__(self, label_to_display_messages_in): # pass in a crapload
         self.settings = []
         self.display_label = label_to_display_messages_in
+        self.allied_health = 10
+        self.nazi_health = 3
 
     def receive_settings(self, settings):
         self.settings = settings
         print("Received Settings")
         message_to_display = "{} was received for settings".format(settings)
         self.display_label.configure(text=message_to_display)
+
+    def receive_news_on_war(self, news):
+        if news is True:
+            self.nazi_health -= 1
+            if self.nazi_health == 0:
+                print('allies win')
+        else:
+            self.allied_health -= 1
+            if self.allied_health == 0:
+                print('nazis wins')
 
 
 def main():
@@ -164,6 +176,8 @@ def send_guess(mqtt_client, guess_0, guess_1, guess_2):
     guess.append(guess_2.get())
     print(guess)
     mqtt_client.send_message("guess_data", [guess])
+    time.sleep(60)
+    marching_orders(mqtt_client)
 
 
 def generate(input_list):
@@ -174,6 +188,10 @@ def generate(input_list):
 
 def reset_settings(mqtt_client):
     mqtt_client.send_message("reset_settings")
+
+
+def shutdown(mqtt_client):
+    mqtt_client.send_message('shutdown', [])
 
 
 main()

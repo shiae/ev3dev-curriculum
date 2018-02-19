@@ -196,6 +196,8 @@ class Snatch3r(object):
             color = self.color_sensor.COLOR_GREEN
         elif color == 'black':
             color = self.color_sensor.COLOR_BLACK
+        elif color == 'yellow':
+            color = self.color_sensor.COLOR_YELLOW
         while self.color_sensor.color != color and self.ir_sensor.proximity < 10:
             self.drive(200, 200)
             while self.color_sensor.color == self.color_sensor.COLOR_WHITE:
@@ -206,3 +208,7 @@ class Snatch3r(object):
                 self.turn_degrees(-5, 100)
                 self.turn_degrees(5, 100)
         self.stop()
+        if self.ir_sensor.proximity < 10:
+            return True
+        else:
+            return False
