@@ -17,9 +17,9 @@ class MyDelegate(object):
     #     frame.grid()
     #     root.mainloop()
 
-    def treat(self):
+    def love(self):
         root = tkinter.Tk()
-        root.title = "Thanks for feeding me!"
+        # root.title = "Thanks for feeding me!"
         hearts = tkinter.PhotoImage(file="hearts.gif")
         label = ttk.Label(root, image=hearts)
         label.grid()
