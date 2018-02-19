@@ -75,7 +75,10 @@ class MyDelegate(object):
                 else:
                     robit.stop()
                     ev3.Sound.speak("Woof!")
+                    robit.arm_up()
                     time.sleep(2)
+                    robit.turn_degrees(180, turn_speed)
+                    robit.drive(forward_speed, forward_speed - 100)
 
             time.sleep(0.25)
 
