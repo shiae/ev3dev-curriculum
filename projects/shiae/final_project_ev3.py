@@ -10,23 +10,28 @@ robit = robo.Snatch3r()
 
 
 class MyDelegate(object):
+    """ Creates a delegate to receive messages from the PC"""
     def __init__(self):
         self.robot = robo.Snatch3r()
         self.mqtt_client = None  # To be set later.
 
     def speak_ev3(self):
+        """ Robit will say 'bark bark'"""
         print("--------------------------------------------")
         print(" Speak ev3")
         print("--------------------------------------------")
         ev3.Sound.speak('bark bark')
 
     def sit(self):
+        """Robit's motors will stop"""
         print("--------------------------------------------")
         print(" Sit ev3")
         print("--------------------------------------------")
         robit.stop()
 
     def shake(self):
+        """ When Robit senses something in front of his IR sensor, his arm
+        will move up and down."""
         print("--------------------------------------------")
         print(" Shake")
         print("--------------------------------------------")
@@ -37,6 +42,8 @@ class MyDelegate(object):
         print("Exit Shake")
 
     def fetch(self):
+        """Robit will look for and retrieve his toy, but will not return it
+        to you--he will instead start running in circles."""
         print("--------------------------------------------")
         print(" Fetch ev3")
         print("--------------------------------------------")
@@ -78,12 +85,14 @@ class MyDelegate(object):
                     time.sleep(2)
                     robit.turn_degrees(180, turn_speed)
                     robit.drive(forward_speed, forward_speed - 100)
+                    time.sleep(5)
 
             time.sleep(0.25)
 
         robit.shutdown()
 
     def come(self):
+        """Robit will look for his toy and come to it."""
         print("--------------------------------------------")
         print(" Come ev3")
         print("--------------------------------------------")
