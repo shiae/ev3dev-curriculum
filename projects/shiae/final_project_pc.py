@@ -58,6 +58,7 @@ def command(frame):
 
     if command_box.get() == "Speak":
         speak_btn.state(["!disabled"])
+        speak_btn[command] = lambda: mqtt_client.send_message("speak")
     elif command_box.get() == "Fetch":
         mqtt_client.send_message('fetch')
     elif command_box.get() == "Sit":
