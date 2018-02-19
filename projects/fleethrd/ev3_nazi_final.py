@@ -158,7 +158,7 @@ def return_home(foiled, data):
         robot.turn_degrees(180, speed)
         robot.follow_line('black')
         robot.turn_degrees(180, speed)
-        
+
 
 def figuring_out_where_i_ended_up(data):
     speed = 200
