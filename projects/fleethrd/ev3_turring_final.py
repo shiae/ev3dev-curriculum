@@ -20,6 +20,7 @@ class MyDelegate(object):
         self.waiting_on_news = False
 
     def receive_data(self, data):
+        speed = 200
         self.data = data
         data_copy = []
         print("received", data)
@@ -36,12 +37,26 @@ class MyDelegate(object):
             self.win = return_home(data_copy)
             if self.win:
                 time.sleep(10)
-                return_home(data_copy)
+                robot.follow_line('blue')
+                if data[0] == 'b':
+                    robot.turn_degrees(30, speed)
+                elif data[0] == 'c':
+                    robot.turn_degrees(-30, speed)
+                robot.follow_line('black')
+            robot.turn_degrees(90, speed)
+            robot.drive_inches(48, speed)
+            while robot.ir_sensor > 10:
+                time.sleep(.01)
+            robot.turn_degrees(180, speed)
             self.waiting_on_news = True
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
             while self.waiting_on_news is True:
                 time.sleep(.01)
+            robot.drive(speed, speed)
+            while robot.color_sensor.color != robot.color_sensor.COLOR_BLACK:
+                time.sleep(.01)
+            robot.turn_degrees(-90, speed)
 
     def guess_data(self, guess):
         self.guess = guess
@@ -161,6 +176,8 @@ def handle_up(state, mqtt_client, my_delegate):
     if state and my_delegate.has_settings:
         print("up button was pressed")
         mqtt_client.send_message("receive-settings", [my_delegate.settings])
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         my_delegate.freeze = False
 
 
@@ -181,23 +198,27 @@ def process_data(data):
 
 def return_home(data):
     speed = 200
+    win = False
     robot.turn_degrees(180, speed)
     if data[0] == 'a':
-        robot.follow_line('black')
+        win =robot.follow_line('black')
     elif data[0] == 'b':
-        robot.follow_line('blue')
+        win = robot.follow_line('blue')
         robot.turn_degrees(30, speed)
         robot.follow_line('black')
     elif data[0] == 'c':
-        robot.follow_line('blue')
+        win = robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
         robot.follow_line('black')
+    return win
 
 
 def handle_down(state, mqtt_client, my_delegate):
     if state and my_delegate.waiting_on_news:
         mqtt_client.send_message(
             "receive_news_on_war", [my_delegate.waiting_on_news])
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         my_delegate.waiting_on_news = False
 
 
