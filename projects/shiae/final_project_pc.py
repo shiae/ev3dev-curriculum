@@ -1,6 +1,15 @@
+"""
+My final project turns the ev3 robot into a dog, who I call Robit. Robit can
+speak, come, sit, fetch, and shake.
 
-# functions: 5-20 lines of code
-#
+This file is meant to be run on a pc. When run, a window will pop up with a
+drop down box and two buttons. The user selects an option from the drop down
+box, and clicks send. This command will be sent to Robit. If "Speak" is
+selected, the "Bark Bark" button will be enabled. Each time the "Bark Bark"
+button is pressed, Robit will say "bark bark."
+
+Author: Allison Shi, February 2018
+"""
 
 import tkinter
 from tkinter import ttk, StringVar

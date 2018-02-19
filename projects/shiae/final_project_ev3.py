@@ -1,5 +1,11 @@
 """
+My final project turns the ev3 robot into a dog, who I call Robit. Robit can
+speak, come, sit, fetch, and shake.
 
+This file was designed to be run on the ev3. It receives messages from the
+PC and executes them.
+
+Author: Allison Shi, February 2018
 """
 
 import ev3dev.ev3 as ev3
