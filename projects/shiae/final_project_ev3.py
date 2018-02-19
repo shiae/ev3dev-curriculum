@@ -41,7 +41,7 @@ class MyDelegate(object):
         print(" Fetch ev3")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
-        robit.pixy.mode = "SIG1"
+        robit.pixy.mode = "SIG2"
         turn_speed = 100
         forward_speed = 300
         while not robit.touch_sensor.is_pressed:
