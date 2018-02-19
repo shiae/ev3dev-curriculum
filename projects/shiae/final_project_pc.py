@@ -8,14 +8,14 @@ import mqtt_remote_method_calls as com
 
 
 class MyDelegate(object):
-    def scared_of_red(self):
-        root = tkinter.Tk()
-        root.title = "I don't like red"
-        label = ttk.Label(root, text="I don't like red!")
-        label.grid()
-        frame = ttk.Frame(root, padding=30)
-        frame.grid()
-        root.mainloop()
+    # def scared_of_red(self):
+    #     root = tkinter.Tk()
+    #     root.title = "I don't like red"
+    #     label = ttk.Label(root, text="I don't like red!")
+    #     label.grid()
+    #     frame = ttk.Frame(root, padding=30)
+    #     frame.grid()
+    #     root.mainloop()
 
     def treat(self):
         root = tkinter.Tk()

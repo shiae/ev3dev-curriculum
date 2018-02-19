@@ -138,9 +138,9 @@ def main():
     print(" Calibrating")
     print("--------------------------------------------")
     robit.arm_calibration()
-    if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
-        mqtt_client.send_message("scared_of_red")
-    elif robit.color_sensor.value() == ev3.ColorSensor.COLOR_BLUE:
+    # if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
+    #     mqtt_client.send_message("scared_of_red")
+    if robit.color_sensor.value() == ev3.ColorSensor.COLOR_BLUE:
         mqtt_client.send_message("treat")
     robit.loop_forever()
 
