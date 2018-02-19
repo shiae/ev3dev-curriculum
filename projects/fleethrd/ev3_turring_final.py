@@ -71,6 +71,10 @@ class MyDelegate(object):
     def reset_settings(self):
         self.settings = []
 
+    def shutdown(self):
+        self.running =False
+        robot.shutdown()
+
 
 def main():
     my_delegate = MyDelegate()

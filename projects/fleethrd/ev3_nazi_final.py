@@ -25,6 +25,10 @@ class MyDelegate(object):
     def receive_settings(self, settings):
         self.settings = settings
 
+    def shutdown(self):
+        self.running = False
+        robot.shutdown()
+
 def main():
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
