@@ -38,7 +38,7 @@ def main():
     root.title = "Robit"
     label = ttk.Label(root, text="What do you want Robit to do?")
     label.grid(row=0, column=0)
-    frame1 = ttk.Frame(root, padding=30)
+    frame1 = ttk.Frame(root, padding=100)
     frame1.grid()
     command(frame1)
 
@@ -51,22 +51,46 @@ def command(frame):
     command_box.bind('<<Combobox Selected>>', print('command_ev3'))
     command_box['values'] = ('Fetch', 'Sit', 'Shake', 'Come', 'Speak')
     command_box.grid(column=0, row=1)
-    speak_btn = ttk.Button(command_box, text="Bark Bark")
+    speak_btn = ttk.Button(frame, text="Bark Bark")
     speak_btn.grid(column=0, row=2)
-    speak_btn[command] = lambda: mqtt_client.send_message('speak_ev3')
     speak_btn.state(["disabled"])
-
-    if command_box.get() == "Speak":
+    if command_box.get == 'Speak':
         speak_btn.state(["!disabled"])
-        speak_btn[command] = lambda: mqtt_client.send_message("speak")
-    elif command_box.get() == "Fetch":
-        mqtt_client.send_message('fetch')
-    elif command_box.get() == "Sit":
-        mqtt_client.send_message('sit')
-    elif command_box.get() == "Come":
-        mqtt_client.send_message('come')
-    elif command_box.get() == "Shake":
-        mqtt_client.send_message('shake')
+        # speak_btn[command] = lambda: mqtt_client.send_message('speak')
+        print("speak")
+    elif command_box.get() == 'Fetch':
+        # mqtt_client.send_message('fetch')
+        print("fetch")
+    elif command_box.get() == 'Sit':
+        # mqtt_client.send_message('sit')
+        print("sit")
+    elif command_box.get() == 'Come':
+        # mqtt_client.send_message('come')
+        print("come")
+    elif command_box.get() == 'Shake':
+        # mqtt_client.send_message('shake')
+        print("shake")
+    # send_btn = ttk.Button(frame, text="send")
+    # send_btn.grid(column=1, row=1)
+    # send_btn[command] = lambda: send(command_box.get())
+
+# def send(selected):
+#     if selected == 'Speak':
+#         speak_btn.state(["!disabled"])
+#         # speak_btn[command] = lambda: mqtt_client.send_message('speak')
+#         print("speak")
+#     elif selected == 'Fetch':
+#         # mqtt_client.send_message('fetch')
+#         print("fetch")
+#     elif command_box.get() == 'Sit':
+#         # mqtt_client.send_message('sit')
+#         print("sit")
+#     elif command_box.get() == 'Come':
+#         # mqtt_client.send_message('come')
+#         print("come")
+#     elif command_box.get() == 'Shake':
+#         # mqtt_client.send_message('shake')
+#         print("shake")
 
 
 main()
