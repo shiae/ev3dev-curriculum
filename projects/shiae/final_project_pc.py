@@ -40,44 +40,44 @@ def main():
     label.grid(row=0, column=0)
     frame1 = ttk.Frame(root, padding=70)
     frame1.grid()
-    command(frame1)
+    command(frame1, root)
 
 
 def command(frame, root):
     command_var = StringVar()
-    command_box = ttk.Combobox(frame1, textvariable=command_var)
+    command_box = ttk.Combobox(frame, textvariable=command_var)
     command_box.bind('<<Combobox Selected>>', print('command_ev3'))
     command_box['values'] = ('Fetch', 'Sit', 'Shake', 'Come', 'Speak')
     command_box.grid(column=0, row=1)
-    speak_btn = ttk.Button(frame1, text="Bark Bark")
+    speak_btn = ttk.Button(frame, text="Bark Bark")
     speak_btn.grid(column=0, row=2)
     speak_btn.state(["disabled"])
     print(command_box.get())
     print("hello")
-    send_btn = ttk.Button(frame1, text="Send")
+    send_btn = ttk.Button(frame, text="Send")
     send_btn.grid(column=1, row=1)
     send_btn['command'] = lambda: check(command_var.get(), speak_btn)
     root.mainloop()
 
 
-def check(command, speak_btn):
-    if command == 'Speak':
+def check(command_input, speak_btn):
+    if command_input == 'Speak':
         speak_btn.state(["!disabled"])
         # speak_btn[command] = lambda: mqtt_client.send_message('speak')
         print("speak")
-    elif command == 'Fetch':
+    elif command_input == 'Fetch':
         # mqtt_client.send_message('fetch')
         speak_btn.state(["disabled"])
         print("fetch")
-    elif command == 'Sit':
+    elif command_input == 'Sit':
         # mqtt_client.send_message('sit')
         speak_btn.state(["disabled"])
         print("sit")
-    elif command == 'Come':
+    elif command_input == 'Come':
         # mqtt_client.send_message('come')
         speak_btn.state(["disabled"])
         print("come")
-    elif command == 'Shake':
+    elif command_input == 'Shake':
         # mqtt_client.send_message('shake')
         speak_btn.state(["disabled"])
         print("shake")
