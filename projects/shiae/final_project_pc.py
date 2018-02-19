@@ -19,7 +19,6 @@ class MyDelegate(object):
 
     def love(self):
         root = tkinter.Tk()
-        # root.title = "Thanks for feeding me!"
         hearts = tkinter.PhotoImage(file="hearts.gif")
         label = ttk.Label(root, image=hearts)
         label.grid()
@@ -36,8 +35,13 @@ mqtt_client.connect_to_ev3()
 def main():
     root = tkinter.Tk()
     root.title = "Robit"
-    label = ttk.Label(root, text="What do you want Robit to do?")
-    label.grid(row=0, column=0)
+    label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
+    label0.grid(row=0, column=0)
+    label2 = ttk.Label(root, text=" ", font=('Helvetica', 10))
+    label2.grid(row=1, column=0)
+    label1 = ttk.Label(root, text="What do you want Robit to do?",
+                       font=("Helvetica", 17))
+    label1.grid(row=2, column=0)
     frame1 = ttk.Frame(root, padding=70)
     frame1.grid()
     command(frame1, root)
@@ -45,18 +49,20 @@ def main():
 
 def command(frame, root):
     command_var = StringVar()
-    command_box = ttk.Combobox(frame, textvariable=command_var)
+    command_box = ttk.Combobox(frame, textvariable=command_var,
+                               font=("Helvetica", 12))
     command_box.bind('<<Combobox Selected>>', print('command_ev3'))
     command_box['values'] = ('Fetch', 'Sit', 'Shake', 'Come', 'Speak')
-    command_box.grid(column=0, row=1)
-    speak_btn = ttk.Button(frame, text="Bark Bark")
-    speak_btn.grid(column=0, row=2)
+    command_box.grid(column=0, row=3)
+
+    speak_btn = ttk.Button(frame, text="Bark Bark", style=(my.TButton))
+    speak_btn.grid(column=0, row=4)
     speak_btn.state(["disabled"])
-    print(command_box.get())
-    print("hello")
+
     send_btn = ttk.Button(frame, text="Send")
-    send_btn.grid(column=1, row=1)
+    send_btn.grid(column=1, row=3)
     send_btn['command'] = lambda: check(command_var.get(), speak_btn)
+
     root.mainloop()
 
 
