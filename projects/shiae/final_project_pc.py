@@ -35,15 +35,20 @@ mqtt_client.connect_to_ev3()
 def main():
     root = tkinter.Tk()
     root.title = "Robit"
+
     label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
     label0.grid(row=0, column=0)
+
     label2 = ttk.Label(root, text=" ", font=('Helvetica', 10))
     label2.grid(row=1, column=0)
+
     label1 = ttk.Label(root, text="What do you want Robit to do?",
                        font=("Helvetica", 17))
     label1.grid(row=2, column=0)
+
     frame1 = ttk.Frame(root, padding=70)
     frame1.grid()
+
     command(frame1, root)
 
 
@@ -55,11 +60,14 @@ def command(frame, root):
     command_box['values'] = ('Fetch', 'Sit', 'Shake', 'Come', 'Speak')
     command_box.grid(column=0, row=3)
 
-    speak_btn = ttk.Button(frame, text="Bark Bark", style=(my.TButton))
+    style = ttk.Style()
+    style.configure('my.TButton', font=('Helvetica', 12))
+
+    speak_btn = ttk.Button(frame, text="Bark Bark", style='my.TButton')
     speak_btn.grid(column=0, row=4)
     speak_btn.state(["disabled"])
 
-    send_btn = ttk.Button(frame, text="Send")
+    send_btn = ttk.Button(frame, text="Send", style='my.TButton')
     send_btn.grid(column=1, row=3)
     send_btn['command'] = lambda: check(command_var.get(), speak_btn)
 
