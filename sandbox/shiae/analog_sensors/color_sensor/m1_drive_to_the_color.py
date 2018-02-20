@@ -112,7 +112,6 @@ def drive_to_color(button_state, robot, color_to_seek):
         ev3.Sound.speak("Found " + COLOR_NAMES[color_to_seek]).wait()
 
 
-
 def handle_shutdown(button_state, dc):
     """Exit the program."""
     if button_state:

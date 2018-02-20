@@ -114,13 +114,52 @@ class Snatch3r(object):
     def hop(self, grid_size):
         """hops forward for positive values and backwards for negative
         values"""
-        self.left_motor.run_to_rel_pos(position_sp=grid_size, speed=900,
+        print('hop!')
+        print(grid_size)
+        self.left_motor.run_to_rel_pos(position_sp=grid_size, speed_sp=900,
                                        stop_action='brake')
-        self.right_motor.run_to_rel_pos(position_sp=grid_size, speed=900,
+        print('passes left motor')
+        self.right_motor.run_to_rel_pos(position_sp=grid_size, speed_sp=900,
                                        stop_action='brake')
+        print('passed right motor')
+
+    def rotate_right(self):
+        """hops forward for positive values and backwards for negative
+        values"""
+        print('hop!')
+        self.left_motor.run_to_rel_pos(position_sp=100, speed_sp=900,
+                                       stop_action='brake')
+        print('passes left motor')
+        self.right_motor.run_to_rel_pos(position_sp=100, speed_sp=-900,
+                                       stop_action='brake')
+        print('passed right motor')
+
+    def rotate_right(self):
+        """hops forward for positive values and backwards for negative
+        values"""
+        print('right!')
+        self.left_motor.run_to_rel_pos(position_sp=200, speed_sp=900,
+                                       stop_action='brake')
+        print('passes left motor')
+        self.right_motor.run_to_rel_pos(position_sp=-200, speed_sp=900,
+                                       stop_action='brake')
+        print('passed right motor')
+
+    def rotate_left(self):
+        """hops forward for positive values and backwards for negative
+        values"""
+        print('left!')
+        self.left_motor.run_to_rel_pos(position_sp=-200, speed_sp=900,
+                                       stop_action='brake')
+        print('passes left motor')
+        self.right_motor.run_to_rel_pos(position_sp=200, speed_sp=900,
+                                       stop_action='brake')
+        print('passed right motor')
 
     def turn(self, left_speed, right_speed):
         """turns left for positive values and right for negative values"""
+        print(left_speed)
+        print(right_speed)
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
 
