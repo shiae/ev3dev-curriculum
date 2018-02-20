@@ -117,7 +117,7 @@ class MyDelegate(object):
             width = robit.pixy.value(3)
             height = robit.pixy.value(4)
             area = width * height
-            close_enough = 300
+            close_enough = 400
 
             print("(X, Y)=({}, {})".format(x, y), width, height, area)
 
@@ -157,10 +157,16 @@ def main():
     print("--------------------------------------------")
     print(" Calibrating")
     print("--------------------------------------------")
-    robit.arm_calibration()
-    picked_up = 80
-    if robit.color_sensor.reflected_light_intensity > picked_up:
-        mqtt_client.send_message("love")
+    # robit.arm_calibration()
+    while True:
+        print(robit.color_sensor.reflected_light_intensity)
+
+        if robit.color_sensor.reflected_light_intensity == 0:
+            mqtt_client.send_message("love")
+            break
+
+        time.sleep(0.1)
+
     robit.loop_forever()
 
 

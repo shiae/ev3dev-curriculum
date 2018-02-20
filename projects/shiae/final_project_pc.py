@@ -24,8 +24,8 @@ class MyDelegate(object):
         """ When Robit is picked up, a window with a heart
         picture pops up"""
         root = tkinter.Toplevel()
-        hearts = tkinter.PhotoImage(file="heart.png")
-        label = ttk.Label(root, image=hearts, padding=50)
+        heart = tkinter.PhotoImage(file="heart.png")
+        label = ttk.Label(root, image=heart, padding=50)
         label.grid()
         frame = ttk.Frame(root, padding=10)
         frame.grid()
