@@ -1,7 +1,5 @@
-
+"""an unimplemented second robot that would act as the nazi army"""
 import mqtt_remote_method_calls as com
-
-import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
 
