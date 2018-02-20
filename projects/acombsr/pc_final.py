@@ -60,6 +60,7 @@ def main():
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=6, column=2)
     right_button['command'] = lambda: send_right(robit)
+    right_button['command'] = lambda: send_right(robit)
     root.bind('<Right>',
               lambda event: send_right(robit))
 
