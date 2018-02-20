@@ -21,12 +21,12 @@ class MyDelegate(object):
         self.robot = robo.Snatch3r()
         self.mqtt_client = None  # To be set later.
 
-    def speak_ev3(self):
+    def speak(self):
         """ Robit will say 'bark bark'"""
         print("--------------------------------------------")
         print(" Speak")
         print("--------------------------------------------")
-        ev3.Sound.speak('bark bark')
+        ev3.Sound.speak('bark bark').wait()
 
     def sit(self):
         """Robit's motors will stop"""
@@ -74,7 +74,7 @@ class MyDelegate(object):
                 while robit.pixy.value(
                         1) < 150 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
-            elif x > 150:
+            elif x > 170:
                 robit.turn(-turn_speed, -turn_speed)
                 while robit.pixy.value(
                         1) > 170 and robit.touch_sensor.is_pressed is False:
@@ -86,7 +86,7 @@ class MyDelegate(object):
                     time.sleep(0.01)
                 else:
                     robit.stop()
-                    ev3.Sound.speak("Woof!")
+                    ev3.Sound.speak("Woof!").wait()
                     robit.arm_up()
                     time.sleep(2)
                     robit.turn_degrees(180, turn_speed)
@@ -103,6 +103,7 @@ class MyDelegate(object):
         print(" Come")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
+        ev3.Sound.speak("Come")
         robit.pixy.mode = "SIG2"
         turn_speed = 100
         forward_speed = 300
@@ -113,8 +114,7 @@ class MyDelegate(object):
             width = robit.pixy.value(3)
             height = robit.pixy.value(4)
             area = width * height
-            close_enough = \
-                7489213479018234709812374092183740921834709128347012938471239084712903847123908471239847
+            close_enough = 800
 
             print("(X, Y)=({}, {})".format(x, y))
 
@@ -123,19 +123,20 @@ class MyDelegate(object):
                 while robit.pixy.value(
                         1) < 150 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
-            elif x > 170:
+            elif x > 150:
                 robit.turn(-turn_speed, -turn_speed)
                 while robit.pixy.value(
-                        1) > 170 and robit.touch_sensor.is_pressed is False:
+                        1) > 150 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
             else:
                 robit.stop()
-                if area > close_enough:
+                if area < close_enough:
                     robit.drive(forward_speed, forward_speed)
-                    time.sleep(0.01)
+                    time.sleep(0.1)
                 else:
                     robit.stop()
-                    ev3.Sound.speak("Woof!")
+                    ev3.Sound.speak("Wuff!")
+                    print("woof")
                     time.sleep(2)
 
             time.sleep(0.25)
