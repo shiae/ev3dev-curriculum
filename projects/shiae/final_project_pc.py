@@ -20,30 +20,17 @@ class MyDelegate(object):
     """ Creates an object used as a delegate for MQTT(for receiving messages
     from ev3)"""
 
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Robit")
-        style = ttk.Style()
-
-        label0 = ttk.Label(self.root, text=" ", font=('Helvetica', 10))
-        label0.grid(row=0, column=0)
-
-        label1 = ttk.Label(self.root, text="What do you want Robit to do?",
-                           font=("Helvetica", 17))
-        label1.grid(row=2, column=0)
-
-        style.configure('my.TFrame', background='#a8c9ff')
-        frame1 = ttk.Frame(self.root, style='my.TFrame', padding=70)
-        frame1.grid()
-
-        command(frame1, self.root)
+    def __init__(self):
+        self.running = True
 
     def love(self):
         """ When Robit is picked up, a window with a heart
         picture pops up"""
-        popup = tkinter.Toplevel(self.root)
+        popup = tkinter.Toplevel()
         heart = tkinter.PhotoImage(file="heart.png")
         label = ttk.Label(popup, image=heart, padding=50)
+        label.image = heart
+        label.pack()
         label.grid()
         frame = ttk.Frame(popup, padding=10)
         frame.grid()
@@ -51,29 +38,29 @@ class MyDelegate(object):
 
 def main():
     root = tkinter.Tk()
-    my_delegate = MyDelegate(root)
+    my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()
+    root.title("Robit")
+    style = ttk.Style()
+
+    label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
+    label0.grid(row=0, column=0)
+
+    label1 = ttk.Label(root, text="What do you want Robit to do?",
+                       font=("Helvetica", 17))
+    label1.grid(row=2, column=0)
+
+    style.configure('my.TFrame', background='#a8c9ff')
+    frame1 = ttk.Frame(root, style='my.TFrame', padding=70)
+    frame1.grid()
+
+    command(frame1, root, mqtt_client)
+
     root.mainloop()
-    # root = tkinter.Tk()
-    # root.title("Robit")
-    # style = ttk.Style()
-    #
-    # label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
-    # label0.grid(row=0, column=0)
-    #
-    # label1 = ttk.Label(root, text="What do you want Robit to do?",
-    #                    font=("Helvetica", 17))
-    # label1.grid(row=2, column=0)
-    #
-    # style.configure('my.TFrame', background='#a8c9ff')
-    # frame1 = ttk.Frame(root, style='my.TFrame', padding=70)
-    # frame1.grid()
-    #
-    # command(frame1, root)
 
 
-def command(frame, root):
+def command(frame, root, mqtt_client):
     """ Creates a drop down for the different commands Robit can receive."""
     style = ttk.Style()
     style.configure('my.TButton', font=('Helvetica', 12), background='#002663',
@@ -92,12 +79,12 @@ def command(frame, root):
 
     send_btn = ttk.Button(frame, text="Send", style='my.TButton')
     send_btn.grid(column=2, row=3)
-    send_btn['command'] = lambda: check(command_var.get(), speak_btn)
+    send_btn['command'] = lambda: check(command_var.get(), speak_btn, mqtt_client)
 
     root.mainloop()
 
 
-def check(command_input, speak_btn):
+def check(command_input, speak_btn, mqtt_client):
     """ Decides what message to send to Robit based on command selected."""
     if command_input == 'Speak':
         speak_btn.state(["!disabled"])

@@ -117,7 +117,7 @@ class MyDelegate(object):
             width = robit.pixy.value(3)
             height = robit.pixy.value(4)
             area = width * height
-            close_enough = 400
+            close_enough = 2000
 
             print("(X, Y)=({}, {})".format(x, y), width, height, area)
 
@@ -165,7 +165,7 @@ def main():
             mqtt_client.send_message("love")
             break
 
-        time.sleep(0.1)
+        time.sleep(1)
 
     robit.loop_forever()
 
