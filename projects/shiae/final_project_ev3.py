@@ -158,7 +158,7 @@ def main():
     print(" Calibrating")
     print("--------------------------------------------")
     robit.arm_calibration()
-    picked_up = 70
+    picked_up = 80
     if robit.color_sensor.reflected_light_intensity > picked_up:
         mqtt_client.send_message("love")
     robit.loop_forever()
