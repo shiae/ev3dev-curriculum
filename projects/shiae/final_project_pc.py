@@ -80,9 +80,6 @@ def command(frame, root):
     speak_btn.grid(column=0, row=5)
     speak_btn.state(["disabled"])
 
-    # label4 = ttk.Label(root, text="hello", font=('Helvetica', 10))
-    # label4.grid(row=0, column=1)
-
     send_btn = ttk.Button(frame, text="Send", style='my.TButton')
     send_btn.grid(column=2, row=3)
     send_btn['command'] = lambda: check(command_var.get(), speak_btn)
