@@ -191,14 +191,18 @@ def handle_up(state, mqtt_client, my_delegate):
 def process_data(data):
     speed = 200
     if data[0] == 'd':
+        print('d')
         time.sleep(10)
     elif data[0] == 'a':
+        print('a')
         robot.follow_line('blue')
     elif data[0] == 'b':
+        print('b')
         robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
         robot.follow_line('red')
     elif data[0] == 'c':
+        print('c')
         robot.follow_line('blue')
         robot.turn(30, speed)
         robot.follow_line('green')
@@ -208,15 +212,12 @@ def return_home(data):
     win = False
     robot.turn_degrees(180, speed)
     if data[0] == 'a':
-        print('a')
         win = robot.follow_line('black')
     elif data[0] == 'b':
-        print('b')
         win = robot.follow_line('blue')
         robot.turn_degrees(30, speed)
         robot.follow_line('black')
     elif data[0] == 'c':
-        print('c')
         win = robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
         robot.follow_line('black')

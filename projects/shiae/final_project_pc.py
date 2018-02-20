@@ -94,22 +94,22 @@ def check(command_input, speak_btn):
     """ Decides what message to send to Robit based on command selected."""
     if command_input == 'Speak':
         speak_btn.state(["!disabled"])
-        # speak_btn[command] = lambda: mqtt_client.send_message('speak')
+        speak_btn['command'] = lambda: mqtt_client.send_message('speak')
         print("speak")
     elif command_input == 'Fetch':
-        # mqtt_client.send_message('fetch')
+        mqtt_client.send_message('fetch')
         speak_btn.state(["disabled"])
         print("fetch")
     elif command_input == 'Sit':
-        # mqtt_client.send_message('sit')
+        mqtt_client.send_message('sit')
         speak_btn.state(["disabled"])
         print("sit")
     elif command_input == 'Come':
-        # mqtt_client.send_message('come')
+        mqtt_client.send_message('come')
         speak_btn.state(["disabled"])
         print("come")
     elif command_input == 'Shake':
-        # mqtt_client.send_message('shake')
+        mqtt_client.send_message('shake')
         speak_btn.state(["disabled"])
         print("shake")
 

@@ -188,6 +188,7 @@ class Snatch3r(object):
         time.sleep(1)
 
     def follow_line(self, color):
+        print(color)
         if color == 'blue':
             color = self.color_sensor.COLOR_BLUE
         elif color == 'red':
@@ -198,33 +199,76 @@ class Snatch3r(object):
             color = self.color_sensor.COLOR_BLACK
         elif color == 'yellow':
             color = self.color_sensor.COLOR_YELLOW
-        color_sensor = self.color_sensor.color
-        proximity = self.ir_sensor.proximity
-        while color_sensor != color: # or  proximity > 10:
+        while self.color_sensor.color != color and self.ir_sensor.proximity > 10:
             self.drive(200, 200)
             time.sleep(.5)
-            while color_sensor == self.color_sensor.COLOR_WHITE:
+            while self.color_sensor.color == self.color_sensor.COLOR_WHITE:
                 time.sleep(.01)
-                color_sensor = self.color_sensor.color
-                proximity = self.ir_sensor.proximity
-            while color_sensor != self.color_sensor.COLOR_WHITE:
+                if self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
+            while self.color_sensor.color != self.color_sensor.COLOR_WHITE:
                 self.turn_degrees(10, 100)
-                color_sensor = self.color_sensor.color
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
                 self.turn_degrees(-10, 100)
-                color_sensor = self.color_sensor.color
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
                 self.turn_degrees(-10, 100)
-                color_sensor = self.color_sensor.color
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
                 self.turn_degrees(10, 100)
-                color_sensor = self.color_sensor.color
-                self.turn_degrees(20, 100)
-                color_sensor = self.color_sensor.color
-                self.turn_degrees(-20, 100)
-                color_sensor = self.color_sensor.color
-                self.turn_degrees(-20, 100)
-                color_sensor = self.color_sensor.color
-                self.turn_degrees(20, 100)
-                color_sensor = self.color_sensor.color
-                proximity = self.ir_sensor.proximity
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
+                self.turn_degrees(15, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
+                self.turn_degrees(-15, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
+                self.turn_degrees(-15, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
+                self.turn_degrees(15, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                elif self.ir_sensor.proximity <= 10:
+                    break
+            if self.color_sensor.color == color:
+                break
+            elif self.ir_sensor.proximity <= 10:
+                break
         self.stop()
         if self.ir_sensor.proximity < 10:
             return True
