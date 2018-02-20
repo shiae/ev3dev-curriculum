@@ -20,39 +20,57 @@ class MyDelegate(object):
     """ Creates an object used as a delegate for MQTT(for receiving messages
     from ev3)"""
 
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Robit")
+        style = ttk.Style()
+
+        label0 = ttk.Label(self.root, text=" ", font=('Helvetica', 10))
+        label0.grid(row=0, column=0)
+
+        label1 = ttk.Label(self.root, text="What do you want Robit to do?",
+                           font=("Helvetica", 17))
+        label1.grid(row=2, column=0)
+
+        style.configure('my.TFrame', background='#a8c9ff')
+        frame1 = ttk.Frame(self.root, style='my.TFrame', padding=70)
+        frame1.grid()
+
+        command(frame1, self.root)
+
     def love(self):
         """ When Robit is picked up, a window with a heart
         picture pops up"""
-        root = tkinter.Toplevel()
+        popup = tkinter.Toplevel(self.root)
         heart = tkinter.PhotoImage(file="heart.png")
-        label = ttk.Label(root, image=heart, padding=50)
+        label = ttk.Label(popup, image=heart, padding=50)
         label.grid()
-        frame = ttk.Frame(root, padding=10)
+        frame = ttk.Frame(popup, padding=10)
         frame.grid()
-
-
-my_delegate = MyDelegate()
-mqtt_client = com.MqttClient(my_delegate)
-mqtt_client.connect_to_ev3()
 
 
 def main():
     root = tkinter.Tk()
-    root.title("Robit")
-    style = ttk.Style()
-
-    label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
-    label0.grid(row=0, column=0)
-
-    label1 = ttk.Label(root, text="What do you want Robit to do?",
-                       font=("Helvetica", 17))
-    label1.grid(row=2, column=0)
-
-    style.configure('my.TFrame', background='#a8c9ff')
-    frame1 = ttk.Frame(root, style='my.TFrame', padding=70)
-    frame1.grid()
-
-    command(frame1, root)
+    my_delegate = MyDelegate(root)
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_ev3()
+    root.mainloop()
+    # root = tkinter.Tk()
+    # root.title("Robit")
+    # style = ttk.Style()
+    #
+    # label0 = ttk.Label(root, text=" ", font=('Helvetica', 10))
+    # label0.grid(row=0, column=0)
+    #
+    # label1 = ttk.Label(root, text="What do you want Robit to do?",
+    #                    font=("Helvetica", 17))
+    # label1.grid(row=2, column=0)
+    #
+    # style.configure('my.TFrame', background='#a8c9ff')
+    # frame1 = ttk.Frame(root, style='my.TFrame', padding=70)
+    # frame1.grid()
+    #
+    # command(frame1, root)
 
 
 def command(frame, root):
