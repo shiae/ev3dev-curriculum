@@ -41,13 +41,16 @@ class MyDelegate(object):
                 self.display.configure(text=message_to_display)
                 exit()
 
-    def receive_news_one_robot(self, guessed_settings, settings, data,
+    def receive_news_one_robot(self, settings, data,
                                data_copy):
         print('hey')
         news = False
-        if decryption(data, settings) == decryption(data_copy,
-                                                    guessed_settings):
+        if decryption(settings, data) == decryption(self.settings,
+                                                    data_copy):
+
             news = True
+        print(data)
+        print(data_copy)
         if news is True:
             self.nazi_health -= 1
             self.nazi_health_display.configure(text=self.nazi_health)

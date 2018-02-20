@@ -253,7 +253,6 @@ def handle_down(state, mqtt_client, my_delegate):
         # mqtt_client.send_message(
         #     "receive_news_on_war", [my_delegate.waiting_on_news])
         mqtt_client.send_message("receive_news_one_robot",
-                                 [my_delegate.settings,
                                   my_delegate.one_robot_settings,
                                   my_delegate.data, my_delegate.data])
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
