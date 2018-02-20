@@ -11,6 +11,15 @@ class MyDelegate(object):
     def on_circle_draw(self, color, x, y):
         self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
 
+    def on_square_draw(self, color, x, y, distance):
+        self.canvas.create_square(x - (distance/2),
+                                  y - (distance/2),
+                                  x + (distance/2),
+                                  y + (distance/2),
+                                  fill=color,
+                             width=3)
+
+
 
 def main():
     root = tkinter.Tk()
