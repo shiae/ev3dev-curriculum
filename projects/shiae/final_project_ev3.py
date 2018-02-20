@@ -158,6 +158,8 @@ def main():
     #     mqtt_client.send_message("scared_of_red")
     if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
         mqtt_client.send_message("love")
+    if robit.color_sensor.value() == ev3.ColorSensor.COLOR_WHITE:
+        mqtt_client.send_message("love")
     robit.loop_forever()
 
 
