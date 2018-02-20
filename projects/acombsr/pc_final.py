@@ -12,10 +12,9 @@ class MyDelegate(object):
         self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
 
     def on_square_draw(self, color, x, y, distance):
-        print('arrived at square draw')
-        self.canvas.create_rectangle(x,y,x+distance, y+distance, fill='red',
+        self.canvas.create_rectangle(x,400-y,x+distance, 400-(y+distance),
+                                     fill='red',
                                      width=3)
-        print('passed square draw')
 
 
 def main():
@@ -50,7 +49,7 @@ def main():
     grid_size_label = ttk.Label(main_frame, text="Grid Size")
     grid_size_label.grid(row=4, column=4)
     grid_size_entry = ttk.Entry(main_frame, width=8)
-    grid_size_entry.insert(0, "600")
+    grid_size_entry.insert(0, "20")
     grid_size_entry.grid(row=5, column=4)
 
     forward_button = ttk.Button(main_frame, text="Forward")

@@ -33,8 +33,8 @@ class Snatch3r(object):
         self.running = True
 
         self.facing = 'right'
-        self.x_dir = 0
-        self.y_dir = 0
+        self.x_dir = 400
+        self.y_dir = 200
         self.color = 1
         self.has_moved = False
         self.grid_size = 0
@@ -123,9 +123,11 @@ class Snatch3r(object):
         values"""
         print('hop!')
         print(grid_size)
-        self.left_motor.run_to_rel_pos(position_sp=grid_size, speed_sp=900,
+        self.left_motor.run_to_rel_pos(position_sp=(10*grid_size),
+                                       speed_sp=900,
                                        stop_action='brake')
-        self.right_motor.run_to_rel_pos(position_sp=grid_size, speed_sp=900,
+        self.right_motor.run_to_rel_pos(position_sp=(10*grid_size),
+                                        speed_sp=900,
                                        stop_action='brake')
 
         if(self.facing == 'right'):
