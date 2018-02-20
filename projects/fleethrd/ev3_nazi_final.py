@@ -146,8 +146,15 @@ def process_data(data):
                 robot.follow_line('red')
             elif data[0] == 'c':
                 time.sleep(5)
-        else:
-            time.sleep(5)
+        elif data[2] == 'd':
+            if data[0] == 'a':
+                robot.follow_line('blue')
+            elif data[0] == 'b':
+                robot.turn_degrees(120, speed)
+                robot.follow_line('red')
+            elif data[0] == 'c':
+                robot.turn_degrees(-120, speed)
+                robot.follow_line('green')
 
 
 def return_home(foiled, data):
