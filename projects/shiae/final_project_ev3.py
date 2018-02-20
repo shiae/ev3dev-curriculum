@@ -41,7 +41,7 @@ class MyDelegate(object):
         print("--------------------------------------------")
         print(" Shake")
         print("--------------------------------------------")
-        ev3.Sound.speak("shake")
+        ev3.Sound.speak("shake").wait()
         while not robit.touch_sensor.is_pressed:
             if robit.ir_sensor.proximity < 7:
                 robit.shake()
@@ -86,7 +86,7 @@ class MyDelegate(object):
                     time.sleep(0.01)
                 else:
                     robit.stop()
-                    ev3.Sound.speak("Woof!").wait()
+                    ev3.Sound.speak("Wuff!").wait()
                     robit.arm_up()
                     time.sleep(2)
                     robit.turn_degrees(180, turn_speed)
@@ -103,7 +103,7 @@ class MyDelegate(object):
         print(" Come")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
-        ev3.Sound.speak("Come")
+        ev3.Sound.speak("Come").wait()
         robit.pixy.mode = "SIG2"
         turn_speed = 100
         forward_speed = 300
@@ -123,10 +123,10 @@ class MyDelegate(object):
                 while robit.pixy.value(
                         1) < 150 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
-            elif x > 150:
+            elif x > 170:
                 robit.turn(-turn_speed, -turn_speed)
                 while robit.pixy.value(
-                        1) > 150 and robit.touch_sensor.is_pressed is False:
+                        1) > 170 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
             else:
                 robit.stop()
@@ -135,7 +135,7 @@ class MyDelegate(object):
                     time.sleep(0.1)
                 else:
                     robit.stop()
-                    ev3.Sound.speak("Wuff!")
+                    ev3.Sound.speak("Wuff!").wait()
                     print("woof")
                     time.sleep(2)
 
@@ -157,6 +157,8 @@ def main():
     # if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
     #     mqtt_client.send_message("scared_of_red")
     if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
+        mqtt_client.send_message("love")
+    if robit.color_sensor.value() == ev3.ColorSensor.COLOR_WHITE:
         mqtt_client.send_message("love")
     robit.loop_forever()
 
