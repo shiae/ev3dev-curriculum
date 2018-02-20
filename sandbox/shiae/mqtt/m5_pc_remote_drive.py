@@ -51,7 +51,7 @@ def main():
     left_speed_entry.grid(row=1, column=0)
 
     right_speed_label = ttk.Label(main_frame, text="Right")
-    right_speed_label.grid(row=0, column=2)
+    right_speesd_label.grid(row=0, column=2)
     right_speed_entry = ttk.Entry(main_frame, width=8, justify=tkinter.RIGHT)
     right_speed_entry.insert(0, "600")
     right_speed_entry.grid(row=1, column=2)
