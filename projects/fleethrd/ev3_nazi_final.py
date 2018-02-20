@@ -156,7 +156,6 @@ def process_data(data):
                 robot.turn_degrees(-120, speed)
                 robot.follow_line('green')
 
-
 def return_home(foiled, data):
     speed = 200
     if robot.color_sensor.color != robot.color_sensor.COLOR_WHITE:
