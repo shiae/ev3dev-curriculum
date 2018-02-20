@@ -198,26 +198,55 @@ class Snatch3r(object):
             color = self.color_sensor.COLOR_BLACK
         elif color == 'yellow':
             color = self.color_sensor.COLOR_YELLOW
-        while self.color_sensor.color != color and self.ir_sensor.proximity >\
-                10:
+        print(color)
+        while self.color_sensor.color != color and self.ir_sensor.proximity > 10:
             self.drive(200, 200)
             time.sleep(.5)
-            while (self.color_sensor.color == self.color_sensor.COLOR_WHITE)and (self.color_sensor.color!= color):
+            while self.color_sensor.color == self.color_sensor.COLOR_WHITE:
                 time.sleep(.01)
-            while (self.color_sensor.color != self.color_sensor.COLOR_WHITE)\
-                    and (self.color_sensor.color!= color):
+                if self.color_sensor.color == color:
+                    break
+            while self.color_sensor.color != self.color_sensor.COLOR_WHITE:
                 self.turn_degrees(10, 100)
                 if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
                     break
                 self.turn_degrees(-10, 100)
                 if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
                     break
+                elif self.color_sensor.color == color:
+                    break
                 self.turn_degrees(-10, 100)
                 if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
                     break
                 self.turn_degrees(10, 100)
                 if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
                     break
+                self.turn_degrees(20, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                self.turn_degrees(-20, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                self.turn_degrees(-20, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+                self.turn_degrees(20, 100)
+                if self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+                    break
+                elif self.color_sensor.color == color:
+                    break
+            if self.color_sensor.color == color:
+                break
         self.stop()
         if self.ir_sensor.proximity < 10:
             return True
