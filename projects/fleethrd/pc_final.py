@@ -106,6 +106,9 @@ def gui(root):
     next_orders_button.grid(row=5, column=1)
     next_orders_button['command'] = lambda: marching_orders(mqtt_client)
 
+    guess_label = ttk.Label(main_frame, text="Make Your Guess Below")
+    guess_label.grid(row=6, column=1)
+
     my_delegate = MyDelegate(display, nazi_health, allied_health_label)
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()

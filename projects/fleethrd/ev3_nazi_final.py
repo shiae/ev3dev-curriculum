@@ -7,6 +7,7 @@ import robot_controller as robo
 
 
 class MyDelegate(object):
+    """handles function calls from the pc"""
 
     def __init__(self):
         self.running = True

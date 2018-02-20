@@ -90,23 +90,9 @@ def main():
               lambda event: send_backward(robit, left_speed_entry,
                                           right_speed_entry))
 
-    up_button = ttk.Button(main_frame, text="Up")
-    up_button.grid(row=8, column=0)
-    up_button['command'] = lambda: send_up(robit)
-    root.bind('<u>', lambda event: send_up(robit))
-
-    down_button = ttk.Button(main_frame, text="Down")
-    down_button.grid(row=9, column=0)
-    down_button['command'] = lambda: send_down(robit)
-    root.bind('<j>', lambda event: send_down(robit))
-
     q_button = ttk.Button(main_frame, text="Quit")
-    q_button.grid(row=8, column=2)
+    q_button.grid(row=8, column=1)
     q_button['command'] = (lambda: quit_program(robit, False))
-
-    e_button = ttk.Button(main_frame, text="Exit")
-    e_button.grid(row=9, column=2)
-    e_button['command'] = (lambda: quit_program(robit, True))
 
     root.mainloop()
 
@@ -142,16 +128,6 @@ def send_right(mqtt_client, left_speed_entry, right_speed_entry):
 def send_stop(mqtt_client):
     print("robit_stop")
     mqtt_client.send_message("stop")
-
-
-def send_up(mqtt_client):
-    print("arm_up")
-    mqtt_client.send_message("arm_up")
-
-
-def send_down(mqtt_client):
-    print("arm_down")
-    mqtt_client.send_message("arm_down")
 
 
 def quit_program(mqtt_client, shutdown_ev3):
