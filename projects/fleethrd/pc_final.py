@@ -47,7 +47,6 @@ class MyDelegate(object):
         news = False
         if decryption(settings, data) == decryption(self.settings,
                                                     data_copy):
-
             news = True
         print(data)
         print(data_copy)
