@@ -29,14 +29,14 @@ class MyDelegate(object):
     #     root.mainloop()
 
     def love(self):
-        """ When Robit's color sensor senses red, a window with a hear gif pops up"""
-        root = tkinter.Tk()
+        """ When Robit is picked up, a window with a heart
+        picture pops up"""
+        root = tkinter.Toplevel()
         hearts = tkinter.PhotoImage(file="heart.png")
         label = ttk.Label(root, image=hearts, padding=50)
         label.grid()
         frame = ttk.Frame(root, padding=10)
         frame.grid()
-        root.mainloop()
 
 
 my_delegate = MyDelegate()
