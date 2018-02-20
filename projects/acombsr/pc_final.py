@@ -13,7 +13,7 @@ class MyDelegate(object):
 
     def on_square_draw(self, color, x, y, distance):
         self.canvas.create_rectangle(x,400-y,x+distance, 400-(y+distance),
-                                     fill='red',
+                                     fill=color,
                                      width=3)
 
 

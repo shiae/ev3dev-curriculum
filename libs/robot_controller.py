@@ -35,7 +35,7 @@ class Snatch3r(object):
         self.facing = 'right'
         self.x_dir = 400
         self.y_dir = 200
-        self.color = 1
+        self.color = 5
         self.has_moved = False
         self.grid_size = 0
 
@@ -123,6 +123,7 @@ class Snatch3r(object):
         values"""
         print('hop!')
         print(grid_size)
+        current_color = 'red'
         self.left_motor.run_to_rel_pos(position_sp=(10*grid_size),
                                        speed_sp=900,
                                        stop_action='brake')
@@ -139,8 +140,25 @@ class Snatch3r(object):
         if (self.facing == 'down'):
             self.y_dir -= grid_size
 
-        self.color = self.color_sensor.color
+        current_color = self.color_sensor.color
         self.grid_size = grid_size
+
+        if current_color == 1:
+            self.color = 'black'
+        if current_color == 2:
+            current_color = 'blue'
+        if current_color == 3:
+            self.color = 'green'
+        if current_color == 4:
+            self.color = 'yellow'
+        if current_color == 5:
+            self.color = 'red'
+        if current_color == 6:
+            self.color = 'white'
+        if current_color == 7:
+            self.color = 'brown'
+
+
         self.has_moved = True
         print("Facing ", self.facing)
         print("X: ", self.x_dir)
