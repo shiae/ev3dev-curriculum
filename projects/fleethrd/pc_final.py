@@ -32,12 +32,14 @@ class MyDelegate(object):
             if self.nazi_health == 0:
                 message_to_display = "Allies Win! Press Exit to Leave Game"
                 self.display.configure(text=message_to_display)
+                exit()
         else:
             self.allied_health -= 1
             self.allied_health_display.configure(text=self.allied_health)
             if self.allied_health == 0:
                 message_to_display = "Nazis Win! Press Exit to Leave Game"
                 self.display.configure(text=message_to_display)
+                exit()
 
 
 def main():

@@ -50,7 +50,7 @@ class MyDelegate(object):
             self.waiting_on_news = True
             while self.waiting_on_news is True:
                 time.sleep(.01)
-                self.robot.drive(speed, speed)
+            self.robot.drive(speed, speed)
             while self.robot.color_sensor.color != \
                     self.robot.color_sensor.COLOR_BLACK:
                 time.sleep(.01)
@@ -68,7 +68,7 @@ class MyDelegate(object):
         self.has_settings = True
         while self.has_settings:
             time.sleep(.01)
-            self.robot.drive(speed, speed)
+        self.robot.drive(speed, speed)
         while self.robot.color_sensor.color != \
                 self.robot.color_sensor.COLOR_BLACK:
             time.sleep(.01)
