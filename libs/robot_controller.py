@@ -235,8 +235,10 @@ class Snatch3r(object):
         time.sleep(1)
 
     def follow_line(self, color):
-        """follows a white line until it reaches the given color or detects
-        an object"""
+        """goes in a straight line until it reaches the given color or detects
+        an object - additional feature of following a white line commented
+        out due to the robot literally ripping the paper as it tried to
+        navigate"""
         speed = 200
         print(color)
         if color == 'blue':

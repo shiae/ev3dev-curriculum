@@ -1,3 +1,7 @@
+# the pc part of the final that randomly generates a message and settings to
+# encrypt.  It sends data to the robot and receives data from it as well.
+# Some features are commented out or unused as originally the plan was to have
+# two robots but that fell through at midnight
 
 import tkinter
 from tkinter import ttk
@@ -43,11 +47,11 @@ class MyDelegate(object):
 
     def receive_news_one_robot(self, settings, data,
                                data_copy):
+        """takes the original data and settings and compares it to the found settings to figure out if the nazis were foiled that turn"""
         print('hey')
         news = False
         if decryption(settings, data) == decryption(self.settings,
                                                     data_copy):
-
             news = True
         print(data)
         print(data_copy)

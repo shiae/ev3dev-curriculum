@@ -27,11 +27,12 @@ def main():
     frame.grid()
     root.mainloop()
 
-    popup = tkinter.Toplevel(root)
+    popup = tkinter.Toplevel()
     heart = tkinter.PhotoImage(file="heart.png")
     label = ttk.Label(popup, image=heart, padding=50)
     label.grid()
     frame = ttk.Frame(popup, padding=10)
     frame.grid()
+
 
 main()
