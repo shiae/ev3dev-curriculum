@@ -139,12 +139,10 @@ class Snatch3r(object):
 
         self.color = self.color_sensor.color
         self.grid_size = grid_size
-        #self.has_moved = True
-        print('passes hop')
+        self.has_moved = True
         print("Facing ", self.facing)
         print("X: ", self.x_dir)
         print("Y: ", self.y_dir)
-
 
     def rotate_right(self):
         """hops forward for positive values and backwards for negative
