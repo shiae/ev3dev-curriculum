@@ -1,13 +1,15 @@
+# The robot portion of the code that works to communicated with the pc (
+# both send and receive) in order to try and crack the enigma code and
+# intercept the nazis and the intended target
 
 import mqtt_remote_method_calls as com
-
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
 
 
 class MyDelegate(object):
-    '''handles function calls from the pc'''
+    """handles function calls from the pc"""
 
     def __init__(self):
         self.running = True
@@ -251,6 +253,7 @@ def return_home(data, my_delegate):
 def handle_down(state, mqtt_client, my_delegate):
     """handles a press of the down button"""
     if state and my_delegate.waiting_on_news:
+        # commented out because I could only get one robot working
         # mqtt_client.send_message(
         #     "receive_news_on_war", [my_delegate.waiting_on_news])
         mqtt_client.send_message("receive_news_one_robot",
