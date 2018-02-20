@@ -41,10 +41,16 @@ class MyDelegate(object):
                 self.display.configure(text=message_to_display)
                 exit()
 
-    def receive_news_one_robot(self, guessed_settings, settings, data):
+    def receive_news_one_robot(self, settings, data,
+                               data_copy):
+        print('hey')
         news = False
-        if decryption(data, settings) == decryption(data, guessed_settings):
+        if decryption(settings, data) == decryption(self.settings,
+                                                    data_copy):
+
             news = True
+        print(data)
+        print(data_copy)
         if news is True:
             self.nazi_health -= 1
             self.nazi_health_display.configure(text=self.nazi_health)
@@ -130,7 +136,7 @@ def gui(root):
     guess_label = ttk.Label(main_frame, text="Make Your Guess Below")
     guess_label.grid(row=6, column=1)
 
-    my_delegate = MyDelegate(display, nazi_health, allied_health_label)
+    my_delegate = MyDelegate(display, nazi_health, allied_health)
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()
 
@@ -282,7 +288,7 @@ def decryption(settings, data):
     system_rotation(wheels)
     data[2] = wheels[1].index(wheels[2].index(wheels[3].index(wheels[4].index(wheels[3][wheels[2][wheels[1][data[2]]]]))))
     numbers_to_letters(data)
-    return(data)
+    return data
 
 
 main()

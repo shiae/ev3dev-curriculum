@@ -211,7 +211,8 @@ class Snatch3r(object):
         elif color == 'yellow':
             color = self.color_sensor.COLOR_YELLOW
         self.drive(speed, speed)
-        while self.color_sensor.color != color and self.ir_sensor.proximity > 10:
+        while self.color_sensor.color != color:  # and self.ir_sensor.proximity
+            #  > 10:
             time.sleep(.01)
             # self.drive(200, 200)
             # time.sleep(.5)

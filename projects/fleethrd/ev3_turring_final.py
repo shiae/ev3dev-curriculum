@@ -1,6 +1,5 @@
 
 import mqtt_remote_method_calls as com
-
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
@@ -37,14 +36,14 @@ class MyDelegate(object):
             print("guessed", data_copy)
             process_data(data_copy, self)
             self.win = return_home(data_copy, self)
-            if self.win:
-                time.sleep(10)
-                self.robot.follow_line('blue')
-                if data[0] == 'b':
-                    self.robot.turn_degrees(30, speed)
-                elif data[0] == 'c':
-                    self.robot.turn_degrees(-30, speed)
-                    self.robot.follow_line('black')
+            # if self.win:
+            #     time.sleep(10)
+            #     self.robot.follow_line('blue')
+            #     if data[0] == 'b':
+            #         self.robot.turn_degrees(30, speed)
+            #     elif data[0] == 'c':
+            #         self.robot.turn_degrees(-30, speed)
+            #         self.robot.follow_line('black')
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
             creative_human_interaction(self)
@@ -55,7 +54,7 @@ class MyDelegate(object):
             while self.robot.color_sensor.color != \
                     self.robot.color_sensor.COLOR_BLACK:
                 time.sleep(.01)
-                self.robot.turn_degrees(-90, speed)
+            self.robot.turn_degrees(-90, speed)
 
     def guess_data(self, guess):
         """receives a guess and runs a brute force cracking method to find the settings"""
@@ -254,9 +253,8 @@ def handle_down(state, mqtt_client, my_delegate):
         # mqtt_client.send_message(
         #     "receive_news_on_war", [my_delegate.waiting_on_news])
         mqtt_client.send_message("receive_news_one_robot",
-                                 [my_delegate.settings,
                                   my_delegate.one_robot_settings,
-                                  my_delegate.data])
+                                  my_delegate.data, my_delegate.data])
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         my_delegate.waiting_on_news = False
