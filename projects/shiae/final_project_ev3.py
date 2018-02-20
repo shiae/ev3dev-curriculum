@@ -83,7 +83,7 @@ class MyDelegate(object):
                 robit.stop()
                 if area > close_enough:
                     robit.drive(forward_speed, forward_speed)
-                    time.sleep(0.01)
+                    time.sleep(4)
                 else:
                     robit.stop()
                     ev3.Sound.speak("Wuff!").wait()
