@@ -46,6 +46,7 @@ def followLine(robot):
     ev3.Sound.speak("Goodbye").wait()
     robot.shutdown()
 
+
 def follow_the_line(robot, white_level, black_level):
     while not robot.touch_sensor.is_pressed:
         robot.drive(200, 200)

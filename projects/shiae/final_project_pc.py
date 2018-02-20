@@ -4,9 +4,11 @@ speak, come, sit, fetch, and shake.
 
 This file is meant to be run on a pc. When run, a window will pop up with a
 drop down box and two buttons. The user selects an option from the drop down
-box, and clicks send. This command will be sent to Robit. If "Speak" is
+box and clicks send. This command will be sent to Robit. If "Speak" is
 selected, the "Bark Bark" button will be enabled. Each time the "Bark Bark"
 button is pressed, Robit will say "bark bark."
+
+In addition, when Robit is picked up, a heart picture will pop up.
 
 Author: Allison Shi, February 2018
 """
@@ -20,24 +22,27 @@ class MyDelegate(object):
     """ Creates an object used as a delegate for MQTT(for receiving messages
     from ev3)"""
 
+    def __init__(self):
+        self.running = True
+
     def love(self):
         """ When Robit is picked up, a window with a heart
         picture pops up"""
-        root = tkinter.Toplevel()
-        hearts = tkinter.PhotoImage(file="heart.png")
-        label = ttk.Label(root, image=hearts, padding=50)
+        popup = tkinter.Toplevel()
+        heart = tkinter.PhotoImage(file="heart.png")
+        label = ttk.Label(popup, image=heart, padding=50)
+        label.image = heart
+        label.pack()
         label.grid()
-        frame = ttk.Frame(root, padding=10)
+        frame = ttk.Frame(popup, padding=10)
         frame.grid()
-
-
-my_delegate = MyDelegate()
-mqtt_client = com.MqttClient(my_delegate)
-mqtt_client.connect_to_ev3()
 
 
 def main():
     root = tkinter.Tk()
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_ev3()
     root.title("Robit")
     style = ttk.Style()
 
@@ -52,10 +57,12 @@ def main():
     frame1 = ttk.Frame(root, style='my.TFrame', padding=70)
     frame1.grid()
 
-    command(frame1, root)
+    command(frame1, root, mqtt_client)
+
+    root.mainloop()
 
 
-def command(frame, root):
+def command(frame, root, mqtt_client):
     """ Creates a drop down for the different commands Robit can receive."""
     style = ttk.Style()
     style.configure('my.TButton', font=('Helvetica', 12), background='#002663',
@@ -74,12 +81,12 @@ def command(frame, root):
 
     send_btn = ttk.Button(frame, text="Send", style='my.TButton')
     send_btn.grid(column=2, row=3)
-    send_btn['command'] = lambda: check(command_var.get(), speak_btn)
+    send_btn['command'] = lambda: check(command_var.get(), speak_btn, mqtt_client)
 
     root.mainloop()
 
 
-def check(command_input, speak_btn):
+def check(command_input, speak_btn, mqtt_client):
     """ Decides what message to send to Robit based on command selected."""
     if command_input == 'Speak':
         speak_btn.state(["!disabled"])
