@@ -16,7 +16,7 @@ class MyDelegate(object):
                                   y - (distance/2),
                                   x + (distance/2),
                                   y + (distance/2),
-                                  fill=color,
+                                  fill=,
                              width=3)
 
 
@@ -47,7 +47,7 @@ def main():
     clear_button.grid(row=6, column=4)
     clear_button["command"] = lambda: clear(canvas)
 
-    robit = com.MqttClient()
+    robit = com.MqttClient(my_delegate)
     robit.connect_to_ev3()
 
     grid_size_label = ttk.Label(main_frame, text="Grid Size")

@@ -35,7 +35,7 @@ class Snatch3r(object):
         self.facing = 'right'
         self.x_dir = 0
         self.y_dir = 0
-        self.color = 'white'
+        self.color = 1
         self.has_moved = False
         self.grid_size = 0
 
