@@ -31,10 +31,10 @@ class MyDelegate(object):
     def love(self):
         """ When Robit's color sensor senses red, a window with a hear gif pops up"""
         root = tkinter.Tk()
-        hearts = tkinter.PhotoImage(file="hearts.gif")
-        label = ttk.Label(root, image=hearts)
+        hearts = tkinter.PhotoImage(file="heart.png")
+        label = ttk.Label(root, image=hearts, padding=50)
         label.grid()
-        frame = ttk.Frame(root, padding=30)
+        frame = ttk.Frame(root, padding=10)
         frame.grid()
         root.mainloop()
 
