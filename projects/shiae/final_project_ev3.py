@@ -123,10 +123,10 @@ class MyDelegate(object):
                 while robit.pixy.value(
                         1) < 150 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
-            elif x > 150:
+            elif x > 170:
                 robit.turn(-turn_speed, -turn_speed)
                 while robit.pixy.value(
-                        1) > 150 and robit.touch_sensor.is_pressed is False:
+                        1) > 170 and robit.touch_sensor.is_pressed is False:
                     time.sleep(.01)
             else:
                 robit.stop()
