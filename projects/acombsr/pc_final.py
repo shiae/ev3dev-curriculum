@@ -81,12 +81,12 @@ def send_forward(mqtt_client, grid_size):
 
 def send_left(mqtt_client):
     print("robit_left")
-    mqtt_client.send_message("turn", [900, 900])
+    mqtt_client.send_message("rotate_right")
 
 
 def send_right(mqtt_client):
     print("robit_right")
-    mqtt_client.send_message("turn", [-900, -900])
+    mqtt_client.send_message("rotate_left")
 
 
 def quit_program(mqtt_client, shutdown_ev3):
