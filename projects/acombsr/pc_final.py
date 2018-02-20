@@ -14,22 +14,22 @@ class MyDelegate(object):
 
 def main():
     root = tkinter.Tk()
-    root.title = "PC Testing"
+    root.title = "MappingRobot"
 
     main_frame = ttk.Frame(root, padding=5)
     main_frame.grid()
 
     canvas = tkinter.Canvas(main_frame, background="white", width=800,
                             height=500)
-    canvas.grid(columnspan=2)
+    canvas.grid(columnspan=3)
 
     my_delegate = MyDelegate(canvas)
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_ev3()
     mqtt_client.connect("draw", "draw")
 
-    label = ttk.Label(main_frame, text='Test Frame')
-    label.grid(columnspan=2)
+    label = ttk.Label(main_frame, text='Robo-Map')
+    label.grid(columnspan=3)
 
     spaceBar = ttk.Button(main_frame, text='spaceBar')
     spaceBar.grid(row=3, column=2)
@@ -44,7 +44,6 @@ def main():
     quit_button.grid(row=3, column=1)
     quit_button["command"] = lambda: quit_program(mqtt_client, True)
 
-    root.mainloop()
 
 
 
@@ -81,20 +80,24 @@ def main():
 
 
 
-    main_frame = ttk.Frame(root, padding=20, relief='raised')
-    main_frame.grid()
 
-    left_speed_label = ttk.Label(main_frame, text="Left")
+    alt_frame = ttk.Frame(root, padding=20, relief='raised')
+    alt_frame.grid()
+
+    robit = com.MqttClient()
+    robit.connect_to_ev3()
+
+    left_speed_label = ttk.Label(alt_frame, text="Left")
     left_speed_label.grid(row=0, column=0)
-    left_speed_entry = ttk.Entry(main_frame, width=8)
+    left_speed_entry = ttk.Entry(alt_frame, width=8)
     left_speed_entry.insert(0, "600")
-    left_speed_entry.grid(row=1, column=0)
+    left_speed_entry.grid(row=4, column=0)
 
-    right_speed_label = ttk.Label(main_frame, text="Right")
-    right_speed_label.grid(row=0, column=2)
-    right_speed_entry = ttk.Entry(main_frame, width=8, justify=tkinter.RIGHT)
+    right_speed_label = ttk.Label(alt_frame, text="Right")
+    right_speed_label.grid(row=3, column=2)
+    right_speed_entry = ttk.Entry(alt_frame, width=8, justify=tkinter.RIGHT)
     right_speed_entry.insert(0, "600")
-    right_speed_entry.grid(row=1, column=2)
+    right_speed_entry.grid(row=4, column=2)
 
     # DONE: 3. Implement the callbacks for the drive buttons. Set both the
     # click and shortcut key callbacks.
@@ -103,68 +106,68 @@ def main():
     # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
     # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
 
-    forward_button = ttk.Button(main_frame, text="Forward")
-    forward_button.grid(row=2, column=1)
-    forward_button['command'] = lambda: send_forward(mqtt_client,
+    forward_button = ttk.Button(alt_frame, text="Forward")
+    forward_button.grid(row=5, column=1)
+    forward_button['command'] = lambda: send_forward(robit,
                                                      left_speed_entry,
                                                      right_speed_entry)
-    root.bind('<Up>', lambda event: send_forward(mqtt_client, left_speed_entry,
+    root.bind('<Up>', lambda event: send_forward(robit, left_speed_entry,
                                                  right_speed_entry))
     # forward_button and '<Up>' key is done for your here...
-    # forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
-    # root.bind('<Up>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
+    # forward_button['command'] = lambda: some_callback1(robit, left_speed_entry, right_speed_entry)
+    # root.bind('<Up>', lambda event: some_callback1(robit, left_speed_entry, right_speed_entry))
 
-    left_button = ttk.Button(main_frame, text="Left")
-    left_button.grid(row=3, column=0)
-    left_button['command'] = lambda: send_left(mqtt_client, left_speed_entry,
+    left_button = ttk.Button(alt_frame, text="Left")
+    left_button.grid(row=6, column=0)
+    left_button['command'] = lambda: send_left(robit, left_speed_entry,
                                                right_speed_entry)
-    root.bind('<Left>', lambda event: send_left(mqtt_client, left_speed_entry,
+    root.bind('<Left>', lambda event: send_left(robit, left_speed_entry,
                                                 right_speed_entry))
     # left_button and '<Left>' key
 
-    stop_button = ttk.Button(main_frame, text="Stop")
-    stop_button.grid(row=3, column=1)
-    stop_button['command'] = lambda: send_stop(mqtt_client)
-    root.bind('<space>', lambda event: send_stop(mqtt_client))
+    stop_button = ttk.Button(alt_frame, text="Stop")
+    stop_button.grid(row=6, column=1)
+    stop_button['command'] = lambda: send_stop(robit)
+    root.bind('<space>', lambda event: send_stop(robit))
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
 
-    right_button = ttk.Button(main_frame, text="Right")
-    right_button.grid(row=3, column=2)
-    right_button['command'] = lambda: send_right(mqtt_client, left_speed_entry,
+    right_button = ttk.Button(alt_frame, text="Right")
+    right_button.grid(row=6, column=2)
+    right_button['command'] = lambda: send_right(robit, left_speed_entry,
                                                  right_speed_entry)
     root.bind('<Right>',
-              lambda event: send_right(mqtt_client, left_speed_entry,
+              lambda event: send_right(robit, left_speed_entry,
                                        right_speed_entry))
     # right_button and '<Right>' key
 
-    back_button = ttk.Button(main_frame, text="Back")
-    back_button.grid(row=4, column=1)
-    back_button['command'] = lambda: send_backward(mqtt_client,
+    back_button = ttk.Button(alt_frame, text="Back")
+    back_button.grid(row=7, column=1)
+    back_button['command'] = lambda: send_backward(robit,
                                                    left_speed_entry,
                                                    right_speed_entry)
     root.bind('<Down>',
-              lambda event: send_backward(mqtt_client, left_speed_entry,
+              lambda event: send_backward(robit, left_speed_entry,
                                           right_speed_entry))
     # back_button and '<Down>' key
 
-    up_button = ttk.Button(main_frame, text="Up")
-    up_button.grid(row=5, column=0)
-    up_button['command'] = lambda: send_up(mqtt_client)
-    root.bind('<u>', lambda event: send_up(mqtt_client))
+    up_button = ttk.Button(alt_frame, text="Up")
+    up_button.grid(row=8, column=0)
+    up_button['command'] = lambda: send_up(robit)
+    root.bind('<u>', lambda event: send_up(robit))
 
-    down_button = ttk.Button(main_frame, text="Down")
-    down_button.grid(row=6, column=0)
-    down_button['command'] = lambda: send_down(mqtt_client)
-    root.bind('<j>', lambda event: send_down(mqtt_client))
+    down_button = ttk.Button(alt_frame, text="Down")
+    down_button.grid(row=9, column=0)
+    down_button['command'] = lambda: send_down(robit)
+    root.bind('<j>', lambda event: send_down(robit))
 
     # Buttons for quit and exit
-    q_button = ttk.Button(main_frame, text="Quit")
-    q_button.grid(row=5, column=2)
-    q_button['command'] = (lambda: quit_program(mqtt_client, False))
+    q_button = ttk.Button(alt_frame, text="Quit")
+    q_button.grid(row=8, column=2)
+    q_button['command'] = (lambda: quit_program(robit, False))
 
-    e_button = ttk.Button(main_frame, text="Exit")
-    e_button.grid(row=6, column=2)
-    e_button['command'] = (lambda: quit_program(mqtt_client, True))
+    e_button = ttk.Button(alt_frame, text="Exit")
+    e_button.grid(row=9, column=2)
+    e_button['command'] = (lambda: quit_program(robit, True))
 
     root.mainloop()
 
