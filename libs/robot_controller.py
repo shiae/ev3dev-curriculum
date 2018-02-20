@@ -215,8 +215,10 @@ class Snatch3r(object):
             while self.color_sensor.color == self.color_sensor.COLOR_WHITE:
                 time.sleep(.01)
                 if self.color_sensor.color == color:
+                    self.stop()
                     break
                 elif self.ir_sensor.proximity <= 10:
+                    self.stop()
                     break
             while self.color_sensor.color != self.color_sensor.COLOR_WHITE:
                 self.turn_degrees(10, 100)

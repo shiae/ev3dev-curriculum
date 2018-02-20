@@ -117,9 +117,9 @@ class MyDelegate(object):
             width = robit.pixy.value(3)
             height = robit.pixy.value(4)
             area = width * height
-            close_enough = 80
+            close_enough = 300
 
-            print("(X, Y)=({}, {})".format(x, y))
+            print("(X, Y)=({}, {})".format(x, y), width, height, area)
 
             if x < 150:
                 robit.turn(turn_speed, turn_speed)
@@ -133,7 +133,7 @@ class MyDelegate(object):
                     time.sleep(.01)
             else:
                 robit.stop()
-                if 5 < area < close_enough:
+                if 0 < area < close_enough:
                     robit.drive(forward_speed, forward_speed)
                     time.sleep(3)
                 else:
@@ -158,11 +158,8 @@ def main():
     print(" Calibrating")
     print("--------------------------------------------")
     robit.arm_calibration()
-    # if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
-    #     mqtt_client.send_message("scared_of_red")
-    if robit.color_sensor.value() == ev3.ColorSensor.COLOR_RED:
-        mqtt_client.send_message("love")
-    if robit.color_sensor.value() == ev3.ColorSensor.COLOR_WHITE:
+    picked_up = 70
+    if robit.color_sensor.reflected_light_intensity > picked_up:
         mqtt_client.send_message("love")
     robit.loop_forever()
 
