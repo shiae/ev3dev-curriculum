@@ -66,6 +66,7 @@ class MyDelegate(object):
         self.has_settings = True
         while self.has_settings:
             time.sleep(.01)
+        robot.drive(speed, speed)
         while robot.color_sensor.color != robot.color_sensor.COLOR_BLACK:
             time.sleep(.01)
         robot.turn_degrees(-90, speed)
@@ -181,10 +182,10 @@ def numbers_to_letters(data):
 def handle_up(state, mqtt_client, my_delegate):
     if state and my_delegate.has_settings:
         print("up button was pressed")
-        mqtt_client.send_message("receive-settings", [my_delegate.settings])
+        mqtt_client.send_message("receive_settings", [my_delegate.settings])
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-        my_delegate.freeze = False
+        my_delegate.has_settings = False
 
 
 def process_data(data):
@@ -196,10 +197,12 @@ def process_data(data):
     elif data[0] == 'b':
         robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
+        robot.drive_inches(2, speed)
         robot.follow_line('red')
     elif data[0] == 'c':
         robot.follow_line('blue')
         robot.turn(30, speed)
+        robot.drive_inches(2, speed)
         robot.follow_line('green')
 
 def return_home(data):
@@ -207,14 +210,19 @@ def return_home(data):
     win = False
     robot.turn_degrees(180, speed)
     if data[0] == 'a':
-        win =robot.follow_line('black')
+        print('a')
+        win = robot.follow_line('black')
     elif data[0] == 'b':
+        print('b')
         win = robot.follow_line('blue')
         robot.turn_degrees(30, speed)
+        robot.drive_inches(2, speed)
         robot.follow_line('black')
     elif data[0] == 'c':
+        print('c')
         win = robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
+        robot.drive_inches(2, speed)
         robot.follow_line('black')
     return win
 
@@ -231,8 +239,8 @@ def handle_down(state, mqtt_client, my_delegate):
 def creative_human_interaction():
     speed = 200
     robot.turn_degrees(90, speed)
-    robot.drive_inches(48, speed)
-    while robot.ir_sensor > 10:
+    robot.drive_inches(4, speed) # change
+    while robot.ir_sensor.proximity > 10:
         time.sleep(.01)
     robot.turn_degrees(180, speed)
 

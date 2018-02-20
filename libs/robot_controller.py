@@ -198,16 +198,33 @@ class Snatch3r(object):
             color = self.color_sensor.COLOR_BLACK
         elif color == 'yellow':
             color = self.color_sensor.COLOR_YELLOW
-        while self.color_sensor.color != color and self.ir_sensor.proximity < 10:
+        color_sensor = self.color_sensor.color
+        proximity = self.ir_sensor.proximity
+        while color_sensor != color or  proximity >10:
             self.drive(200, 200)
             time.sleep(.5)
-            while self.color_sensor.color == self.color_sensor.COLOR_WHITE:
+            while color_sensor == self.color_sensor.COLOR_WHITE:
                 time.sleep(.01)
-            while self.color_sensor.color != self.color_sensor.COLOR_WHITE:
-                self.turn_degrees(5, 100)
-                self.turn_degrees(-5, 100)
-                self.turn_degrees(-5, 100)
-                self.turn_degrees(5, 100)
+                color_sensor = self.color_sensor.color
+                proximity = self.ir_sensor.proximity
+            while color_sensor != self.color_sensor.COLOR_WHITE:
+                self.turn_degrees(10, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(-10, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(-10, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(10, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(20, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(-20, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(-20, 100)
+                color_sensor = self.color_sensor.color
+                self.turn_degrees(20, 100)
+                color_sensor = self.color_sensor.color
+                proximity = self.ir_sensor.proximity
         self.stop()
         if self.ir_sensor.proximity < 10:
             return True
