@@ -12,7 +12,6 @@ import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
 import mqtt_remote_method_calls as com
-robit = robo.Snatch3r()
 
 
 class MyDelegate(object):
@@ -33,6 +32,7 @@ class MyDelegate(object):
         print("--------------------------------------------")
         print(" Sit")
         print("--------------------------------------------")
+        robit = robo.Snatch3r()
         robit.stop()
 
     def shake(self):
@@ -42,6 +42,7 @@ class MyDelegate(object):
         print(" Shake")
         print("--------------------------------------------")
         ev3.Sound.speak("shake").wait()
+        robit = robo.Snatch3r()
         while not robit.touch_sensor.is_pressed:
             if robit.ir_sensor.proximity < 7:
                 robit.shake()
@@ -54,6 +55,7 @@ class MyDelegate(object):
         print(" Fetch")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
+        robit = robo.Snatch3r()
         robit.pixy.mode = "SIG2"
         turn_speed = 100
         forward_speed = 300
@@ -103,6 +105,7 @@ class MyDelegate(object):
         print(" Come")
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
+        robit = robo.Snatch3r()
         ev3.Sound.speak("Come").wait()
         robit.pixy.mode = "SIG2"
         turn_speed = 100
@@ -148,6 +151,7 @@ def main():
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
+    robit = robo.Snatch3r()
     assert robit.pixy
     assert robit.color_sensor
     print("--------------------------------------------")
