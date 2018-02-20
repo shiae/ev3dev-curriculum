@@ -56,6 +56,7 @@ class MyDelegate(object):
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
         robit = robo.Snatch3r()
+        ev3.Sound.speak("Fetch").wait()
         robit.pixy.mode = "SIG1"
         turn_speed = 100
         forward_speed = 300
@@ -66,10 +67,9 @@ class MyDelegate(object):
             width = robit.pixy.value(3)
             height = robit.pixy.value(4)
             area = width * height
-            close_enough = \
-                7489213479018234709812374092183740921834709128347012938471239084712903847123908471239847
+            close_enough = 2500
 
-            print("(X, Y)=({}, {})".format(x, y))
+            print("(X, Y)=({}, {})".format(x, y), width, height, area)
 
             if x < 150:
                 robit.turn(turn_speed, turn_speed)
@@ -83,21 +83,24 @@ class MyDelegate(object):
                     time.sleep(.01)
             else:
                 robit.stop()
-                if area > close_enough:
+                if 0 < area < close_enough:
                     robit.drive(forward_speed, forward_speed)
-                    time.sleep(4)
+                    time.sleep(3)
                 else:
                     robit.stop()
                     ev3.Sound.speak("Wuff!").wait()
+                    robit.drive(forward_speed, forward_speed)
+                    time.sleep(2)
                     robit.arm_up()
                     time.sleep(2)
-                    robit.turn_degrees(180, turn_speed)
-                    robit.drive(forward_speed, forward_speed - 100)
-                    time.sleep(5)
+                    robit.turn_degrees(180, 600)
+                    robit.drive(900, 100)
+                    time.sleep(7)
 
             time.sleep(0.25)
 
         robit.shutdown()
+
 
     def come(self):
         """Robit will look for his toy and come to it."""
@@ -157,7 +160,7 @@ def main():
     print("--------------------------------------------")
     print(" Calibrating")
     print("--------------------------------------------")
-    # robit.arm_calibration()
+    robit.arm_calibration()
     while True:
         print(robit.color_sensor.reflected_light_intensity)
 
