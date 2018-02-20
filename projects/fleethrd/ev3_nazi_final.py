@@ -17,12 +17,14 @@ class MyDelegate(object):
         self.foiled_by_damn_allies = False
 
     def receive_data(self, data):
+        """receives data figures out what to do with it"""
         self.data = data
         decryption(self.settings, self.data)
         self.foiled_by_damn_allies = process_data(self.data)
         return_home(self.foiled_by_damn_allies, self.data)
 
     def receive_settings(self, settings):
+        """receives settings"""
         self.settings = settings
 
     def shutdown(self):
@@ -38,6 +40,7 @@ def main():
 
 
 def decryption(settings, data):
+    """decrypts the given set of encrypted data with the given settings"""
     x = [2, 0, 1, 3]
     y = [3, 2, 1, 0]
     z = [1, 3, 2, 0]
@@ -56,6 +59,7 @@ def decryption(settings, data):
 
 
 def set_up(settings, wheels):
+    """sets the wheels up based on the given settings"""
     letters_to_numbers(settings)
     for k in range(len(settings)):
         for j in range(settings[k]):
@@ -64,6 +68,7 @@ def set_up(settings, wheels):
 
 
 def system_rotation(wheels):
+    """rotates the wheels based on a set algorithm"""
     rotation(wheels[1])
     if wheels[0] == 1:
         rotation(wheels[2])
@@ -73,6 +78,7 @@ def system_rotation(wheels):
 
 
 def rotation(wheel):
+    """rotates a single wheel"""
     temp = wheel[0]
     for k in range(len(wheel) - 1):
         if wheel[k + 1] > 0:
@@ -86,6 +92,7 @@ def rotation(wheel):
 
 
 def letters_to_numbers(data):
+    """converts a list of letters into a list of numbers"""
     for k in range(len(data)):
         if data[k] == 'a':
             data[k] = 0
@@ -98,6 +105,7 @@ def letters_to_numbers(data):
 
 
 def numbers_to_letters(data):
+    """converts a list of numbers into a list of numbers"""
     for k in range(len(data)):
         if data[k] == 0:
             data[k] = 'a'
@@ -110,6 +118,7 @@ def numbers_to_letters(data):
 
 
 def process_data(data):
+    """figures out how to move the robot based on the given data"""
     speed = 200
     if data[0] == 'd':
         time.sleep(10)
@@ -156,8 +165,8 @@ def process_data(data):
                 robot.turn_degrees(-120, speed)
                 robot.follow_line('green')
 
-
 def return_home(foiled, data):
+    """returns to the robot to start"""
     speed = 200
     if robot.color_sensor.color != robot.color_sensor.COLOR_WHITE:
         figuring_out_how_to_get_home(data[2])
@@ -172,6 +181,7 @@ def return_home(foiled, data):
 
 
 def figuring_out_where_i_ended_up(data):
+    """figures out roughly where the robot ended up"""
     speed = 200
     if data[2] == 'd':
         robot.turn_degrees(180, speed)
@@ -197,6 +207,7 @@ def figuring_out_where_i_ended_up(data):
 
 
 def figuring_out_how_to_get_home(route):
+    """figures out how to get the robot back to start"""
     speed = 200
     if robot.color_sensor.color == robot.color_sensor.COLOR_BLUE:
         if route == 'a':

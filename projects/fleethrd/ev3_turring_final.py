@@ -20,6 +20,7 @@ class MyDelegate(object):
         self.waiting_on_news = False
 
     def receive_data(self, data):
+        """handles the incoming data and works to process it"""
         speed = 200
         self.data = data
         data_copy = []
@@ -55,6 +56,7 @@ class MyDelegate(object):
             robot.turn_degrees(-90, speed)
 
     def guess_data(self, guess):
+        """receives a guess and runs a brute force cracking method to find the settings"""
         speed = 200
         self.guess = guess
         self.settings = bombe(self.data, self.guess)
@@ -72,9 +74,11 @@ class MyDelegate(object):
         robot.turn_degrees(-90, speed)
 
     def reset_settings(self):
+        """resets the settings"""
         self.settings = []
 
     def shutdown(self):
+        """shuts off the robot"""
         self.running =False
         robot.shutdown()
 
@@ -93,6 +97,7 @@ def main():
 
 
 def bombe(data, guess):
+    """takes a guess and the encrypted data to find the settings"""
     letters_to_numbers(data)
     for k in range(4):
         # time.sleep(1)
@@ -113,6 +118,7 @@ def bombe(data, guess):
 
 
 def decryption(settings, data):
+    """takes settings and data to decrpyt the data"""
     x = [2, 0, 1, 3]
     y = [3, 2, 1, 0]
     z = [1, 3, 2, 0]
@@ -128,12 +134,14 @@ def decryption(settings, data):
 
 
 def set_up(settings, wheels):
+    """sets up the enigma machine with the given settings"""
     for k in range(len(settings)):
         for j in range(settings[k]):
             rotation(wheels[k+1])
 
 
 def system_rotation(wheels):
+    """rotates the wheels in the system based on a set algorithm"""
     rotation(wheels[1])
     if wheels[0] == 1:
         rotation(wheels[2])
@@ -143,6 +151,7 @@ def system_rotation(wheels):
 
 
 def rotation(wheel):
+    """rotates one wheel"""
     temp = wheel[0]
     for k in range(len(wheel) - 1):
         if wheel[k + 1] > 0:
@@ -156,6 +165,7 @@ def rotation(wheel):
 
 
 def letters_to_numbers(data):
+    """takes a list of letters and converts it to a list of numbers"""
     for k in range(len(data)):
         if data[k] == 'a':
             data[k] = 0
@@ -168,6 +178,7 @@ def letters_to_numbers(data):
 
 
 def numbers_to_letters(data):
+    """takes a list of numbers and converts it to a list of letters"""
     for k in range(len(data)):
         if data[k] == 0:
             data[k] = 'a'
@@ -180,6 +191,7 @@ def numbers_to_letters(data):
 
 
 def handle_up(state, mqtt_client, my_delegate):
+    """handles a press of the up button"""
     if state and my_delegate.has_settings:
         print("up button was pressed")
         mqtt_client.send_message("receive_settings", [my_delegate.settings])
@@ -189,6 +201,7 @@ def handle_up(state, mqtt_client, my_delegate):
 
 
 def process_data(data):
+    """takes a set of data and decides how the robot is to move based on it"""
     speed = 200
     if data[0] == 'd':
         print('d')
@@ -208,6 +221,8 @@ def process_data(data):
         robot.follow_line('green')
 
 def return_home(data):
+    """figures out the robot's rough position and figures out how to return
+    to its start"""
     speed = 200
     win = False
     robot.turn_degrees(180, speed)
@@ -225,6 +240,7 @@ def return_home(data):
 
 
 def handle_down(state, mqtt_client, my_delegate):
+    """handles a press of the down button"""
     if state and my_delegate.waiting_on_news:
         mqtt_client.send_message(
             "receive_news_on_war", [my_delegate.waiting_on_news])
@@ -234,6 +250,7 @@ def handle_down(state, mqtt_client, my_delegate):
 
 
 def creative_human_interaction():
+    """drives towards the user and waits until the user gets close to the ir sensor"""
     speed = 200
     robot.turn_degrees(90, speed)
     robot.drive_inches(4, speed) # change
