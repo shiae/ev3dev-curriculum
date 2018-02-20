@@ -18,6 +18,7 @@ class MyDelegate(object):
         self.win = False
         self.waiting_on_news = False
         self.robot = robo.Snatch3r()
+        self.one_robot_settings = []
 
     def receive_data(self, data):
         """handles the incoming data and works to process it"""
@@ -77,6 +78,9 @@ class MyDelegate(object):
     def reset_settings(self):
         """resets the settings"""
         self.settings = []
+
+    def receive_settings(self, settings):
+        self.one_robot_settings = settings
 
     def shutdown(self):
         """shuts off the my_delegate.robot"""
@@ -247,8 +251,12 @@ def return_home(data, my_delegate):
 def handle_down(state, mqtt_client, my_delegate):
     """handles a press of the down button"""
     if state and my_delegate.waiting_on_news:
-        mqtt_client.send_message(
-            "receive_news_on_war", [my_delegate.waiting_on_news])
+        # mqtt_client.send_message(
+        #     "receive_news_on_war", [my_delegate.waiting_on_news])
+        mqtt_client.send_message("receive_news_one_robot",
+                                 [my_delegate.settings,
+                                  my_delegate.one_robot_settings,
+                                  my_delegate.data])
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         my_delegate.waiting_on_news = False

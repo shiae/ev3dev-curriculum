@@ -41,6 +41,25 @@ class MyDelegate(object):
                 self.display.configure(text=message_to_display)
                 exit()
 
+    def receive_news_one_robot(self, guessed_settings, settings, data):
+        news = False
+        if decryption(data, settings) == decryption(data, guessed_settings):
+            news = True
+        if news is True:
+            self.nazi_health -= 1
+            self.nazi_health_display.configure(text=self.nazi_health)
+            if self.nazi_health == 0:
+                message_to_display = "Allies Win! Press Exit to Leave Game"
+                self.display.configure(text=message_to_display)
+                exit()
+        else:
+            self.allied_health -= 1
+            self.allied_health_display.configure(text=self.allied_health)
+            if self.allied_health == 0:
+                message_to_display = "Nazis Win! Press Exit to Leave Game"
+                self.display.configure(text=message_to_display)
+                exit()
+
 
 def main():
     root = tkinter.Tk()
@@ -245,6 +264,25 @@ def shutdown(mqtt_client):
 def start_game(mqtt_client):
     """starts the game by sending out the first set of data"""
     marching_orders(mqtt_client)
+
+
+def decryption(settings, data):
+    """decrypts the given set of encrypted data with the given settings"""
+    x = [2, 0, 1, 3]
+    y = [3, 2, 1, 0]
+    z = [1, 3, 2, 0]
+    r = [2, 3, 0, 1]
+    wheels = [0, x, y, z, r]
+    set_up(settings, wheels)
+    letters_to_numbers(data)
+    system_rotation(wheels)
+    data[0] = wheels[1].index(wheels[2].index(wheels[3].index(wheels[4].index(wheels[3][wheels[2][wheels[1][data[0]]]]))))
+    system_rotation(wheels)
+    data[1] = wheels[1].index(wheels[2].index(wheels[3].index(wheels[4].index(wheels[3][wheels[2][wheels[1][data[1]]]]))))
+    system_rotation(wheels)
+    data[2] = wheels[1].index(wheels[2].index(wheels[3].index(wheels[4].index(wheels[3][wheels[2][wheels[1][data[2]]]]))))
+    numbers_to_letters(data)
+    return(data)
 
 
 main()
