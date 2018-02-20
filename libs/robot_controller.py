@@ -188,6 +188,8 @@ class Snatch3r(object):
         time.sleep(1)
 
     def follow_line(self, color):
+        """follows a white line until it reaches the given color or detects
+        an object"""
         print(color)
         if color == 'blue':
             color = self.color_sensor.COLOR_BLUE

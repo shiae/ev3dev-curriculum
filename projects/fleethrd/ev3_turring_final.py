@@ -4,11 +4,10 @@ import mqtt_remote_method_calls as com
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
-robot = robo.Snatch3r() # yes, a global variable because I need it in many,
-# many places
 
 
 class MyDelegate(object):
+    '''handles function calls from the pc'''
 
     def __init__(self):
         self.running = True
@@ -18,6 +17,7 @@ class MyDelegate(object):
         self.has_settings = False
         self.win = False
         self.waiting_on_news = False
+        self.robot = robo.Snatch3r()
 
     def receive_data(self, data):
         """handles the incoming data and works to process it"""
@@ -34,26 +34,27 @@ class MyDelegate(object):
             numbers_to_letters(data_copy)
             numbers_to_letters(self.settings)
             print("guessed", data_copy)
-            process_data(data_copy)
-            self.win = return_home(data_copy)
+            process_data(data_copy, self)
+            self.win = return_home(data_copy, self)
             if self.win:
                 time.sleep(10)
-                robot.follow_line('blue')
+                self.robot.follow_line('blue')
                 if data[0] == 'b':
-                    robot.turn_degrees(30, speed)
+                    self.robot.turn_degrees(30, speed)
                 elif data[0] == 'c':
-                    robot.turn_degrees(-30, speed)
-                robot.follow_line('black')
+                    self.robot.turn_degrees(-30, speed)
+                    self.robot.follow_line('black')
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
-            creative_human_interaction()
+            creative_human_interaction(self)
             self.waiting_on_news = True
             while self.waiting_on_news is True:
                 time.sleep(.01)
-            robot.drive(speed, speed)
-            while robot.color_sensor.color != robot.color_sensor.COLOR_BLACK:
+                self.robot.drive(speed, speed)
+            while self.robot.color_sensor.color != \
+                    self.robot.color_sensor.COLOR_BLACK:
                 time.sleep(.01)
-            robot.turn_degrees(-90, speed)
+                self.robot.turn_degrees(-90, speed)
 
     def guess_data(self, guess):
         """receives a guess and runs a brute force cracking method to find the settings"""
@@ -61,26 +62,27 @@ class MyDelegate(object):
         self.guess = guess
         self.settings = bombe(self.data, self.guess)
         print(self.settings)
-        robot.turn_degrees(180, speed)
+        self.robot.turn_degrees(180, speed)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-        creative_human_interaction()
+        creative_human_interaction(self)
         self.has_settings = True
         while self.has_settings:
             time.sleep(.01)
-        robot.drive(speed, speed)
-        while robot.color_sensor.color != robot.color_sensor.COLOR_BLACK:
+            self.robot.drive(speed, speed)
+        while self.robot.color_sensor.color != \
+                self.robot.color_sensor.COLOR_BLACK:
             time.sleep(.01)
-        robot.turn_degrees(-90, speed)
+        self.robot.turn_degrees(-90, speed)
 
     def reset_settings(self):
         """resets the settings"""
         self.settings = []
 
     def shutdown(self):
-        """shuts off the robot"""
-        self.running =False
-        robot.shutdown()
+        """shuts off the my_delegate.robot"""
+        self.running = False
+        self.robot.shutdown()
 
 
 def main():
@@ -93,7 +95,6 @@ def main():
     while my_delegate.running:
         btn.process()
         time.sleep(.01)
-
 
 
 def bombe(data, guess):
@@ -200,42 +201,47 @@ def handle_up(state, mqtt_client, my_delegate):
         my_delegate.has_settings = False
 
 
-def process_data(data):
-    """takes a set of data and decides how the robot is to move based on it"""
+def process_data(data, my_delegate):
+    """takes a set of data and decides how the my_delegate.robot is to move
+    based
+     on
+    it"""
     speed = 200
     if data[0] == 'd':
         print('d')
         time.sleep(10)
     elif data[0] == 'a':
         print('a')
-        robot.follow_line('blue')
+        my_delegate.robot.follow_line('blue')
     elif data[0] == 'b':
         print('b')
-        robot.follow_line('blue')
-        robot.turn_degrees(-30, speed)
-        robot.follow_line('red')
+        my_delegate.robot.follow_line('blue')
+        my_delegate.robot.turn_degrees(-30, speed)
+        my_delegate.robot.follow_line('red')
     elif data[0] == 'c':
         print('c')
-        robot.follow_line('blue')
-        robot.turn(30, speed)
-        robot.follow_line('green')
+        my_delegate.robot.follow_line('blue')
+        my_delegate.robot.turn(30, speed)
+        my_delegate.robot.follow_line('green')
 
-def return_home(data):
-    """figures out the robot's rough position and figures out how to return
+
+def return_home(data, my_delegate):
+    """figures out the my_delegate.robot's rough position and figures out how to
+    return
     to its start"""
     speed = 200
     win = False
-    robot.turn_degrees(180, speed)
+    my_delegate.robot.turn_degrees(180, speed)
     if data[0] == 'a':
-        win = robot.follow_line('black')
+        win = my_delegate.robot.follow_line('black')
     elif data[0] == 'b':
-        win = robot.follow_line('blue')
-        robot.turn_degrees(30, speed)
-        robot.follow_line('black')
+        win = my_delegate.robot.follow_line('blue')
+        my_delegate.robot.turn_degrees(30, speed)
+        my_delegate.robot.follow_line('black')
     elif data[0] == 'c':
-        win = robot.follow_line('blue')
-        robot.turn_degrees(-30, speed)
-        robot.follow_line('black')
+        win = my_delegate.robot.follow_line('blue')
+        my_delegate.robot.turn_degrees(-30, speed)
+        my_delegate.robot.follow_line('black')
     return win
 
 
@@ -249,14 +255,14 @@ def handle_down(state, mqtt_client, my_delegate):
         my_delegate.waiting_on_news = False
 
 
-def creative_human_interaction():
+def creative_human_interaction(my_delegate):
     """drives towards the user and waits until the user gets close to the ir sensor"""
     speed = 200
-    robot.turn_degrees(90, speed)
-    robot.drive_inches(4, speed) # change
-    while robot.ir_sensor.proximity > 10:
+    my_delegate.robot.turn_degrees(90, speed)
+    my_delegate.robot.drive_inches(4, speed)  # change
+    while my_delegate.robot.ir_sensor.proximity > 10:
         time.sleep(.01)
-    robot.turn_degrees(180, speed)
+    my_delegate.robot.turn_degrees(180, speed)
 
 
 main()

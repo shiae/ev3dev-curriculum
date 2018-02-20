@@ -4,24 +4,24 @@ import mqtt_remote_method_calls as com
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
-robot = robo.Snatch3r() # yes, a global variable because I need it in many
-# places
 
 
 class MyDelegate(object):
+    """handles function calls from the pc"""
 
     def __init__(self):
         self.running = True
         self.data = ['a', 'a', 'a']
         self.settings = ['a', 'a', 'a']
         self.foiled_by_damn_allies = False
+        self.robot = robo.Snatch3r()
 
     def receive_data(self, data):
         """receives data figures out what to do with it"""
         self.data = data
         decryption(self.settings, self.data)
-        self.foiled_by_damn_allies = process_data(self.data)
-        return_home(self.foiled_by_damn_allies, self.data)
+        self.foiled_by_damn_allies = process_data(self.data, self)
+        return_home(self.foiled_by_damn_allies, self.data, self)
 
     def receive_settings(self, settings):
         """receives settings"""
@@ -29,7 +29,8 @@ class MyDelegate(object):
 
     def shutdown(self):
         self.running = False
-        robot.shutdown()
+        self.robot.shutdown()
+
 
 def main():
     my_delegate = MyDelegate()
@@ -117,149 +118,156 @@ def numbers_to_letters(data):
             data[k] = 'd'
 
 
-def process_data(data):
-    """figures out how to move the robot based on the given data"""
+def process_data(data, my_delegate):
+    """figures out how to move the my_delegate.robot based on the given data"""
     speed = 200
+    foiled = False
     if data[0] == 'd':
         time.sleep(10)
     else:
         if data[2] == 'a':
-            robot.follow_line('blue')
+            my_delegate.robot.follow_line('blue')
             if data[0] == 'a':
                 time.sleep(5)
             elif data[0] == 'b':
-                robot.turn_degrees(150, speed)
-                robot.follow_line('red')
+                my_delegate.robot.turn_degrees(150, speed)
+                foiled = my_delegate.robot.follow_line('red')
             elif data[0] == 'c':
-                robot.turn_degrees(-150, speed)
-                robot.follow_line('green')
-        elif data[2] =='b':
-            robot.turn_degrees(120, speed)
-            robot.follow_line('red')
+                my_delegate.robot.turn_degrees(-150, speed)
+                foiled = my_delegate.robot.follow_line('green')
+        elif data[2] == 'b':
+            my_delegate.robot.turn_degrees(120, speed)
+            my_delegate.robot.follow_line('red')
             if data[0] == 'a':
-                robot.turn_degrees(-150, speed)
-                robot.follow_line('blue')
+                my_delegate.robot.turn_degrees(-150, speed)
+                foiled = my_delegate.robot.follow_line('blue')
             elif data[0] == 'b':
                 time.sleep(5)
             elif data[0] == 'c':
-                robot.turn_degrees(150, speed)
-                robot.follow_line('green')
-        elif data[2] =='c':
-            robot.turn_degrees(-120, speed)
-            robot.follow_line('green')
+                my_delegate.robot.turn_degrees(150, speed)
+                foiled = my_delegate.robot.follow_line('green')
+        elif data[2] == 'c':
+            my_delegate.robot.turn_degrees(-120, speed)
+            my_delegate.robot.follow_line('green')
             if data[0] == 'a':
-                robot.turn_degrees(150, speed)
-                robot.follow_line('blue')
+                my_delegate.robot.turn_degrees(150, speed)
+                foiled = my_delegate.robot.follow_line('blue')
             elif data[0] == 'b':
-                robot.turn_degrees(-150, speed)
-                robot.follow_line('red')
+                my_delegate.robot.turn_degrees(-150, speed)
+                foiled = my_delegate.robot.follow_line('red')
             elif data[0] == 'c':
                 time.sleep(5)
         elif data[2] == 'd':
             if data[0] == 'a':
-                robot.follow_line('blue')
+                foiled = my_delegate.robot.follow_line('blue')
             elif data[0] == 'b':
-                robot.turn_degrees(120, speed)
-                robot.follow_line('red')
+                my_delegate.robot.turn_degrees(120, speed)
+                foiled = my_delegate.robot.follow_line('red')
             elif data[0] == 'c':
-                robot.turn_degrees(-120, speed)
-                robot.follow_line('green')
+                my_delegate.robot.turn_degrees(-120, speed)
+                foiled = my_delegate.robot.follow_line('green')
+    return foiled
 
-def return_home(foiled, data):
-    """returns to the robot to start"""
+
+def return_home(foiled, data, my_delegate):
+    """returns to the my_delegate.robot to start"""
     speed = 200
-    if robot.color_sensor.color != robot.color_sensor.COLOR_WHITE:
-        figuring_out_how_to_get_home(data[2])
+    if my_delegate.robot.color_sensor.color != \
+            my_delegate.robot.color_sensor.COLOR_WHITE:
+        figuring_out_how_to_get_home(data[2], my_delegate)
     else:
-        figuring_out_where_i_ended_up(data)
+        figuring_out_where_i_ended_up(data, my_delegate)
     if foiled:
-        robot.follow_line('blue')
+        my_delegate.robot.follow_line('blue')
         time.sleep(10)
-        robot.turn_degrees(180, speed)
-        robot.follow_line('black')
-        robot.turn_degrees(180, speed)
+        my_delegate.robot.turn_degrees(180, speed)
+        my_delegate.robot.follow_line('black')
+        my_delegate.robot.turn_degrees(180, speed)
 
 
-def figuring_out_where_i_ended_up(data):
-    """figures out roughly where the robot ended up"""
+def figuring_out_where_i_ended_up(data, my_delegate):
+    """figures out roughly where the my_delegate.robot ended up"""
     speed = 200
     if data[2] == 'd':
-        robot.turn_degrees(180, speed)
-        robot.follow_line('black')
+        my_delegate.robot.turn_degrees(180, speed)
+        my_delegate.robot.follow_line('black')
         if data[0] == 'a':
-            robot.turn_degrees(180, speed)
+            my_delegate.robot.turn_degrees(180, speed)
         elif data[0] == 'b':
-            robot.turn_degrees(30, speed)
+            my_delegate.robot.turn_degrees(30, speed)
         elif data[0] == 'c':
-            robot.turn_degrees(-30, speed)
+            my_delegate.robot.turn_degrees(-30, speed)
     elif data[2] == 'a':
-        robot.turn_degrees(180, speed)
-        robot.follow_line('blue')
-        figuring_out_how_to_get_home(data[0])
+        my_delegate.robot.turn_degrees(180, speed)
+        my_delegate.robot.follow_line('blue')
+        figuring_out_how_to_get_home(data[0], my_delegate)
     elif data[2] == 'b':
-        robot.turn_degrees(180, speed)
-        robot.follow_line('red')
-        figuring_out_how_to_get_home(data[0])
+        my_delegate.robot.turn_degrees(180, speed)
+        my_delegate.robot.follow_line('red')
+        figuring_out_how_to_get_home(data[0], my_delegate)
     elif data[2] == 'c':
-        robot.turn_degrees(180, speed)
-        robot.follow_line('green')
-        figuring_out_how_to_get_home(data[0])
+        my_delegate.robot.turn_degrees(180, speed)
+        my_delegate.robot.follow_line('green')
+        figuring_out_how_to_get_home(data[0], my_delegate)
 
 
-def figuring_out_how_to_get_home(route):
-    """figures out how to get the robot back to start"""
+def figuring_out_how_to_get_home(route, my_delegate):
+    """figures out how to get the my_delegate.robot back to start"""
     speed = 200
-    if robot.color_sensor.color == robot.color_sensor.COLOR_BLUE:
+    if my_delegate.robot.color_sensor.color == \
+            my_delegate.robot.color_sensor.COLOR_BLUE:
         if route == 'a':
-            robot.turn_degrees(180, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(180, speed)
+            my_delegate.robot.turn_degrees(180, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(180, speed)
         elif route == 'b':
-            robot.turn_degrees(-150, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(180, speed)
+            my_delegate.robot.turn_degrees(-150, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(180, speed)
         elif route == 'c':
-            robot.turn_degrees(150, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(180, speed)
+            my_delegate.robot.turn_degrees(150, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(180, speed)
         elif route == 'd':
-            robot.turn_degrees(180, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(180, speed)
-    elif robot.color_sensor.color == robot.color_sensor.COLOR_RED:
+            my_delegate.robot.turn_degrees(180, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(180, speed)
+    elif my_delegate.robot.color_sensor.color == \
+            my_delegate.robot.color_sensor.COLOR_RED:
         if route == 'a':
-            robot.turn_degrees(150, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(30, speed)
+            my_delegate.robot.turn_degrees(150, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(30, speed)
         elif route == 'b':
-            robot.turn_degrees(180, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(30, speed)
+            my_delegate.robot.turn_degrees(180, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(30, speed)
         elif route == 'c':
-            robot.turn_degrees(-150, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(30, speed)
+            my_delegate.robot.turn_degrees(-150, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(30, speed)
         elif route == 'd':
-            robot.turn_degrees(180, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(30, speed)
-    elif robot.color_sensor.color == robot.color_sensor.COLOR_GREEN:
+            my_delegate.robot.turn_degrees(180, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(30, speed)
+    elif my_delegate.robot.color_sensor.color == \
+            my_delegate.robot.color_sensor.COLOR_GREEN:
         if route == 'a':
-            robot.turn_degrees(-150, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(-30, speed)
+            my_delegate.robot.turn_degrees(-150, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(-30, speed)
         elif route == 'b':
-            robot.turn_degrees(180, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(-30, speed)
+            my_delegate.robot.turn_degrees(180, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(-30, speed)
         elif route == 'c':
-            robot.turn_degrees(150, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(-30, speed)
+            my_delegate.robot.turn_degrees(150, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(-30, speed)
         elif route == 'd':
-            robot.turn_degrees(180, speed)
-            robot.follow_line('black')
-            robot.turn_degrees(-30, speed)
+            my_delegate.robot.turn_degrees(180, speed)
+            my_delegate.robot.follow_line('black')
+            my_delegate.robot.turn_degrees(-30, speed)
 
 
 main()
