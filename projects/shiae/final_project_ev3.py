@@ -101,7 +101,6 @@ class MyDelegate(object):
 
         robit.shutdown()
 
-
     def come(self):
         """Robit will look for his toy and come to it."""
         print("--------------------------------------------")
