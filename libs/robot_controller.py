@@ -111,6 +111,14 @@ class Snatch3r(object):
         self.left_motor.run_forever(speed_sp=left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
 
+    def hop(self, grid_size):
+        """hops forward for positive values and backwards for negative
+        values"""
+        self.left_motor.run_to_rel_pos(position_sp=grid_size, speed=900,
+                                       stop_action='brake')
+        self.right_motor.run_to_rel_pos(position_sp=grid_size, speed=900,
+                                       stop_action='brake')
+
     def turn(self, left_speed, right_speed):
         """turns left for positive values and right for negative values"""
         self.left_motor.run_forever(speed_sp=-left_speed)
