@@ -62,7 +62,6 @@ class MyDelegate(object):
         self.guess = guess
         self.settings = bombe(self.data, self.guess)
         print(self.settings)
-        self.robot.turn_degrees(180, speed)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
         creative_human_interaction(self)
