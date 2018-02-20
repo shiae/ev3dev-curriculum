@@ -200,7 +200,7 @@ class Snatch3r(object):
             color = self.color_sensor.COLOR_YELLOW
         color_sensor = self.color_sensor.color
         proximity = self.ir_sensor.proximity
-        while color_sensor != color or  proximity > 10:
+        while color_sensor != color: # or  proximity > 10:
             self.drive(200, 200)
             time.sleep(.5)
             while color_sensor == self.color_sensor.COLOR_WHITE:
