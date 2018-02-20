@@ -1,7 +1,6 @@
 import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
-import random
 
 
 class MyDelegate(object):
@@ -54,13 +53,6 @@ def main():
     right_speed_entry.insert(0, "600")
     right_speed_entry.grid(row=4, column=2)
 
-    # DONE: 3. Implement the callbacks for the drive buttons. Set both the
-    # click and shortcut key callbacks.
-    #
-    # To help get you started the arm up and down buttons have been implemented.
-    # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
-    # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
-
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=5, column=1)
     forward_button['command'] = lambda: send_forward(robit,
@@ -68,9 +60,6 @@ def main():
                                                      right_speed_entry)
     root.bind('<Up>', lambda event: send_forward(robit, left_speed_entry,
                                                  right_speed_entry))
-    # forward_button and '<Up>' key is done for your here...
-    # forward_button['command'] = lambda: some_callback1(robit, left_speed_entry, right_speed_entry)
-    # root.bind('<Up>', lambda event: some_callback1(robit, left_speed_entry, right_speed_entry))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=6, column=0)
@@ -78,13 +67,11 @@ def main():
                                                right_speed_entry)
     root.bind('<Left>', lambda event: send_left(robit, left_speed_entry,
                                                 right_speed_entry))
-    # left_button and '<Left>' key
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=6, column=1)
     stop_button['command'] = lambda: send_stop(robit)
     root.bind('<space>', lambda event: send_stop(robit))
-    # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=6, column=2)
@@ -93,7 +80,6 @@ def main():
     root.bind('<Right>',
               lambda event: send_right(robit, left_speed_entry,
                                        right_speed_entry))
-    # right_button and '<Right>' key
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=7, column=1)
@@ -103,7 +89,6 @@ def main():
     root.bind('<Down>',
               lambda event: send_backward(robit, left_speed_entry,
                                           right_speed_entry))
-    # back_button and '<Down>' key
 
     up_button = ttk.Button(main_frame, text="Up")
     up_button.grid(row=8, column=0)
@@ -169,7 +154,6 @@ def send_down(mqtt_client):
     mqtt_client.send_message("arm_down")
 
 
-# Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
         print("shutdown")
@@ -181,5 +165,6 @@ def quit_program(mqtt_client, shutdown_ev3):
 def left_mouse_click(event, mqtt_client):
     mqtt_client.send_message('on_circle_draw', ['red', event.x,
                                                 event.y])
+
 
 main()
