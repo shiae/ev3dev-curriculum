@@ -197,12 +197,10 @@ def process_data(data):
     elif data[0] == 'b':
         robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
-        robot.drive_inches(2, speed)
         robot.follow_line('red')
     elif data[0] == 'c':
         robot.follow_line('blue')
         robot.turn(30, speed)
-        robot.drive_inches(2, speed)
         robot.follow_line('green')
 
 def return_home(data):
@@ -216,13 +214,11 @@ def return_home(data):
         print('b')
         win = robot.follow_line('blue')
         robot.turn_degrees(30, speed)
-        robot.drive_inches(2, speed)
         robot.follow_line('black')
     elif data[0] == 'c':
         print('c')
         win = robot.follow_line('blue')
         robot.turn_degrees(-30, speed)
-        robot.drive_inches(2, speed)
         robot.follow_line('black')
     return win
 
