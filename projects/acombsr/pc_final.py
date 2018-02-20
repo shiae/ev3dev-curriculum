@@ -16,7 +16,7 @@ class MyDelegate(object):
                                   y - (distance/2),
                                   x + (distance/2),
                                   y + (distance/2),
-                                  fill=,
+                                  fill='green',
                              width=3)
 
 

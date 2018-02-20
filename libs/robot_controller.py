@@ -125,7 +125,6 @@ class Snatch3r(object):
         print(grid_size)
         self.left_motor.run_to_rel_pos(position_sp=grid_size, speed_sp=900,
                                        stop_action='brake')
-        print('passes left motor')
         self.right_motor.run_to_rel_pos(position_sp=grid_size, speed_sp=900,
                                        stop_action='brake')
 
@@ -137,51 +136,37 @@ class Snatch3r(object):
             self.y_dir += grid_size
         if (self.facing == 'down'):
             self.y_dir -= grid_size
+
         self.color = self.color_sensor.color
         self.grid_size = grid_size
-        self.has_moved = True
+        #self.has_moved = True
+        print('passes hop')
+        print("Facing ", self.facing)
+        print("X: ", self.x_dir)
+        print("Y: ", self.y_dir)
 
 
     def rotate_right(self):
         """hops forward for positive values and backwards for negative
         values"""
         print('hop!')
-        self.left_motor.run_to_rel_pos(position_sp=100, speed_sp=900,
-                                       stop_action='brake')
-        print('passes left motor')
-        self.right_motor.run_to_rel_pos(position_sp=100, speed_sp=-900,
-                                       stop_action='brake')
-        print('passed right motor')
-
-        if (self.facing == 'right'):
-            self.fafcing = 'down'
-        if (self.facing == 'left'):
-            self.facing = 'up'
-        if (self.facing == 'up'):
-            self.facing = 'right'
-        if (self.facing == 'down'):
-            self.facing = 'left'
-
-
-    def rotate_right(self):
-        """hops forward for positive values and backwards for negative
-        values"""
-        print('right!')
         self.left_motor.run_to_rel_pos(position_sp=400, speed_sp=900,
                                        stop_action='brake')
-        print('passes left motor')
-        self.right_motor.run_to_rel_pos(position_sp=-400, speed_sp=900,
+        self.right_motor.run_to_rel_pos(position_sp=-400, speed_sp=-900,
                                        stop_action='brake')
-        print('passed right motor')
+
+        print("Facing ", self.facing)
 
         if (self.facing == 'right'):
-            self.fafcing = 'up'
-        if (self.facing == 'left'):
             self.facing = 'down'
-        if (self.facing == 'up'):
-            self.facing = 'left'
-        if (self.facing == 'down'):
+        elif (self.facing == 'left'):
+            self.facing = 'up'
+        elif (self.facing == 'up'):
             self.facing = 'right'
+        elif (self.facing == 'down'):
+            self.facing = 'left'
+        print("Facing ", self.facing)
+
 
     def rotate_left(self):
         """hops forward for positive values and backwards for negative
@@ -189,10 +174,21 @@ class Snatch3r(object):
         print('left!')
         self.left_motor.run_to_rel_pos(position_sp=-400, speed_sp=900,
                                        stop_action='brake')
-        print('passes left motor')
         self.right_motor.run_to_rel_pos(position_sp=400, speed_sp=900,
                                        stop_action='brake')
-        print('passed right motor')
+
+        print("Facing ", self.facing)
+
+        if (self.facing == 'right'):
+            self.facing = 'up'
+        elif(self.facing == 'left'):
+            self.facing = 'down'
+        elif(self.facing == 'up'):
+            self.facing = 'left'
+        elif(self.facing == 'down'):
+            self.facing = 'right'
+
+        print("Facing ", self.facing)
 
     def turn(self, left_speed, right_speed):
         """turns left for positive values and right for negative values"""
