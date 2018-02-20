@@ -44,7 +44,7 @@ class MyDelegate(object):
         ev3.Sound.speak("shake").wait()
         robit = robo.Snatch3r()
         while not robit.touch_sensor.is_pressed:
-            if robit.ir_sensor.proximity < 7:
+            if robit.ir_sensor.proximity < 2:
                 robit.shake()
         print("Exit Shake")
 
@@ -56,7 +56,7 @@ class MyDelegate(object):
         print("--------------------------------------------")
         print("Press the touch sensor to exit this program.")
         robit = robo.Snatch3r()
-        robit.pixy.mode = "SIG2"
+        robit.pixy.mode = "SIG1"
         turn_speed = 100
         forward_speed = 300
         while not robit.touch_sensor.is_pressed:
@@ -107,7 +107,7 @@ class MyDelegate(object):
         print("Press the touch sensor to exit this program.")
         robit = robo.Snatch3r()
         ev3.Sound.speak("Come").wait()
-        robit.pixy.mode = "SIG2"
+        robit.pixy.mode = "SIG1"
         turn_speed = 100
         forward_speed = 300
         while not robit.touch_sensor.is_pressed:
@@ -117,7 +117,7 @@ class MyDelegate(object):
             width = robit.pixy.value(3)
             height = robit.pixy.value(4)
             area = width * height
-            close_enough = 800
+            close_enough = 80
 
             print("(X, Y)=({}, {})".format(x, y))
 
@@ -133,9 +133,9 @@ class MyDelegate(object):
                     time.sleep(.01)
             else:
                 robit.stop()
-                if area < close_enough:
+                if 5 < area < close_enough:
                     robit.drive(forward_speed, forward_speed)
-                    time.sleep(0.1)
+                    time.sleep(3)
                 else:
                     robit.stop()
                     ev3.Sound.speak("Wuff!").wait()
