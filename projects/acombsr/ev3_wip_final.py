@@ -15,6 +15,12 @@ def main():
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
     while my_delegate.running:
+        if(robot.has_moved):
+            mqtt_client.send_message("on_square_draw", [robot.color,
+                                                        robot.x_dir,
+                                                        robot.y_dir,
+                                                        robot.grid_size])
+            robot.has_moved = False
         time.sleep(.01)
 
 

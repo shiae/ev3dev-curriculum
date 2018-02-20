@@ -35,6 +35,9 @@ class Snatch3r(object):
         self.facing = 'right'
         self.x_dir = 0
         self.y_dir = 0
+        self.color = 'white'
+        self.has_moved = False
+        self.grid_size = 0
 
         assert self.left_motor.connected
         assert self.right_motor.connected
@@ -134,11 +137,9 @@ class Snatch3r(object):
             self.y_dir += grid_size
         if (self.facing == 'down'):
             self.y_dir -= grid_size
-
-        color = self.color_sensor.color
-        # mqtt_client.send_message('on_square_draw', [color, self.x_dir,
-        #                                             self.y_dir, grid_size])
-
+        self.color = self.color_sensor.color
+        self.grid_size = grid_size
+        self.has_moved = True
 
 
     def rotate_right(self):
@@ -152,6 +153,16 @@ class Snatch3r(object):
                                        stop_action='brake')
         print('passed right motor')
 
+        if (self.facing == 'right'):
+            self.fafcing = 'down'
+        if (self.facing == 'left'):
+            self.facing = 'up'
+        if (self.facing == 'up'):
+            self.facing = 'right'
+        if (self.facing == 'down'):
+            self.facing = 'left'
+
+
     def rotate_right(self):
         """hops forward for positive values and backwards for negative
         values"""
@@ -162,6 +173,15 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=-400, speed_sp=900,
                                        stop_action='brake')
         print('passed right motor')
+
+        if (self.facing == 'right'):
+            self.fafcing = 'up'
+        if (self.facing == 'left'):
+            self.facing = 'down'
+        if (self.facing == 'up'):
+            self.facing = 'left'
+        if (self.facing == 'down'):
+            self.facing = 'right'
 
     def rotate_left(self):
         """hops forward for positive values and backwards for negative
