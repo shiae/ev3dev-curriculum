@@ -209,7 +209,7 @@ def send_guess(mqtt_client, guess_0, guess_1, guess_2):
     guess.append(guess_2.get())
     print(guess)
     mqtt_client.send_message("guess_data", [guess])
-    # time.sleep(60)
+    time.sleep(30)
     marching_orders(mqtt_client)
 
 
