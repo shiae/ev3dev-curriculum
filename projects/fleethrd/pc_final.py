@@ -25,6 +25,7 @@ class MyDelegate(object):
 
     def receive_news_on_war(self, news):
         """receives news from the turing bot and sets the score based on it"""
+        print('it bloody worked')
         if news is True:
             self.nazi_health -= 1
             self.nazi_health_display.configure(text=self.nazi_health)
@@ -100,6 +101,10 @@ def gui(root):
     start_button = ttk.Button(main_frame, text='Start Game')
     start_button.grid(row=5, column=0)
     start_button['command'] = lambda: start_game(mqtt_client)
+
+    next_orders_button = ttk.Button(main_frame, text='Next Campaign')
+    next_orders_button.grid(row=5, column=1)
+    next_orders_button['command'] = lambda: marching_orders(mqtt_client)
 
     my_delegate = MyDelegate(display, nazi_health, allied_health_label)
     mqtt_client = com.MqttClient(my_delegate)
