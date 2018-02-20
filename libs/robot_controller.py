@@ -138,10 +138,10 @@ class Snatch3r(object):
         """hops forward for positive values and backwards for negative
         values"""
         print('right!')
-        self.left_motor.run_to_rel_pos(position_sp=200, speed_sp=900,
+        self.left_motor.run_to_rel_pos(position_sp=400, speed_sp=900,
                                        stop_action='brake')
         print('passes left motor')
-        self.right_motor.run_to_rel_pos(position_sp=-200, speed_sp=900,
+        self.right_motor.run_to_rel_pos(position_sp=-400, speed_sp=900,
                                        stop_action='brake')
         print('passed right motor')
 
@@ -149,10 +149,10 @@ class Snatch3r(object):
         """hops forward for positive values and backwards for negative
         values"""
         print('left!')
-        self.left_motor.run_to_rel_pos(position_sp=-200, speed_sp=900,
+        self.left_motor.run_to_rel_pos(position_sp=-400, speed_sp=900,
                                        stop_action='brake')
         print('passes left motor')
-        self.right_motor.run_to_rel_pos(position_sp=200, speed_sp=900,
+        self.right_motor.run_to_rel_pos(position_sp=400, speed_sp=900,
                                        stop_action='brake')
         print('passed right motor')
 
